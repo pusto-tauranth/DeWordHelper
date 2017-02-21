@@ -16,9 +16,11 @@ public class TrainingSettingsActivity extends AppCompatActivity {
     public void onGenderClick(View v){
         Intent intent=new Intent(this,GenderTrainingActivity.class);
         startActivity(intent);
+        finish();
     }
     public void onPlClick(View v){
         Intent intent=new Intent(this,PlTrainingActivity.class);
         startActivity(intent);
+        finish();
     }
 }

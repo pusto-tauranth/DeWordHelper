@@ -19,5 +19,6 @@ public class StockSelectActivity extends AppCompatActivity {
     public void onStock1Click(View v){
         Intent intent=new Intent(this,TrainingSettingsActivity.class);
         startActivity(intent);
+        finish();
     }
 }
