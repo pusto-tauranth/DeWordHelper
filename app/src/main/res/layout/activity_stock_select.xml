@@ -17,5 +17,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:id="@+id/button4"
-        android:onClick="onStock1Click"/>
+        android:onClick="onStock1Click"
+        android:textSize="35sp" />
 </RelativeLayout>
