@@ -1,6 +1,8 @@
 package com.lyz.dewordhelper;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,23 +40,51 @@ public class GenderTrainingActivity extends AppCompatActivity {
 
     }
     public void onGenderAClick(View v){     //设置View为Button时，会报错。
-        /*if(ques.gender.equals(((Button)v).getText())){
-
+        if(ques.gender.equals(((Button)v).getText())){
+            AlertDialog.Builder builder =new AlertDialog.Builder(this);
+            builder.setTitle("Richtig");
+            builder.setMessage(ques.gender+" "+ques.word+" "+ques.pl+" "+ques.chn);
+            builder.setPositiveButton("Nächst", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if(round<roundMax){
+                        Intent intent=new Intent(GenderTrainingActivity.this,GenderTrainingActivity.class);
+                        intent.putExtra("round",round+1);
+                        intent.putExtra("roundMax",roundMax);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Intent intent=new Intent(GenderTrainingActivity.this,GenderTrainingActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            });
+            builder.show();
         }
         else{
-
-        }*/
-        if(round<roundMax){
-            Intent intent=new Intent(this,GenderTrainingActivity.class);
-            intent.putExtra("round",round+1);
-            intent.putExtra("roundMax",roundMax);
-            startActivity(intent);
-            finish();
-        }else{
-            Intent intent=new Intent(this,ReportActivity.class);
-            startActivity(intent);
-            finish();
+            AlertDialog.Builder builder =new AlertDialog.Builder(this);
+            builder.setTitle("Falsch");
+            builder.setMessage(ques.gender+" "+ques.word+" "+ques.pl+" "+ques.chn);
+            builder.setPositiveButton("Nächst", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if(round<roundMax){
+                        Intent intent=new Intent(GenderTrainingActivity.this,GenderTrainingActivity.class);
+                        intent.putExtra("round",round+1);
+                        intent.putExtra("roundMax",roundMax);
+                        startActivity(intent);
+                        finish();
+                    }else{
+                        Intent intent=new Intent(GenderTrainingActivity.this,ReportActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            });
+            builder.show();
         }
+
 
     }
 }

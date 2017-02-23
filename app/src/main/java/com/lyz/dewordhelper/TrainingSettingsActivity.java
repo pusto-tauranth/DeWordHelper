@@ -7,7 +7,7 @@ import android.view.View;
 
 public class TrainingSettingsActivity extends AppCompatActivity {
 
-    int roundMax=10;
+    int roundMax=5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
