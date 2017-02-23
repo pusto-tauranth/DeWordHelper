@@ -19,7 +19,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="der"
+            android:text="@string/option_der"
             android:layout_weight="1"
             android:background="@android:color/holo_blue_dark"
             android:onClick="onGenderAClick"
@@ -27,7 +27,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="das"
+            android:text="@string/option_das"
             android:layout_weight="1"
             android:id="@+id/das"
             android:onClick="onGenderAClick"
@@ -35,7 +35,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="die"
+            android:text="@string/option_die"
             android:layout_weight="1"
             android:onClick="onGenderAClick"
             android:background="@android:color/holo_red_dark"
@@ -56,8 +56,8 @@
         android:text="pl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/word"
-        android:layout_toEndOf="@+id/word"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/word"
         android:id="@+id/pl"
         android:textSize="40sp" />
 
@@ -65,8 +65,9 @@
         android:text="Chinese"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/word"
+        android:layout_below="@+id/pl"
         android:layout_alignParentStart="true"
-        android:id="@+id/fy"
+        android:id="@+id/chn"
         android:textSize="30sp" />
+
 </RelativeLayout>

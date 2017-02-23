@@ -7,6 +7,8 @@ import android.view.View;
 
 public class TrainingSettingsActivity extends AppCompatActivity {
 
+    int roundMax=10;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,11 +17,14 @@ public class TrainingSettingsActivity extends AppCompatActivity {
     }
     public void onGenderClick(View v){
         Intent intent=new Intent(this,GenderTrainingActivity.class);
+        intent.putExtra("round",1);
+        intent.putExtra("roundMax",roundMax);
         startActivity(intent);
         finish();
     }
     public void onPlClick(View v){
         Intent intent=new Intent(this,PlTrainingActivity.class);
+        intent.putExtra("round",1);
         startActivity(intent);
         finish();
     }

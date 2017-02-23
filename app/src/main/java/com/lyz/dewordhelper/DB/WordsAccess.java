@@ -20,7 +20,7 @@ public class WordsAccess {
     }
 
     public int insert(Word word){
-        SQLiteDatabase db=wordsHelper.getWritableDatabase();
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         ContentValues values=new ContentValues();
         values.put(Word.Key_gender,word.gender);
         values.put(Word.Key_word,word.word);
@@ -32,13 +32,13 @@ public class WordsAccess {
     }
 
     public void delete(int word_ID){
-        SQLiteDatabase db=wordsHelper.getWritableDatabase();
-        db.delete(Word.TABLE,Word.Key_Id +"=?", new String[]{String.valueOf(word_ID)});
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+        db.delete(Word.TABLE,Word.Key_Id +" = ?", new String[]{String.valueOf(word_ID)});
         db.close();
     }
 
     public void update(Word word){
-        SQLiteDatabase db=wordsHelper.getWritableDatabase();
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         ContentValues values=new ContentValues();
         values.put(Word.Key_gender,word.gender);
         values.put(Word.Key_word,word.word);
@@ -49,7 +49,7 @@ public class WordsAccess {
     }
 
     public ArrayList<HashMap<String,String>> getWordList(){
-        SQLiteDatabase db=wordsHelper.getWritableDatabase();
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String selectQuery="SELECT "+
                 Word.Key_Id +","+
                 Word.Key_gender+","+
@@ -73,14 +73,15 @@ public class WordsAccess {
     }
 
     public Word getWordById(int Id){
-        SQLiteDatabase db=wordsHelper.getWritableDatabase();
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String selectQuery="SELECT "+
                 Word.Key_Id +","+
                 Word.Key_gender+","+
                 Word.Key_word+","+
-                Word.Key_pl+"FROM"+Word.TABLE
-                +"WHERE "+
-                Word.Key_Id +"=?";
+                Word.Key_pl+","+
+                Word.Key_chn+" FROM "+Word.TABLE
+                +" WHERE "+
+                Word.Key_Id +" = ?";
         Word word=new Word();
         Cursor cursor=db.rawQuery(selectQuery,new String[]{String.valueOf(Id)});
 
@@ -90,6 +91,7 @@ public class WordsAccess {
                 word.gender=cursor.getString(cursor.getColumnIndex(Word.Key_gender));
                 word.word=cursor.getString(cursor.getColumnIndex(Word.Key_word));
                 word.pl=cursor.getString(cursor.getColumnIndex(Word.Key_pl));
+                word.chn=cursor.getString(cursor.getColumnIndex(Word.Key_chn));
             }while(cursor.moveToNext());
         }
 
