@@ -51,10 +51,12 @@ public class WordsAccess {
     public ArrayList<HashMap<String,String>> getWordList(){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String selectQuery="SELECT "+
-                Word.Key_Id +","+
+                Word.Key_Id +","+//LZ
                 Word.Key_gender+","+
                 Word.Key_word+","+
-                Word.Key_pl+"FROM"+Word.TABLE;
+                Word.Key_pl+","+
+                Word.Key_book +","+
+                Word.Key_einheit+" FROM "+Word.TABLE;
         ArrayList<HashMap<String,String>> wordList=new ArrayList<>();
         Cursor cursor=db.rawQuery(selectQuery,null);
 
@@ -79,7 +81,9 @@ public class WordsAccess {
                 Word.Key_gender+","+
                 Word.Key_word+","+
                 Word.Key_pl+","+
-                Word.Key_chn+" FROM "+Word.TABLE
+                Word.Key_chn+","+
+                Word.Key_book +","+//LZ
+                Word.Key_einheit+ " FROM "+Word.TABLE
                 +" WHERE "+
                 Word.Key_Id +" = ?";
         Word word=new Word();
@@ -92,6 +96,8 @@ public class WordsAccess {
                 word.word=cursor.getString(cursor.getColumnIndex(Word.Key_word));
                 word.pl=cursor.getString(cursor.getColumnIndex(Word.Key_pl));
                 word.chn=cursor.getString(cursor.getColumnIndex(Word.Key_chn));
+                word.book=cursor.getInt(cursor.getColumnIndex(Word.Key_book));
+                word.einheit=cursor.getInt(cursor.getColumnIndex(Word.Key_einheit));//LZ
             }while(cursor.moveToNext());
         }
 

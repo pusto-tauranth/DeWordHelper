@@ -1,6 +1,5 @@
 <resources>
-    <color name="trueGreen">#4CAF50</color>
-    <color name="falseRed">#EE3B3B</color>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
