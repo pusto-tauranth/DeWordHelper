@@ -1,5 +1,6 @@
 <resources>
-
+    <color name="trueGreen">#4CAF50</color>
+    <color name="falseRed">#EE3B3B</color>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -7,5 +8,46 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="trueAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">#FFC107</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <!-- Used for the background -->
+        <item name="android:background">#4CAF50</item>
+
+        <item name="android:textSize">20sp</item>
+
+    </style>
+    <style name="falseAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <item name="colorAccent">#EEEE00</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <!-- Used for the background -->
+        //<item name="android:background">#EE3B3B</item>
+        <!-- Used for the title and button -->
+        <item name="android:textSize">20sp</item>
+
+    </style>
+
+    <style name="trueDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@color/trueGreen</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+
+    </style>
+
+    <style name="falseDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@color/falseRed</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+
+    </style>
+
 
 </resources>
