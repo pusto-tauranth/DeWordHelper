@@ -39,7 +39,7 @@ public class WordsHelper{
 
     private SQLiteDatabase openDatabase(String dbFile){
         try{
-            if(new File(dbFile).exists()){
+            if(!new File(dbFile).exists()){
                 InputStream is=this.context.getResources().openRawResource(R.raw.deutsch);
                 FileOutputStream fos=new FileOutputStream(dbFile);
                 byte[] buffer=new byte[Buffer_size];
@@ -50,7 +50,7 @@ public class WordsHelper{
                 fos.close();
                 is.close();
             }
-            SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(dbFile,null);
+            db=SQLiteDatabase.openOrCreateDatabase(dbFile,null);
             return db;
         }catch (FileNotFoundException e){
             Log.e("Database", "File not found");
@@ -66,32 +66,3 @@ public class WordsHelper{
         this.db.close();
     }
 }
-
-/*public class WordsHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION=1;
-    private static final String DATABASE_NAME="deutsch.sqlite";
-
-    public WordsHelper(Context context){
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        //创建数据表
-        String CREATE_TABLE_STUDENT="CREATE TABLE "+ Word.TABLE+"("
-                + Word.Key_Id +" TEXT PRIMARY KEY ,"
-                + Word.Key_gender+" TEXT, "
-                + Word.Key_word+" INTEGER, "
-                + Word.Key_pl+" TEXT)";
-        db.execSQL(CREATE_TABLE_STUDENT);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //如果旧表存在，删除，所以数据将会消失
-        db.execSQL("DROP TABLE IF EXISTS "+ Word.TABLE);
-
-        //再次创建表
-        onCreate(db);
-    }
-}*/

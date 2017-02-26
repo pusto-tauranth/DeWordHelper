@@ -13,59 +13,68 @@ import java.util.HashMap;
  */
 
 public class WordsAccess {
-    private WordsHelper wordsHelper;
 
-    public WordsAccess(Context context){
-        wordsHelper=new WordsHelper(context);
-    }
+    //private WordsHelper wordsHelper;
 
-    public int insert(Word word){
+    //public WordsAccess(Context context){
+        //wordsHelper=new WordsHelper(context);
+    //}
+
+    public static int insert(Word word,int book,int einheit){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         ContentValues values=new ContentValues();
         values.put(Word.Key_gender,word.gender);
         values.put(Word.Key_word,word.word);
         values.put(Word.Key_pl,word.pl);
+        values.put(Word.Key_chn,word.chn);
+        values.put(Word.Key_book,book);
+        values.put(Word.Key_einheit,einheit);
         long word_ID=db.insert(Word.TABLE,null,values);
 
         db.close();
         return (int)word_ID;
     }
 
-    public void delete(int word_ID){
+    public static void delete(int word_ID){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         db.delete(Word.TABLE,Word.Key_Id +" = ?", new String[]{String.valueOf(word_ID)});
         db.close();
     }
 
-    public void update(Word word){
+    public static void update(Word word){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         ContentValues values=new ContentValues();
         values.put(Word.Key_gender,word.gender);
         values.put(Word.Key_word,word.word);
         values.put(Word.Key_pl,word.pl);
+        values.put(Word.Key_chn,word.chn);
 
         db.update(Word.TABLE,values,Word.Key_Id +"=?",new String[]{String.valueOf(word.word_Id)});
         db.close();
     }
 
-    public ArrayList<HashMap<String,String>> getWordList(){
+    public static ArrayList<HashMap<String,String>> getWordList(String WHERE){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String selectQuery="SELECT "+
-                Word.Key_Id +","+//LZ
+                Word.Key_Id +","+
                 Word.Key_gender+","+
                 Word.Key_word+","+
                 Word.Key_pl+","+
+                Word.Key_chn+","+
                 Word.Key_book +","+
-                Word.Key_einheit+" FROM "+Word.TABLE;
+                Word.Key_einheit+" FROM "+Word.TABLE+" "+WHERE;
         ArrayList<HashMap<String,String>> wordList=new ArrayList<>();
         Cursor cursor=db.rawQuery(selectQuery,null);
 
         if(cursor.moveToFirst()){
             do{
-                HashMap<String,String> word=new HashMap<>();
-                word.put("id",cursor.getString(cursor.getColumnIndex(Word.Key_Id)));
-                word.put("word",cursor.getString(cursor.getColumnIndex(Word.Key_word)));
-                wordList.add(word);
+                HashMap<String,String> map=new HashMap<>();
+                map.put("All",cursor.getString(cursor.getColumnIndex(Word.Key_gender))+"  "+
+                        cursor.getString(cursor.getColumnIndex(Word.Key_word))+"  "+
+                        cursor.getString(cursor.getColumnIndex(Word.Key_pl))+"  "+
+                        cursor.getString(cursor.getColumnIndex(Word.Key_chn)));
+                map.put("wordId",cursor.getString(cursor.getColumnIndex(Word.Key_Id)));
+                wordList.add(map);
             }while(cursor.moveToNext());
         }
 
@@ -74,7 +83,7 @@ public class WordsAccess {
         return wordList;
     }
 
-    public Word getWordById(int Id){
+    public static Word getWordById(int Id){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String selectQuery="SELECT "+
                 Word.Key_Id +","+

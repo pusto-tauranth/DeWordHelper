@@ -41,8 +41,6 @@ public class TrainingDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_training);
 
-        //setCanceledOnTouchOutside(false);
-
         initView();
         initData();
         initEvent();

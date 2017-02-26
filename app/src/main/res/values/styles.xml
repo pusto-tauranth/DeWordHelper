@@ -7,27 +7,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="trueAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <!-- Used for the buttons -->
-        <item name="colorAccent">#FFC107</item>
-        <!-- Used for the title and text -->
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <!-- Used for the background -->
-        <item name="android:background">#4CAF50</item>
-
-        <item name="android:textSize">20sp</item>
-
-    </style>
-    <style name="falseAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <!-- Used for the buttons -->
-        <item name="colorAccent">#EEEE00</item>
-        <!-- Used for the title and text -->
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <!-- Used for the background -->
-        //<item name="android:background">#EE3B3B</item>
-        <!-- Used for the title and button -->
-        <item name="android:textSize">20sp</item>
-
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="actionMenuTextColor">#ffffff</item> <!--  敲定颜色-->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textSize">18sp</item> <!--  搞掂字体大小-->
     </style>
 
     <style name="trueDialog" parent="Theme.AppCompat.Light.Dialog">
@@ -47,6 +30,15 @@
         <item name="android:backgroundDimEnabled">true</item>
 
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

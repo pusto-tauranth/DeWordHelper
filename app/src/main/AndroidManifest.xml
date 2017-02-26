@@ -20,9 +20,9 @@
         <activity android:name=".TrainingSettingsActivity" />
         <activity android:name=".GenderTrainingActivity" />
         <activity android:name=".PlTrainingActivity" />
-        <activity android:name=".WordDetailActivity"/>
-        <activity android:name=".ReportActivity"/>
-        <activity android:name=".StockDetailActivity"/>
+        <activity android:name=".WordDetailActivity" />
+        <activity android:name=".ReportActivity" />
+        <activity android:name=".StockDetailActivity" />
     </application>
 
 </manifest>

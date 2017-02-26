@@ -1,43 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
+    xmlns:fab="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_height="wrap_content"
+    android:layout_height="wrap_content">
+<!--android:paddingLeft="10dip"
+android:paddingRight="10dip"-->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    android:paddingTop="7dip">
-    <!--android:paddingLeft="10dip"
-    android:paddingRight="10dip"-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-
-    <ListView
+    </android.support.design.widget.AppBarLayout>
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:id="@+id/WordListView">
-    </ListView>
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:id="@+id/All"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textSize="25dip"
-        android:textColor="#000000"
-        android:background="@drawable/setbar_bg"
-        >
-        <!--android:background="#40808080">-->
-    </TextView>
-    <TextView
-         android:layout_height="wrap_content"
-         android:layout_width="fill_parent"
-         android:textSize="7dip"
-         android:textColor="#000000"
-         android:id="@+id/Word"
-         android:layout_marginLeft="10dp"
-         android:background="@drawable/setbar_bg"
-         android:layout_marginRight="10dp">
-         <!--android:background="#40808080"-->
-
-   </TextView>
+        android:layout_height="wrap_content">
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fab"
+            android:layout_gravity="end|bottom"
+            android:clickable="true"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            app:backgroundTint="@color/colorAccent"
+            app:rippleColor="#33728dff" />
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@id/android:list">
+        </ListView>
+    </FrameLayout>
 
 </LinearLayout>
