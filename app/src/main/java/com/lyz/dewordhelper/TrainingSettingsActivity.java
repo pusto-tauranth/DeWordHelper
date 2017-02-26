@@ -80,6 +80,8 @@ public class TrainingSettingsActivity extends AppCompatActivity implements Touch
         Intent intent=new Intent(this,GenderTrainingActivity.class);
         intent.putExtra("round",1);
         intent.putExtra("roundMax",roundMax);
+        intent.putExtra("Book",getIntent().getStringExtra("Book"));
+        intent.putExtra("Einheit",getIntent().getStringExtra("Einheit"));
         startActivity(intent);
 
     }
@@ -87,7 +89,6 @@ public class TrainingSettingsActivity extends AppCompatActivity implements Touch
         Intent intent=new Intent(this,PlTrainingActivity.class);
         intent.putExtra("round",1);
         startActivity(intent);
-        finish();
     }
     public void onChnBtn(View v){
 

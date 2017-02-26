@@ -23,6 +23,14 @@ public class GenderTrainingActivity extends AppCompatActivity {
     int no;
     int round;
     int roundMax;
+    String bookStr;
+    String einheitStr;
+
+    TextView wordTV;
+    TextView plTV;
+    TextView chnTV;
+
+    Random random;
     private TrainingDialog trainingDialog;
 
 
@@ -31,21 +39,41 @@ public class GenderTrainingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_gender_training);
+
         round=getIntent().getIntExtra("round",0);
         roundMax=getIntent().getIntExtra("roundMax",0);
-        TextView wordTV=(TextView)findViewById(R.id.word);
-        TextView plTV=(TextView)findViewById(R.id.pl);
-        TextView chnTV=(TextView)findViewById(R.id.chn);
-        Random random=new Random();
-        do{
-            no=random.nextInt(464);
-            ques = WordsAccess.getWordById(no);
-        }while(ques.gender==null);//YCX
-        ques = WordsAccess.getWordById(no);
-        wordTV.setText(ques.word);
-        plTV.setText(ques.pl);
-        chnTV.setText(ques.chn);
-        initToolbar();
+        bookStr=getIntent().getStringExtra("Book");
+        einheitStr=getIntent().getStringExtra("Einheit");
+        wordTV=(TextView)findViewById(R.id.word);
+        plTV=(TextView)findViewById(R.id.pl);
+        chnTV=(TextView)findViewById(R.id.chn);
+        random=new Random();
+
+        startNext();
+    }
+
+    public void startNext(){
+        if(round<=roundMax){
+            round++;
+            if(bookStr.equals("All")){
+                do{
+                    no=random.nextInt(WordsAccess.getWordTotal());
+                    ques = WordsAccess.getWordById(no);
+                }while(ques.gender==null);//YCX
+                ques = WordsAccess.getWordById(no);
+            }else{
+                no=random.nextInt(WordsAccess.getListWordTotal(bookStr,einheitStr));
+                ques=WordsAccess.getWordByListId(bookStr,einheitStr,no);
+            }
+            wordTV.setText(ques.word);
+            plTV.setText(ques.pl);
+            chnTV.setText(ques.chn);
+            initToolbar();
+        }else{
+            Intent intent=new Intent(this,ReportActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     public void initToolbar(){
@@ -72,37 +100,24 @@ public class GenderTrainingActivity extends AppCompatActivity {
         }
     }
 
-    public void startNext(){
-        if(round<roundMax){
-            Intent intent=new Intent(this,GenderTrainingActivity.class);
-            intent.putExtra("round",round+1);
-            intent.putExtra("roundMax",roundMax);
-            startActivity(intent);
-            finish();
-        }else{
-            Intent intent=new Intent(this,ReportActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }
-
     public TrainingDialog newTrainingDialog(@StyleRes int themResId){
         trainingDialog=new TrainingDialog(this,themResId);
+        trainingDialog.setWord(ques.gender+" "+ques.word+" "+ques.pl);
+        trainingDialog.setChn(ques.chn);
         trainingDialog.setNextOnClickListener(new TrainingDialog.NextOnClickListener() {
             @Override
             public void onNextClick() {
                 startNext();
+                trainingDialog.dismiss();
             }
         });
         trainingDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
                 startNext();
+                trainingDialog.dismiss();
             }
         });
-        trainingDialog.setWord(ques.gender+" "+ques.word+" "+ques.pl);
-        trainingDialog.setChn(ques.chn);
-
         return trainingDialog;
     }
 }

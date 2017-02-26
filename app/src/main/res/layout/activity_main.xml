@@ -23,7 +23,7 @@
             android:id="@+id/button"
             android:textSize="50sp"
             android:textColor="#ffffff"
-            android:background="#009688"/>
+            android:background="#0097a7"/>
 
         <Button
             android:text="词库管理"
@@ -33,6 +33,6 @@
             android:id="@+id/button2"
             android:textSize="50sp"
             android:textColor="#ffffff"
-            android:background="#004d40"/>
+            android:background="#00695c"/>
     </LinearLayout>
 </RelativeLayout>

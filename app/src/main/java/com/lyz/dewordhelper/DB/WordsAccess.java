@@ -53,16 +53,48 @@ public class WordsAccess {
         db.close();
     }
 
+    public static  int getWordTotal(){
+        int total=0;
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+        String selectQuery="SELECT * FROM "+Word.TABLE;
+        Cursor cursor=db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do{
+                total++;
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return total;
+    }
+    public static  int getListWordTotal(String Book,String Einheit){
+        int total=0;
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+        String selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_book+" = "+Book+" AND "+Word.Key_einheit+" = "+Einheit;
+        Cursor cursor=db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do{
+                total++;
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return total;
+    }
+
     public static ArrayList<HashMap<String,String>> getWordList(String WHERE){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
-        String selectQuery="SELECT "+
+        /*String selectQuery="SELECT "+
                 Word.Key_Id +","+
                 Word.Key_gender+","+
                 Word.Key_word+","+
                 Word.Key_pl+","+
                 Word.Key_chn+","+
                 Word.Key_book +","+
-                Word.Key_einheit+" FROM "+Word.TABLE+" "+WHERE;
+                Word.Key_einheit+" FROM "+Word.TABLE+" "+WHERE;*/
+        String selectQuery="SELECT * "+ " FROM "+Word.TABLE+" "+WHERE;
         ArrayList<HashMap<String,String>> wordList=new ArrayList<>();
         Cursor cursor=db.rawQuery(selectQuery,null);
 
@@ -110,6 +142,25 @@ public class WordsAccess {
             }while(cursor.moveToNext());
         }
 
+        cursor.close();
+        db.close();
+        return word;
+    }
+
+    public static Word getWordByListId(String Book,String Einheit,int listId){
+        Word word;
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+        String selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_book+" = "+Book+" AND "+Word.Key_einheit+" = "+Einheit;
+        Cursor cursor=db.rawQuery(selectQuery,null);
+        int i=0;
+        int id=0;
+        if(cursor.moveToFirst()){
+            do{
+                i++;
+                id=cursor.getInt(cursor.getColumnIndex(Word.Key_Id));
+            }while(cursor.moveToNext()&&i<listId);
+        }
+        word=getWordById(id);
         cursor.close();
         db.close();
         return word;

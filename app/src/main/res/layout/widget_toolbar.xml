@@ -9,6 +9,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:navigationIcon="@drawable/ic_chevron_left_black_24dp"
     android:navigationIcon="@drawable/ic_chevron_left_black_24dp"
+    android:elevation="6dp"
     >
 
     <TextView

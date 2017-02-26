@@ -28,10 +28,6 @@ public class TrainingDialog extends Dialog {
 
     private NextOnClickListener nextOnClickListener;
 
-    public void setNextOnClickListener(NextOnClickListener nextOnClickListener){
-        this.nextOnClickListener=nextOnClickListener;
-    }
-
     public TrainingDialog(Context context,@StyleRes int themResId){
         super(context, themResId);
     }
@@ -44,6 +40,14 @@ public class TrainingDialog extends Dialog {
         initView();
         initData();
         initEvent();
+    }
+
+    public interface NextOnClickListener{
+        public void onNextClick();
+    }
+
+    public void setNextOnClickListener(NextOnClickListener nextOnClickListener){
+        this.nextOnClickListener=nextOnClickListener;
     }
 
     private void initEvent(){
@@ -77,9 +81,5 @@ public class TrainingDialog extends Dialog {
 
     public void setChn(String chn){
         chnStr=chn;
-    }
-
-    public interface NextOnClickListener{
-        public void onNextClick();
     }
 }

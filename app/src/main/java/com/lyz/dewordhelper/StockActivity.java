@@ -81,7 +81,7 @@ public class StockActivity extends ListActivity {
         Intent intent = new Intent(this,StockDetailActivity.class);
         intent.putExtra("Einheit",einheitStr);
         intent.putExtra("Book",bookStr);
-        StockActivity.this.startActivity(intent);
+        startActivity(intent);
     }
 }
 
