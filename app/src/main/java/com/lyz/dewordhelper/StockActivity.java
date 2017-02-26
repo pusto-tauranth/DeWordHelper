@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.lyz.dewordhelper.Dialog.InsertDialog;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,8 +24,7 @@ public class StockActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitle("词库管理");
+        initToolbar();
         ArrayList<HashMap<String, String>> myList = new ArrayList<HashMap<String, String>>();
         for (int i=1;i<=10;i++) {
             HashMap<String, String> map = new HashMap<String, String>();
@@ -53,6 +54,19 @@ public class StockActivity extends ListActivity {
                 insertDialog.show();
             }
         });
+    }
+
+    public void initToolbar(){
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        //toolbar.setTitle("词库管理");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StockActivity.this.finish();
+            }
+        });
+        TextView title=(TextView)findViewById(R.id.tv_title);
+        title.setText("词库管理");
     }
 
 

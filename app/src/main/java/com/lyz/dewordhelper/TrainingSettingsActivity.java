@@ -3,8 +3,10 @@ package com.lyz.dewordhelper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -25,8 +27,9 @@ public class TrainingSettingsActivity extends AppCompatActivity implements Touch
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_training_settings);
-        this.setTitle("训练设置");
+        initToolbar();
         init();
        Switch sc=(Switch)findViewById(R.id.chn1);
         sc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
@@ -39,6 +42,17 @@ public class TrainingSettingsActivity extends AppCompatActivity implements Touch
                 }
             }
         });
+    }
+    public void initToolbar(){
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        TextView title=(TextView)findViewById(R.id.tv_title);
+        title.setText("训练设置");
     }
     private void init() {
         Progress = (TextView) findViewById(R.id.progress);

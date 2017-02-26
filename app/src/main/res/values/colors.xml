@@ -4,7 +4,7 @@
     <color name="colorPrimary">#00796b</color>
     <color name="colorPrimaryDark">#004d40</color>
     <!--<color name="colorAccent">#FF4081</color>-->
-    <color name="colorAccent">#dce775</color>
+    <color name="colorAccent">#EEFF41</color>
     <color name="trueGreen">#4CAF50</color>
     <color name="falseRed">#EE3B3B</color>
     <color name="fabPressed">#90caf9</color>

@@ -1,6 +1,8 @@
 package com.lyz.dewordhelper;
 
+import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,10 +27,9 @@ public class StockDetailActivity extends ListActivity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_stock_detail);
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
         einheit = Integer.parseInt(getIntent().getStringExtra("Einheit"));
         book = Integer.parseInt(getIntent().getStringExtra("Book"));
-        toolbar.setTitle("Einheit"+einheit+", Buch"+book);
+        initToolbar();
         ArrayList<HashMap<String, String>> myList;
         String WHERE=" WHERE "+Word.Key_einheit+" = "+einheit+" AND "+Word.Key_book+" = "+book;
         myList=WordsAccess.getWordList(WHERE);
@@ -38,7 +39,6 @@ public class StockDetailActivity extends ListActivity {
                 new String[]{"All", "wordId"},
                 new int[]{R.id.All, R.id.wordId});
         setListAdapter(mSchedule);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,5 +57,16 @@ public class StockDetailActivity extends ListActivity {
        Intent intent = new Intent(this,WordDetailActivity.class);
        intent.putExtra("WordIdStr",wordIdStr);
        this.startActivity(intent);
+    }
+    public void initToolbar() {
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        TextView title = (TextView) findViewById(R.id.tv_title);
+        title.setText("Einheit" + einheit + ", Buch" + book);
     }
 }

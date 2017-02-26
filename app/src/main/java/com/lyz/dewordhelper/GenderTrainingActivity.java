@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,10 +29,10 @@ public class GenderTrainingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_gender_training);
         round=getIntent().getIntExtra("round",0);
         roundMax=getIntent().getIntExtra("roundMax",0);
-        this.setTitle("词性训练");
         TextView wordTV=(TextView)findViewById(R.id.word);
         TextView plTV=(TextView)findViewById(R.id.pl);
         TextView chnTV=(TextView)findViewById(R.id.chn);
@@ -43,6 +45,19 @@ public class GenderTrainingActivity extends AppCompatActivity {
         wordTV.setText(ques.word);
         plTV.setText(ques.pl);
         chnTV.setText(ques.chn);
+        initToolbar();
+    }
+
+    public void initToolbar(){
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        TextView title=(TextView)findViewById(R.id.tv_title);
+        title.setText(ques.word);
     }
 
     public void onGenderAClick(View v){
