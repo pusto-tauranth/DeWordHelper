@@ -8,33 +8,35 @@
 
     <include layout="@layout/widget_toolbar"
         android:id="@+id/toolbar"/>
-    <TextView
-        android:text="Chinese"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/word"
-        android:layout_alignParentStart="true"
-        android:id="@+id/fy"
-        android:textSize="30sp" />
+        android:layout_margin="20dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:text="gender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pl"
-        android:textSize="40sp"
-        android:layout_above="@+id/fy"
-        android:layout_alignParentStart="true" />
 
-    <TextView
-        android:text="word"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="91dp"
-        android:id="@+id/word"
-        android:textSize="50sp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/pl" />
+        <TextView
+            android:text="gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gender"
+            android:textSize="40sp"
+            android:layout_marginTop="70dp"/>
+
+        <TextView
+            android:text="word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/word"
+            android:textColor="#212121"
+            android:textSize="50sp" />
+        <TextView
+            android:text="Chinese"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chn"
+            android:textSize="30sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,133 +44,137 @@
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout4">
+        android:id="@+id/linearLayout4"
+        >
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="-"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
-            android:onClick="onPlAClick"
-            android:id="@+id/pl_no"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="..-"
-            android:layout_weight="1"
-            android:id="@+id/pl_um"
-            android:onClick="onPlAClick"
-            android:background="@android:color/darker_gray"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="-e"
-            android:layout_weight="1"
-            android:onClick="onPlAClick"
-            android:background="@android:color/holo_red_dark"
-            android:id="@+id/pl_e"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="-..e"
-            android:layout_weight="1"
-            android:onClick="onPlAClick"
-            android:background="@android:color/darker_gray"
-            android:id="@+id/pl_um_e"/>
-    </LinearLayout>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:id="@+id/linearLayout3">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="-er"
-                android:layout_weight="1"
-                android:background="@android:color/holo_blue_dark"
-                android:onClick="onPlAClick"
-                android:id="@+id/pl_er"/>
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
+            >
+
+
+
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="-..er"
+                android:text="-"
+                android:textSize="30sp"
                 android:layout_weight="1"
-                android:id="@+id/pl_um_er"
+                android:id="@+id/pl_um"
                 android:onClick="onPlAClick"
-                android:background="@android:color/darker_gray"/>
+                android:textColor="#ffffff"
+                android:background="#212121"
+                android:textAllCaps="false" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="-n"
+                android:text=".."
+                android:textSize="30sp"
                 android:layout_weight="1"
                 android:onClick="onPlAClick"
-                android:background="@android:color/holo_red_dark"
-                android:id="@+id/pl_n"/>
+                android:textColor="#ffffff"
+                android:background="#212121"
+                android:id="@+id/pl_e"
+                android:textAllCaps="false" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="-en"
+                android:text="@string/en_etc"
+                android:textSize="30sp"
                 android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:background="#212121"
                 android:onClick="onPlAClick"
-                android:background="@android:color/darker_gray"
-                android:id="@+id/pl_en"/>
+                android:id="@+id/pl_s"
+                android:textAllCaps="false" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout3">
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="-e"
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:id="@+id/pl_um_er"
+                android:onClick="onPlAClick"
+                android:background="#f50057"
+                android:textColor="#ffffff"
+                android:textAllCaps="false" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="..e"
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:onClick="onPlAClick"
+                android:background="#f50057"
+                android:textColor="#ffffff"
+                android:id="@+id/pl_n"
+                android:textAllCaps="false" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="o.Pl."
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:background="#f50057"
+                android:textColor="#ffffff"
+                android:onClick="onPlAClick"
+                android:id="@+id/pl_er"
+                android:textAllCaps="false" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
             android:orientation="horizontal"
             android:id="@+id/linearLayout2"
             android:layout_weight="1">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="-s"
-                android:layout_weight="1"
-                android:background="@android:color/holo_blue_dark"
-                android:onClick="onPlAClick"
-                android:id="@+id/pl_s" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="-s"
+                android:text="-er"
+                android:textSize="30sp"
                 android:layout_weight="1"
                 android:id="@+id/pl_s2"
                 android:onClick="onPlAClick"
-                android:background="@android:color/darker_gray"/>
+                android:background="#ffc107"
+                android:textAllCaps="false" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="-s"
+                android:text="..er"
+                android:textSize="30sp"
                 android:layout_weight="1"
                 android:onClick="onPlAClick"
-                android:background="@android:color/holo_red_dark"
-                android:id="@+id/pl_s3"/>
-
+                android:background="#ffc107"
+                android:id="@+id/pl_s3"
+                android:textAllCaps="false" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="-s"
+                android:textSize="30sp"
                 android:layout_weight="1"
+                android:background="#ffc107"
                 android:onClick="onPlAClick"
-                android:background="@android:color/darker_gray"
-                android:id="@+id/pl_s4"/>
+                android:id="@+id/pl_other"
+                android:textAllCaps="false" />
+
         </LinearLayout>
     </LinearLayout>
 

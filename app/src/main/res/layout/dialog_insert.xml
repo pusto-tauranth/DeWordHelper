@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/dialog_insert_gender_tv"
             android:text="词性："
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:textSize="20sp"/>
         <EditText
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/dialog_insert_word_tv"
             android:text="词形："
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:textSize="20sp"/>
         <EditText
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/dialog_insert_pl_tv"
             android:text="复数："
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:textSize="20sp"/>
         <EditText
             android:layout_width="match_parent"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/dialog_insert_chn_tv"
             android:text="释义："
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:textSize="20sp"/>
         <EditText
             android:layout_width="match_parent"
@@ -89,7 +89,7 @@
             android:layout_weight="1"
             android:id="@+id/dialog_insert_no"
             android:background="@null"
-            android:textColor="#7D7D7D"
+            android:textColor="#e0e0e0"
             android:textSize="16sp"
             android:text="取消"/>
         <View

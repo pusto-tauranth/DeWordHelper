@@ -27,26 +27,39 @@
         android:layout_marginTop="90dp"
         android:id="@+id/progress" />
 
-    <Button
-    android:text="词性训练"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-        android:id="@+id/button5"
-    android:onClick="onGenderClick"
-        android:layout_marginBottom="19dp"
-        android:layout_alignParentBottom="true"
-        android:textSize="35sp" />
-
-    <Button
-        android:text="复数训练"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button6"
-        android:onClick="onPlClick"
-        android:textSize="35sp"
-        android:layout_alignBaseline="@+id/button5"
-        android:layout_alignBottom="@+id/button5"
-        android:layout_alignParentEnd="true" />
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:text="词性训练"
+            android:textColor="#ffffff"
+            android:background="#0097a7"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:id="@+id/button5"
+            android:onClick="onGenderClick"
+            android:textSize="40sp" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#E4E4E4"
+            />
+
+        <Button
+            android:text="复数训练"
+            android:textColor="#ffffff"
+            android:background="#0097a7"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:id="@+id/button6"
+            android:onClick="onPlClick"
+            android:textSize="40sp"
+            />
+    </LinearLayout>
 
     <com.lyz.dewordhelper.progress.TouchProgressView
         android:id="@+id/proview_style"
@@ -98,8 +111,7 @@
         android:layout_toRightOf="@+id/setting"
         android:layout_toEndOf="@+id/setting"
         android:id="@+id/myprogress"
-        android:textSize="30sp"
-        android:text="任意值" />
+        android:textSize="30sp" />
 
     <Switch
         android:text="是否显示汉语"

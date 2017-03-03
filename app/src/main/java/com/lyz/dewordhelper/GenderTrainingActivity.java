@@ -25,6 +25,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
     int roundMax;
     String bookStr;
     String einheitStr;
+    String ShowChn;
 
     TextView wordTV;
     TextView plTV;
@@ -50,6 +51,12 @@ public class GenderTrainingActivity extends AppCompatActivity {
         random=new Random();
 
         startNext();
+
+        ShowChn=getIntent().getStringExtra("OpenChn");
+        if(ShowChn.equals("close"))//LZ
+            chnTV.setVisibility(View.INVISIBLE);//LZ
+        //LZ
+            //LZ
     }
 
     public void startNext(){

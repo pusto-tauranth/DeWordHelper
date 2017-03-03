@@ -22,7 +22,9 @@ public class TrainingSettingsActivity extends AppCompatActivity implements Touch
     TextView Progress;
     TouchProgressView proViewStyle;
     EditText MyProgress;
+    EditText SetProgress;
     //int progress;
+    String OpenChn="close";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +33,21 @@ public class TrainingSettingsActivity extends AppCompatActivity implements Touch
         setContentView(R.layout.activity_training_settings);
         initToolbar();
         init();
-       Switch sc=(Switch)findViewById(R.id.chn1);
+        SetProgress = (EditText) findViewById(R.id.myprogress);
+        SetProgress.setText("");
+        Switch sc=(Switch)findViewById(R.id.chn1);//-----
         sc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton compoundButton,boolean b){
                 if(b){
                     Toast.makeText(getApplicationContext(),"显示汉语",Toast.LENGTH_SHORT).show();
+                    OpenChn="open";
                 }else{
                     Toast.makeText(getApplicationContext(),"不显示汉语",Toast.LENGTH_SHORT).show();
+                    OpenChn="close";
                 }
             }
-        });
+        });//------LZ
     }
     public void initToolbar(){
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
@@ -72,9 +78,13 @@ public class TrainingSettingsActivity extends AppCompatActivity implements Touch
         Progress.setText(progress+"");
     }
     public void onGenderClick(View v){
-        MyProgress = (EditText) findViewById(R.id.myprogress);
+        if(SetProgress.getText().toString().equals(""))//LZ
+            roundMax=Integer.parseInt(Progress.getText().toString());//LZ
+        else//LZ
+            roundMax=Integer.parseInt(SetProgress.getText().toString());//LZ
+        //MyProgress = (EditText) findViewById(R.id.myprogress);
         //if(Integer.parseInt(MyProgress.getText().toString())==Integer.parseInt(Progress.getText().toString()))
-        roundMax=Integer.parseInt(Progress.getText().toString());
+        //roundMax=Integer.parseInt(Progress.getText().toString());
         //else
         //roundMax=Integer.parseInt(MyProgress.getText().toString());
         Intent intent=new Intent(this,GenderTrainingActivity.class);
@@ -82,12 +92,26 @@ public class TrainingSettingsActivity extends AppCompatActivity implements Touch
         intent.putExtra("roundMax",roundMax);
         intent.putExtra("Book",getIntent().getStringExtra("Book"));
         intent.putExtra("Einheit",getIntent().getStringExtra("Einheit"));
+        intent.putExtra("OpenChn",OpenChn);
         startActivity(intent);
 
     }
     public void onPlClick(View v){
+        if(SetProgress.getText().toString().equals(""))//LZ
+            roundMax=Integer.parseInt(Progress.getText().toString());//LZ
+        else//LZ
+            roundMax=Integer.parseInt(SetProgress.getText().toString());//LZ
+        //MyProgress = (EditText) findViewById(R.id.myprogress);
+        //if(Integer.parseInt(MyProgress.getText().toString())==Integer.parseInt(Progress.getText().toString()))
+        //roundMax=Integer.parseInt(Progress.getText().toString());
+        //else
+        //roundMax=Integer.parseInt(MyProgress.getText().toString());
         Intent intent=new Intent(this,PlTrainingActivity.class);
         intent.putExtra("round",1);
+        intent.putExtra("roundMax",roundMax);
+        intent.putExtra("Book",getIntent().getStringExtra("Book"));
+        intent.putExtra("Einheit",getIntent().getStringExtra("Einheit"));
+        intent.putExtra("OpenChn",OpenChn);
         startActivity(intent);
     }
     public void onChnBtn(View v){
