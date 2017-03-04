@@ -113,7 +113,7 @@ public class PlTrainingActivity extends AppCompatActivity {
             }
         });
         TextView title=(TextView)findViewById(R.id.tv_title);
-        title.setText(ques.word);
+        title.setText(ques.gender+" "+ques.word);
     }
 
     public void onPlAClick(View v) {

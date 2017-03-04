@@ -76,7 +76,7 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="3px"
+        android:layout_height="3dp"
         android:layout_marginTop="15dp"
         android:background="#E4E4E4"/>
     <LinearLayout
