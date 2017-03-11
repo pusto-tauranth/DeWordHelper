@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.lyz.dewordhelper.DB.Word;
@@ -30,11 +31,14 @@ public class PlTrainingActivity extends AppCompatActivity {
     TextView genderTV;
     TextView wordTV;
     TextView chnTV;
+    TextView Round;//
+    TextView RoundMax;//
 
     Button otherPlBtn;
 
     Random random;
     private TrainingDialog trainingDialog;
+    private ProgressBar bar;//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,10 @@ public class PlTrainingActivity extends AppCompatActivity {
         wordTV=(TextView)findViewById(R.id.word);
         chnTV=(TextView)findViewById(R.id.chn);
         otherPlBtn=(Button)findViewById(R.id.pl_other);
+        Round=(TextView)findViewById(R.id.round);
+        RoundMax=(TextView)findViewById(R.id.roundmax);
         random=new Random();
+        RoundMax.setText("/"+roundMax);
 
         ShowChn=getIntent().getStringExtra("OpenChn");
         if(ShowChn.equals("close"))//LZ
@@ -61,6 +68,7 @@ public class PlTrainingActivity extends AppCompatActivity {
 
     public void startNext(){
         if(round<=roundMax){
+            Round.setText("progress："+round);
             round++;
             if(bookStr.equals("All")){
                 do{
@@ -113,13 +121,16 @@ public class PlTrainingActivity extends AppCompatActivity {
             }
         });
         TextView title=(TextView)findViewById(R.id.tv_title);
-        title.setText(ques.gender+" "+ques.word);
+        title.setText(ques.word);
     }
 
-    public void onPlAClick(View v) {
-        String pl=((Button)v).getText().toString();
+    public void onPlAClick(View arg0) {
+        // TODO Auto-generated method stub
+        String pl=((Button)arg0).getText().toString();
         System.out.println(pl);
         System.out.println(ques.pl);
+        bar=(ProgressBar)findViewById(R.id.progressBar2);
+        bar.setProgress(100*(round-1)/roundMax);//
         if(ques.pl.equals(pl)||
                 (pl.equals(this.getResources().getString(R.string.en_etc))&&
                         (ques.pl.equals("-n")||ques.pl.equals("-en")||ques.pl.equals("-nen")))){

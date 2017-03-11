@@ -2,13 +2,14 @@ package com.lyz.dewordhelper;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.lyz.dewordhelper.DB.Word;
@@ -16,7 +17,7 @@ import com.lyz.dewordhelper.DB.WordsAccess;
 import com.lyz.dewordhelper.Dialog.TrainingDialog;
 
 import java.util.Random;
-
+//当出词量=0时出现问题
 public class GenderTrainingActivity extends AppCompatActivity {
 
     Word ques;
@@ -30,9 +31,14 @@ public class GenderTrainingActivity extends AppCompatActivity {
     TextView wordTV;
     TextView plTV;
     TextView chnTV;
+    TextView Round;//
+    TextView RoundMax;//
 
     Random random;
     private TrainingDialog trainingDialog;
+    private ProgressBar bar;//
+
+
 
 
     @Override
@@ -48,7 +54,10 @@ public class GenderTrainingActivity extends AppCompatActivity {
         wordTV=(TextView)findViewById(R.id.word);
         plTV=(TextView)findViewById(R.id.pl);
         chnTV=(TextView)findViewById(R.id.chn);
+        Round=(TextView)findViewById(R.id.round);//
+        RoundMax=(TextView)findViewById(R.id.roundmax);//
         random=new Random();
+        RoundMax.setText("/"+roundMax);//
 
         startNext();
 
@@ -57,10 +66,13 @@ public class GenderTrainingActivity extends AppCompatActivity {
             chnTV.setVisibility(View.INVISIBLE);//LZ
         //LZ
             //LZ
+
+
     }
 
     public void startNext(){
         if(round<=roundMax){
+            Round.setText("progress："+round);//
             round++;
             if(bookStr.equals("All")){
                 do{
@@ -95,8 +107,11 @@ public class GenderTrainingActivity extends AppCompatActivity {
         title.setText(ques.word);
     }
 
-    public void onGenderAClick(View v){
-        if(ques.gender.equals(((Button)v).getText())){
+    public void onGenderAClick(View arg0){
+        // TODO Auto-generated method stub
+        bar=(ProgressBar)findViewById(R.id.progressBar);
+        bar.setProgress(100*(round-1)/roundMax);//
+        if(ques.gender.equals(((Button)arg0).getText())){
             trainingDialog=newTrainingDialog(R.style.trueDialog);
             trainingDialog.setTitle("Richtig");
             trainingDialog.show();

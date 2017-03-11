@@ -178,4 +178,31 @@
         </LinearLayout>
     </LinearLayout>
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/progressBar2"
+        android:max="100"
+        android:visibility="visible"
+        android:layout_above="@+id/linearLayout4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/roundmax"
+        android:textSize="20dp"
+        android:layout_above="@+id/progressBar2"
+        android:layout_toRightOf="@+id/round"
+        android:layout_toEndOf="@+id/round" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/round"
+        android:textSize="20dp"
+        android:layout_above="@+id/progressBar2"
+/>
+
 </RelativeLayout>
