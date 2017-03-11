@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_training_settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lyz.dewordhelper.TrainingSettingsActivity">
+    <include layout="@layout/widget_toolbar"
+        android:id="@+id/toolbar"/>
+
+    <TextView
+        android:text="出词量："
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:id="@+id/textView"
+        android:textSize="35sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView"
+        android:textSize="35sp"
+        android:layout_marginTop="90dp"
+        android:id="@+id/progress" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:text="词性训练"
+            android:textColor="#ffffff"
+            android:background="#0097a7"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:id="@+id/button5"
+            android:onClick="onGenderClick"
+            android:textSize="40sp" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#E4E4E4"
+            />
+
+        <Button
+            android:text="复数训练"
+            android:textColor="#ffffff"
+            android:background="#0097a7"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:id="@+id/button6"
+            android:onClick="onPlClick"
+            android:textSize="40sp"
+            />
+    </LinearLayout>
+
+    <com.lyz.dewordhelper.progress.TouchProgressView
+        android:id="@+id/proview_style"
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp" />
+
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/min"
+        android:layout_below="@+id/proview_style"
+        android:layout_alignLeft="@+id/proview_style"
+        android:layout_alignStart="@+id/proview_style"
+        android:textSize="20sp" />
+
+    <TextView
+        android:text="100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/max"
+        android:layout_marginRight="57dp"
+        android:layout_marginEnd="57dp"
+        android:textSize="20sp"
+        android:layout_below="@+id/proview_style"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="自我设定："
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/setting"
+        android:textSize="30sp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:textColor="#40808080"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/setting"
+        android:layout_toEndOf="@+id/setting"
+        android:id="@+id/myprogress"
+        android:textSize="30sp" />
+
+    <Switch
+        android:text="是否显示汉语"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chn1"
+        android:layout_marginTop="38dp"
+        android:textColor="#AB82FF"
+        android:textSize="30sp"
+        android:layout_below="@+id/myprogress"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

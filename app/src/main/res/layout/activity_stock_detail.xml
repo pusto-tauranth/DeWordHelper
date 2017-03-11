@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    xmlns:fab="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+<!--android:paddingLeft="10dip"
+android:paddingRight="10dip"-->
+    <include layout="@layout/widget_toolbar"
+        android:id="@+id/toolbar"/>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fab"
+            android:layout_gravity="end|bottom"
+            android:clickable="true"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            app:backgroundTint="@color/colorAccent"
+            app:rippleColor="#33728dff" />
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@id/android:list">
+        </ListView>
+    </FrameLayout>
+
+</LinearLayout>

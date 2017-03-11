@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_pl_training"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lyz.dewordhelper.PlTrainingActivity">
+
+    <include layout="@layout/widget_toolbar"
+        android:id="@+id/toolbar"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:text="gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gender"
+            android:textSize="40sp"
+            android:layout_marginTop="70dp"/>
+
+        <TextView
+            android:text="word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/word"
+            android:textColor="#212121"
+            android:textSize="50sp" />
+        <TextView
+            android:text="Chinese"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chn"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout4"
+        >
+
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
+            >
+
+
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="-"
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:id="@+id/pl_um"
+                android:onClick="onPlAClick"
+                android:textColor="#ffffff"
+                android:background="#212121"
+                android:textAllCaps="false" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text=".."
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:onClick="onPlAClick"
+                android:textColor="#ffffff"
+                android:background="#212121"
+                android:id="@+id/pl_e"
+                android:textAllCaps="false" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/en_etc"
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:background="#212121"
+                android:onClick="onPlAClick"
+                android:id="@+id/pl_s"
+                android:textAllCaps="false" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout3">
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="-e"
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:id="@+id/pl_um_er"
+                android:onClick="onPlAClick"
+                android:background="#f50057"
+                android:textColor="#ffffff"
+                android:textAllCaps="false" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="..e"
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:onClick="onPlAClick"
+                android:background="#f50057"
+                android:textColor="#ffffff"
+                android:id="@+id/pl_n"
+                android:textAllCaps="false" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="o.Pl."
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:background="#f50057"
+                android:textColor="#ffffff"
+                android:onClick="onPlAClick"
+                android:id="@+id/pl_er"
+                android:textAllCaps="false" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout2"
+            android:layout_weight="1">
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="-er"
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:id="@+id/pl_s2"
+                android:onClick="onPlAClick"
+                android:background="#ffc107"
+                android:textAllCaps="false" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="..er"
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:onClick="onPlAClick"
+                android:background="#ffc107"
+                android:id="@+id/pl_s3"
+                android:textAllCaps="false" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="-s"
+                android:textSize="30sp"
+                android:layout_weight="1"
+                android:background="#ffc107"
+                android:onClick="onPlAClick"
+                android:id="@+id/pl_other"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

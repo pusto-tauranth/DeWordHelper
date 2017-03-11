@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="@color/dialog_edit">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_delete_tv"
+        android:layout_margin="15dp"
+        android:text="确定删除吗？"
+        android:textColor="#ffffff"
+        android:textSize="25sp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:layout_marginTop="15dp"
+        android:background="#E4E4E4"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/dialog_delete_no"
+            android:background="@null"
+            android:textColor="#e0e0e0"
+            android:textSize="16sp"
+            android:text="取消"/>
+        <View
+            android:layout_width="3px"
+            android:layout_height="match_parent"
+            android:background="#E4E4E4"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/dialog_delete_yes"
+            android:background="@null"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            android:text="确认"/>
+    </LinearLayout>
+</LinearLayout>
