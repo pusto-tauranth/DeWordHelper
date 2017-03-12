@@ -72,7 +72,7 @@ public class PlTrainingActivity extends AppCompatActivity {
             round++;
             if(bookStr.equals("All")){
                 do{
-                    no=random.nextInt(WordsAccess.getWordTotal())+1;
+                    no=random.nextInt(WordsAccess.getWordTotal(Word.TABLE,""))+1;
                     ques = WordsAccess.getWordById(no);
                 }while(ques.gender==null);//YCX
                 ques = WordsAccess.getWordById(no);
@@ -123,7 +123,18 @@ public class PlTrainingActivity extends AppCompatActivity {
         TextView title=(TextView)findViewById(R.id.tv_title);
         title.setText(ques.word);
     }
+    public void recording(boolean Bool){
 
+        ques.date=WordsAccess.timestamp("yyyy-MM-dd",0);
+
+        if(Bool){
+            ques.status=1;
+        } else {
+            ques.errortimes+=1;
+            ques.status=-1;
+        }
+        WordsAccess.update(ques);
+    }
     public void onPlAClick(View arg0) {
         // TODO Auto-generated method stub
         String pl=((Button)arg0).getText().toString();
@@ -136,10 +147,12 @@ public class PlTrainingActivity extends AppCompatActivity {
                         (ques.pl.equals("-n")||ques.pl.equals("-en")||ques.pl.equals("-nen")))){
             trainingDialog=newTrainingDialog(R.style.trueDialog);
             trainingDialog.setTitle("Richtig");
+            recording(true);
             trainingDialog.show();
         }else{
             trainingDialog=newTrainingDialog(R.style.falseDialog);
             trainingDialog.setTitle("Falsch");
+            recording(false);
             trainingDialog.show();
         }
     }

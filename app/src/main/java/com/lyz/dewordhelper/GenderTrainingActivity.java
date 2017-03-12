@@ -76,7 +76,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
             round++;
             if(bookStr.equals("All")){
                 do{
-                    no=random.nextInt(WordsAccess.getWordTotal());
+                    no=random.nextInt(WordsAccess.getWordTotal(Word.TABLE,""));
                     ques = WordsAccess.getWordById(no);
                 }while(ques.gender==null);//YCX
                 ques = WordsAccess.getWordById(no);
@@ -106,7 +106,18 @@ public class GenderTrainingActivity extends AppCompatActivity {
         TextView title=(TextView)findViewById(R.id.tv_title);
         title.setText(ques.word);
     }
+    public void recording(boolean Bool){
 
+        ques.date=WordsAccess.timestamp("yyyy-MM-dd",0);
+
+        if(Bool){
+            ques.status=1;
+        } else {
+            ques.errortimes+=1;
+            ques.status=-1;
+        }
+        WordsAccess.update(ques);
+    }
     public void onGenderAClick(View arg0){
         // TODO Auto-generated method stub
         bar=(ProgressBar)findViewById(R.id.progressBar);
@@ -114,10 +125,12 @@ public class GenderTrainingActivity extends AppCompatActivity {
         if(ques.gender.equals(((Button)arg0).getText())){
             trainingDialog=newTrainingDialog(R.style.trueDialog);
             trainingDialog.setTitle("Richtig");
+            recording(true);
             trainingDialog.show();
         }else{
             trainingDialog=newTrainingDialog(R.style.falseDialog);
             trainingDialog.setTitle("Falsch");
+            recording(false);
             trainingDialog.show();
         }
     }

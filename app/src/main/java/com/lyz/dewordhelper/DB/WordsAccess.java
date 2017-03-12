@@ -5,7 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -19,6 +22,66 @@ public class WordsAccess {
     //public WordsAccess(Context context){
         //wordsHelper=new WordsHelper(context);
     //}
+    public static String timestamp(String format,int offset){/*recommend:"yyyy-MM-dd";offset=-1,昨天；0，当前；1：明天*/
+        Date date=new Date();
+        Calendar calendar = Calendar.getInstance(); //得到日历
+        calendar.setTime(date);//把当前时间赋给日历
+        calendar.add(Calendar.DAY_OF_MONTH, offset);
+        date = calendar.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(date);
+
+    }
+
+    public static int status_reset(){
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+
+        Word word= new Word();
+        word.status=0;
+        ContentValues values=new ContentValues();
+        values.put(Word.Key_status,word.status);
+        int changed_num=db.update(Word.TABLE,values,Word.Key_status + " !=0",null);
+        db.close();
+        return changed_num;
+    }
+    public static void trainingtimes(int new_num){
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+        String timestamp=WordsAccess.timestamp("yyyy-MM-dd",0);
+        String WHERE=" WHERE "+Word.Key_date_2+" = '"+timestamp+"'";
+
+        String update="update "+Word.TABLE_2+" set "+Word.Key_training_2+"="+new_num+"+"+Word.Key_training_2+WHERE;
+        String insert="INSERT INTO "+Word.TABLE_2+" VALUES ('"+timestamp+"','"+new_num+"')";
+
+        if(getWordTotal(Word.TABLE_2,WHERE)==0){
+            db.execSQL(insert);
+        }else {
+            db.execSQL(update);
+        }
+        db.close();
+    }
+    public static Word gettrainingtimes(String timestamp){
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+        String selectQuery="SELECT "+
+                Word.Key_date_2 +","+
+                Word.Key_training_2 +
+                " FROM "+Word.TABLE_2
+                +" WHERE "+
+                Word.Key_date_2 +" = ?";
+        Word word=new Word();
+        Cursor cursor=db.rawQuery(selectQuery,new String[]{String.valueOf(timestamp)});
+
+        if(cursor.moveToFirst()){
+            do{
+                word.date_2=cursor.getString(cursor.getColumnIndex(Word.Key_date_2));
+                word.training_2=cursor.getInt(cursor.getColumnIndex(Word.Key_training_2));//newly added
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return word;
+    }
 
     public static int insert(Word word,int book,int einheit){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
@@ -41,22 +104,25 @@ public class WordsAccess {
         db.close();
     }
 
-    public static void update(Word word){
+    public static int update(Word word){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         ContentValues values=new ContentValues();
         values.put(Word.Key_gender,word.gender);
         values.put(Word.Key_word,word.word);
         values.put(Word.Key_pl,word.pl);
         values.put(Word.Key_chn,word.chn);
-
-        db.update(Word.TABLE,values,Word.Key_Id +"=?",new String[]{String.valueOf(word.word_Id)});
+        values.put(Word.Key_errortimes,word.errortimes);
+        values.put(Word.Key_date,word.date);
+        values.put(Word.Key_status,word.status);
+        int changed_num=db.update(Word.TABLE,values,Word.Key_Id +"=?",new String[]{String.valueOf(word.word_Id)});
         db.close();
+        return changed_num;
     }
 
-    public static  int getWordTotal(){
+    public static  int getWordTotal(String table,String Where){//返回符合where限定的记录数
         int total=0;
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
-        String selectQuery="SELECT * FROM "+Word.TABLE;
+        String selectQuery="SELECT * FROM "+table+Where;
         Cursor cursor=db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){
             do{
@@ -124,6 +190,8 @@ public class WordsAccess {
                 Word.Key_pl+","+
                 Word.Key_chn+","+
                 Word.Key_book +","+//LZ
+                Word.Key_errortimes+","+
+                Word.Key_date+","+      //newly added
                 Word.Key_einheit+ " FROM "+Word.TABLE
                 +" WHERE "+
                 Word.Key_Id +" = ?";

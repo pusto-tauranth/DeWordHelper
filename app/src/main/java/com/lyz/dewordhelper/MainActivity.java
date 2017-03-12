@@ -121,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
     public void initKeyPage() {
         ListView lv = (ListView) pageKey.findViewById(R.id.keyList);
         ArrayList<HashMap<String, String>> myList;
-        String WHERE = " WHERE " + Word.Key_einheit + " = " + 1 + " AND " + Word.Key_book + " = " + 1;
+        String WHERE = " WHERE " + Word.Key_errortimes + " != " + 0
+                +" ORDER BY "+Word.Key_errortimes + " DESC ";
         myList = WordsAccess.getWordList(WHERE);
         SimpleAdapter listAdapter = new SimpleAdapter(this,
                 myList,
