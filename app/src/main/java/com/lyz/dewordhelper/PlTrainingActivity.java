@@ -18,10 +18,11 @@ import com.lyz.dewordhelper.Dialog.TrainingDialog;
 
 import java.util.Random;
 
+import static com.lyz.dewordhelper.DB.WordsAccess.getListWordTotal;
+
 public class PlTrainingActivity extends AppCompatActivity {
 
     Word ques;
-    int no;
     int round;
     int roundMax;
     String bookStr;
@@ -31,14 +32,16 @@ public class PlTrainingActivity extends AppCompatActivity {
     TextView genderTV;
     TextView wordTV;
     TextView chnTV;
-    TextView Round;//
-    TextView RoundMax;//
+    TextView Round;
+    TextView RoundMax;
 
     Button otherPlBtn;
 
+    int wordWeightSum;
     Random random;
+    Word[] words;
     private TrainingDialog trainingDialog;
-    private ProgressBar bar;//
+    private ProgressBar bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +63,10 @@ public class PlTrainingActivity extends AppCompatActivity {
         RoundMax.setText("/"+roundMax);
 
         ShowChn=getIntent().getStringExtra("OpenChn");
-        if(ShowChn.equals("close"))//LZ
-            chnTV.setVisibility(View.INVISIBLE);//LZ
+        if(ShowChn.equals("close"))
+            chnTV.setVisibility(View.INVISIBLE);
 
+        initWords();
         startNext();
     }
 
@@ -70,16 +74,7 @@ public class PlTrainingActivity extends AppCompatActivity {
         if(round<=roundMax){
             Round.setText("progress："+round);
             round++;
-            if(bookStr.equals("All")){
-                do{
-                    no=random.nextInt(WordsAccess.getWordTotal(Word.TABLE,""))+1;
-                    ques = WordsAccess.getWordById(no);
-                }while(ques.gender==null);//YCX
-                ques = WordsAccess.getWordById(no);
-            }else{
-                no=random.nextInt(WordsAccess.getListWordTotal(bookStr,einheitStr));
-                ques=WordsAccess.getWordByListId(bookStr,einheitStr,no);
-            }
+            ques=nextWord();
             wordTV.setText(ques.word);
             genderTV.setText(ques.gender);
             chnTV.setText(ques.chn);
@@ -143,7 +138,7 @@ public class PlTrainingActivity extends AppCompatActivity {
         System.out.println(pl);
         System.out.println(ques.pl);
         bar=(ProgressBar)findViewById(R.id.progressBar2);
-        bar.setProgress(100*(round-1)/roundMax);//
+        bar.setProgress(100*(round-1)/roundMax);
         if(ques.pl.equals(pl)||
                 (pl.equals(this.getResources().getString(R.string.en_etc))&&
                         (ques.pl.equals("-n")||ques.pl.equals("-en")||ques.pl.equals("-nen")))){
@@ -178,5 +173,36 @@ public class PlTrainingActivity extends AppCompatActivity {
             }
         });
         return trainingDialog;
+    }
+
+    public void initWords(){
+
+        if(bookStr.equals("All")){
+            words=new Word[WordsAccess.getWordTotal(Word.TABLE,"")];
+            for(int i=0;i<WordsAccess.getWordTotal(Word.TABLE,"");i++){
+                words[i]=WordsAccess.getWordById(i);
+            }
+        }else{
+            words=new Word[getListWordTotal(bookStr,einheitStr)];
+            for(int i = 0; i<getListWordTotal(bookStr,einheitStr); i++) {
+                words[i] = WordsAccess.getWordByListId(bookStr,einheitStr,i);
+            }
+        }
+        wordWeightSum=0;
+        for(int i=0;i<words.length;i++){
+            wordWeightSum+=100-words[i].accuracy+30;//错误率权重为100-accuracy，为防止相差过大，每词计算权重时各再加一数
+        }
+    }
+    public Word nextWord(){
+        int stepWeightSum=0;
+        int num=random.nextInt(wordWeightSum)+1;
+        int i;
+        for(i=0;i<words.length;i++){
+            stepWeightSum+=100-words[i].accuracy+30;
+            if(num<=stepWeightSum){
+                break;
+            }
+        }
+        return words[i];
     }
 }

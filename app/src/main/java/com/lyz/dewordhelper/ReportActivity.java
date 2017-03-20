@@ -27,7 +27,6 @@ public class ReportActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_report);
         initToolbar();
-
         initKeyPage();
     }
 

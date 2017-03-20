@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private List<PointValue> quanPointValues = new ArrayList<>();
     private List<AxisValue> quanAxisXValues = new ArrayList<>();
 
-    float[] accuracy;//图表的数据点
+    float[] accuracy;
     private List<PointValue> accPointValues = new ArrayList<>();
     private List<AxisValue> accAxisXValues = new ArrayList<>();
 
@@ -138,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout)findViewById(R.id.main_tab);
         //设置tab的模式
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        //for (int i = 0;i< titleList.size(); i++) {
         //把TabLayout和ViewPager关联起来
         tabLayout.setupWithViewPager(mainViewPager);
         //添加tab选项卡
@@ -214,7 +213,6 @@ public class MainActivity extends AppCompatActivity {
         //data.setAxisXTop(axisX);  //x 轴在顶部
         axisX.setHasLines(true); //x 轴分割线
 
-        // Y轴是根据数据的大小自动设置Y轴上限(在下面我会给出固定Y轴数据个数的解决方案)
         Axis axisY = new Axis();  //Y轴
         axisY.setName("训练量");//y轴标注
         axisY.setTextSize(15);//设置字体大小
@@ -226,18 +224,9 @@ public class MainActivity extends AppCompatActivity {
         lineChart =(LineChartView)pageQuantity.findViewById(R.id.line_chart);
         lineChart.setInteractive(true);
         lineChart.setZoomType(ZoomType.VERTICAL);
-        //lineChart.setMaxZoom((float) 2);//最大方法比例
-        //lineChart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
         lineChart.setContainerScrollEnabled(false,null);
         lineChart.setLineChartData(lineChartData);
         lineChart.setVisibility(View.VISIBLE);
-        /**注：下面的7，10只是代表一个数字去类比而已
-         * 当时是为了解决X轴固定数据个数。见（http://forum.xda-developers.com/tools/programming/library-hellocharts-charting-library-t2904456/page2）;
-         */
-        //Viewport v = new Viewport(lineChart.getMaximumViewport());
-        //v.left = 0;
-        //v.right= 7;
-        //lineChart.setCurrentViewport(v);
     }
 
     /**
@@ -284,7 +273,6 @@ public class MainActivity extends AppCompatActivity {
         //data.setAxisXTop(axisX);  //x 轴在顶部
         axisX.setHasLines(true); //x 轴分割线
 
-        // Y轴是根据数据的大小自动设置Y轴上限(在下面我会给出固定Y轴数据个数的解决方案)
         Axis axisY = new Axis();  //Y轴
         axisY.setName("正确率（%）");//y轴标注
         axisY.setTextSize(15);//设置字体大小
@@ -296,17 +284,8 @@ public class MainActivity extends AppCompatActivity {
         lineChart =(LineChartView)pageAccuracy.findViewById(R.id.line_chart);
         lineChart.setInteractive(true);
         lineChart.setZoomType(ZoomType.VERTICAL);
-        //lineChart.setMaxZoom((float) 2);//最大方法比例
-        //lineChart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
         lineChart.setContainerScrollEnabled(false,null);
         lineChart.setLineChartData(lineChartData);
         lineChart.setVisibility(View.VISIBLE);
-        /**注：下面的7，10只是代表一个数字去类比而已
-         * 当时是为了解决X轴固定数据个数。见（http://forum.xda-developers.com/tools/programming/library-hellocharts-charting-library-t2904456/page2）;
-         */
-        //Viewport v = new Viewport(lineChart.getMaximumViewport());
-        //v.left = 0;
-        //v.right= 7;
-        //lineChart.setCurrentViewport(v);
     }
 }

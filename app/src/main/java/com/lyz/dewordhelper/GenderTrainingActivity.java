@@ -3,7 +3,6 @@ package com.lyz.dewordhelper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.UserDictionary;
 import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,11 +20,9 @@ import java.util.Random;
 
 import static com.lyz.dewordhelper.DB.WordsAccess.getListWordTotal;
 
-//当出词量=0时出现问题
 public class GenderTrainingActivity extends AppCompatActivity {
 
     Word ques;
-    int num;
     int round;
     int roundMax;
 
@@ -62,33 +59,23 @@ public class GenderTrainingActivity extends AppCompatActivity {
         wordTV=(TextView)findViewById(R.id.word);
         plTV=(TextView)findViewById(R.id.pl);
         chnTV=(TextView)findViewById(R.id.chn);
-        Round=(TextView)findViewById(R.id.round);//
-        RoundMax=(TextView)findViewById(R.id.roundmax);//
+        Round=(TextView)findViewById(R.id.round);
+        RoundMax=(TextView)findViewById(R.id.roundmax);
         random=new Random();
-        RoundMax.setText("/"+roundMax);//
-
-        initWords();
-        startNext();
+        RoundMax.setText("/"+roundMax);
 
         ShowChn=getIntent().getStringExtra("OpenChn");
         if(ShowChn.equals("close"))
             chnTV.setVisibility(View.INVISIBLE);
+
+        initWords();
+        startNext();
     }
 
     public void startNext(){
         if(round<=roundMax){
-            Round.setText("progress："+round);//
+            Round.setText("progress："+round);
             round++;
-            /*if(bookStr.equals("All")){
-                do{
-                    num =random.nextInt(WordsAccess.getWordTotal(Word.TABLE,""));
-                    ques = WordsAccess.getWordById(num);
-                }while(ques.gender==null);//YCX
-                ques = WordsAccess.getWordById(num);
-            }else{
-                num =random.nextInt(WordsAccess.getListWordTotal(bookStr,einheitStr));
-                ques=WordsAccess.getWordByListId(bookStr,einheitStr, num);
-            }*/
             ques=nextWord();
             wordTV.setText(ques.word);
             plTV.setText(ques.pl);
@@ -129,7 +116,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
     public void onGenderAClick(View arg0){
         // TODO Auto-generated method stub
         bar=(ProgressBar)findViewById(R.id.progressBar);
-        bar.setProgress(100*(round-1)/roundMax);//
+        bar.setProgress(100*(round-1)/roundMax);
         if(ques.gender.equals(((Button)arg0).getText())){
             trainingDialog=newTrainingDialog(R.style.trueDialog);
             trainingDialog.setTitle("Richtig");
@@ -184,7 +171,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
     }
     public Word nextWord(){
         int stepWeightSum=0;
-        num=random.nextInt(wordWeightSum)+1;
+        int num=random.nextInt(wordWeightSum)+1;
         int i;
         for(i=0;i<words.length;i++){
             stepWeightSum+=100-words[i].accuracy+30;

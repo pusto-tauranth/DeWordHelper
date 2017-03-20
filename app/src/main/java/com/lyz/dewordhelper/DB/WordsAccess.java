@@ -1,7 +1,6 @@
 package com.lyz.dewordhelper.DB;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -147,7 +146,7 @@ public class WordsAccess {
         return changed_num;
     }
 
-    public static  int getWordTotal(String table,String Where){//返回符合where限定的记录数
+    public static  int getWordTotal(String table,String Where){//返回符合where条件的记录数
         int total=0;
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String selectQuery="SELECT * FROM "+table+Where;
@@ -229,15 +228,7 @@ public class WordsAccess {
     public static Word getWordById(int Id){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String selectQuery="SELECT * "+
-                /*Word.Key_Id +","+
-                Word.Key_gender+","+
-                Word.Key_word+","+
-                Word.Key_pl+","+
-                Word.Key_chn+","+
-                Word.Key_book +","+//LZ
-                Word.Key_errortimes+","+
-                Word.Key_date+","+      //newly added
-                Word.Key_einheit+ */" FROM "+Word.TABLE
+                " FROM "+Word.TABLE
                 +" WHERE "+
                 Word.Key_Id +" = ?";
         Word word=new Word();
