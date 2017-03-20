@@ -78,7 +78,7 @@ public class WordsAccess {
     public static void setAccuracy(){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String update="update "+Word.TABLE+" set "+Word.Key_accuracy+
-                "=("+Word.Key_training+"-"+Word.Key_errortimes+")/"+Word.Key_training+
+                "=100*("+Word.Key_training+"-"+Word.Key_errortimes+")/"+Word.Key_training+
                 " " +
                 " WHERE "+Word.Key_training+" !=0";
         db.execSQL(update);
@@ -255,6 +255,7 @@ public class WordsAccess {
                 word.status=cursor.getInt(cursor.getColumnIndex(Word.Key_status));
                 word.errortimes=cursor.getInt(cursor.getColumnIndex(Word.Key_errortimes));
                 word.training=cursor.getInt(cursor.getColumnIndex(Word.Key_training));
+                word.accuracy=cursor.getInt(cursor.getColumnIndex(Word.Key_accuracy));
             }while(cursor.moveToNext());
         }
 

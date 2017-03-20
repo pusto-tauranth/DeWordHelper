@@ -53,10 +53,10 @@ public class ReportActivity extends AppCompatActivity {
         String WHERE = " WHERE " + Word.Key_status + " = " + "-1"
                 +" ORDER BY "+Word.Key_errortimes + " DESC ";
         myList = WordsAccess.getWordList(WHERE);
+        WordsAccess.setAccuracy();
         WordsAccess.setErrorTimes();
         int newTrainingTimes=WordsAccess.statusReset();
         WordsAccess.setTrainingTimes(newTrainingTimes);
-        WordsAccess.setAccuracy();
 
         SimpleAdapter listAdapter = new SimpleAdapter(this,
                 myList,
