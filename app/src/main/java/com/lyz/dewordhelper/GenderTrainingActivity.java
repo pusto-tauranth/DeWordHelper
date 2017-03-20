@@ -78,11 +78,12 @@ public class GenderTrainingActivity extends AppCompatActivity {
             round++;
             ques=nextWord();
             wordTV.setText(ques.word);
-            plTV.setText(ques.pl);
+            plTV.setText(ques.plural);
             chnTV.setText(ques.chn);
             initToolbar();
         }else{
             Intent intent=new Intent(this,ReportActivity.class);
+            intent.putExtra("Type","Gender");
             startActivity(intent);
             finish();
         }
@@ -101,14 +102,14 @@ public class GenderTrainingActivity extends AppCompatActivity {
     }
     public void recording(boolean Bool){
 
-        ques.date=WordsAccess.timestamp("yyyy-MM-dd",0);
+        //ques.date=WordsAccess.timestamp("yyyy-MM-dd",0);
 
         if(Bool){
             ques.status=1;
-            ques.training+=1;
+            ques.trainingGender +=1;
         } else {
-            ques.errortimes+=1;
-            ques.training+=1;
+            ques.errorGender +=1;
+            ques.trainingGender +=1;
             ques.status=-1;
         }
         WordsAccess.update(ques);
@@ -132,7 +133,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
 
     public TrainingDialog newTrainingDialog(@StyleRes int themResId){
         trainingDialog=new TrainingDialog(this,themResId);
-        trainingDialog.setWord(ques.gender+" "+ques.word+" "+ques.pl);
+        trainingDialog.setWord(ques.gender+" "+ques.word+" "+ques.plural);
         trainingDialog.setChn(ques.chn);
         trainingDialog.setNextOnClickListener(new TrainingDialog.NextOnClickListener() {
             @Override
@@ -152,7 +153,6 @@ public class GenderTrainingActivity extends AppCompatActivity {
     }
 
     public void initWords(){
-
         if(bookStr.equals("All")){
             words=new Word[WordsAccess.getWordTotal(Word.TABLE,"")];
             for(int i=0;i<WordsAccess.getWordTotal(Word.TABLE,"");i++){
@@ -161,12 +161,12 @@ public class GenderTrainingActivity extends AppCompatActivity {
         }else{
             words=new Word[getListWordTotal(bookStr,einheitStr)];
             for(int i = 0; i<getListWordTotal(bookStr,einheitStr); i++) {
-                words[i] = WordsAccess.getWordByListId(bookStr,einheitStr,i);
+                words[i] = WordsAccess.getWordByListId(bookStr,einheitStr,i+1);
             }
         }
         wordWeightSum=0;
         for(int i=0;i<words.length;i++){
-            wordWeightSum+=100-words[i].accuracy+30;//错误率权重为100-accuracy，为防止相差过大，每词计算权重时各再加一数
+            wordWeightSum+=100-words[i].accuracyGender +30;//错误率权重为100-accuracyGender，为防止相差过大，每词计算权重时各再加一数
         }
     }
     public Word nextWord(){
@@ -174,7 +174,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
         int num=random.nextInt(wordWeightSum)+1;
         int i;
         for(i=0;i<words.length;i++){
-            stepWeightSum+=100-words[i].accuracy+30;
+            stepWeightSum+=100-words[i].accuracyGender +30;
             if(num<=stepWeightSum){
                 break;
             }

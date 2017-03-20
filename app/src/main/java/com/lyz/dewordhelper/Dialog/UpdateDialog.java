@@ -51,7 +51,7 @@ public class UpdateDialog extends Dialog {
 
         genderET.setText(word.gender);
         wordET.setText(word.word);
-        plET.setText(word.pl);
+        plET.setText(word.plural);
         chnET.setText(word.chn);
     }
 
@@ -61,7 +61,7 @@ public class UpdateDialog extends Dialog {
             public void onClick(View v) {
                 word.gender=genderET.getText().toString();
                 word.word=wordET.getText().toString();
-                word.pl=plET.getText().toString();
+                word.plural =plET.getText().toString();
                 word.chn=chnET.getText().toString();
                 WordsAccess.update(word);
                 Toast.makeText(getContext(),"单词编辑成功",Toast.LENGTH_LONG).show();

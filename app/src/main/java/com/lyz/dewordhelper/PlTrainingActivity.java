@@ -78,10 +78,10 @@ public class PlTrainingActivity extends AppCompatActivity {
             wordTV.setText(ques.word);
             genderTV.setText(ques.gender);
             chnTV.setText(ques.chn);
-            if(!ques.pl.equals("-")&&!ques.pl.equals("..")&&!ques.pl.equals("-e")&&!ques.pl.equals("..e")&&
-                    !ques.pl.equals("-er")&&!ques.pl.equals("..er")&&!ques.pl.equals("-en")&&!ques.pl.equals("-n")&&
-                    !ques.pl.equals("-nen")&&!ques.pl.equals("o.Pl.")){
-                otherPlBtn.setText(ques.pl);
+            if(!ques.plural.equals("-")&&!ques.plural.equals("..")&&!ques.plural.equals("-e")&&!ques.plural.equals("..e")&&
+                    !ques.plural.equals("-er")&&!ques.plural.equals("..er")&&!ques.plural.equals("-en")&&!ques.plural.equals("-n")&&
+                    !ques.plural.equals("-nen")&&!ques.plural.equals("o.Pl.")){
+                otherPlBtn.setText(ques.plural);
             }else{
                 int no2=random.nextInt(12);
                 switch(no2){
@@ -102,6 +102,7 @@ public class PlTrainingActivity extends AppCompatActivity {
             initToolbar();
         }else{
             Intent intent=new Intent(this,ReportActivity.class);
+            intent.putExtra("Type","Plural");
             startActivity(intent);
             finish();
         }
@@ -120,14 +121,14 @@ public class PlTrainingActivity extends AppCompatActivity {
     }
     public void recording(boolean Bool){
 
-        ques.date=WordsAccess.timestamp("yyyy-MM-dd",0);
+        //ques.date=WordsAccess.timestamp("yyyy-MM-dd",0);
 
         if(Bool){
             ques.status=1;
-            ques.training+=1;
+            ques.trainingPlural +=1;
         } else {
-            ques.errortimes+=1;
-            ques.training+=1;
+            ques.errorPlural +=1;
+            ques.trainingPlural +=1;
             ques.status=-1;
         }
         WordsAccess.update(ques);
@@ -136,12 +137,12 @@ public class PlTrainingActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
         String pl=((Button)arg0).getText().toString();
         System.out.println(pl);
-        System.out.println(ques.pl);
+        System.out.println(ques.plural);
         bar=(ProgressBar)findViewById(R.id.progressBar2);
         bar.setProgress(100*(round-1)/roundMax);
-        if(ques.pl.equals(pl)||
+        if(ques.plural.equals(pl)||
                 (pl.equals(this.getResources().getString(R.string.en_etc))&&
-                        (ques.pl.equals("-n")||ques.pl.equals("-en")||ques.pl.equals("-nen")))){
+                        (ques.plural.equals("-n")||ques.plural.equals("-en")||ques.plural.equals("-nen")))){
             trainingDialog=newTrainingDialog(R.style.trueDialog);
             trainingDialog.setTitle("Richtig");
             recording(true);
@@ -156,7 +157,7 @@ public class PlTrainingActivity extends AppCompatActivity {
 
     public TrainingDialog newTrainingDialog(@StyleRes int themResId){
         trainingDialog=new TrainingDialog(this,themResId);
-        trainingDialog.setWord(ques.gender+" "+ques.word+" "+ques.pl);
+        trainingDialog.setWord(ques.gender+" "+ques.word+" "+ques.plural);
         trainingDialog.setChn(ques.chn);
         trainingDialog.setNextOnClickListener(new TrainingDialog.NextOnClickListener() {
             @Override
@@ -185,12 +186,12 @@ public class PlTrainingActivity extends AppCompatActivity {
         }else{
             words=new Word[getListWordTotal(bookStr,einheitStr)];
             for(int i = 0; i<getListWordTotal(bookStr,einheitStr); i++) {
-                words[i] = WordsAccess.getWordByListId(bookStr,einheitStr,i);
+                words[i] = WordsAccess.getWordByListId(bookStr,einheitStr,i+1);
             }
         }
         wordWeightSum=0;
         for(int i=0;i<words.length;i++){
-            wordWeightSum+=100-words[i].accuracy+30;//错误率权重为100-accuracy，为防止相差过大，每词计算权重时各再加一数
+            wordWeightSum+=100-words[i].accuracyGender +30;//错误率权重为100-accuracyGender，为防止相差过大，每词计算权重时各再加一数
         }
     }
     public Word nextWord(){
@@ -198,7 +199,7 @@ public class PlTrainingActivity extends AppCompatActivity {
         int num=random.nextInt(wordWeightSum)+1;
         int i;
         for(i=0;i<words.length;i++){
-            stepWeightSum+=100-words[i].accuracy+30;
+            stepWeightSum+=100-words[i].accuracyGender +30;
             if(num<=stepWeightSum){
                 break;
             }

@@ -3,7 +3,6 @@ package com.lyz.dewordhelper.Dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.StyleRes;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 
 import com.lyz.dewordhelper.DB.Word;
 import com.lyz.dewordhelper.DB.WordsAccess;
-import com.lyz.dewordhelper.MainActivity;
 import com.lyz.dewordhelper.R;
 
 /**
@@ -60,7 +58,7 @@ public class InsertDialog extends Dialog {
                 Word word=new Word();
                 word.gender=genderET.getText().toString();
                 word.word=wordET.getText().toString();
-                word.pl=plET.getText().toString();
+                word.plural =plET.getText().toString();
                 word.chn=chnET.getText().toString();
                 int idSpec=WordsAccess.insert(word,book,einheit);
                 Toast.makeText(getContext(),"单词添加成功",Toast.LENGTH_LONG).show();

@@ -49,13 +49,13 @@ public class ReportActivity extends AppCompatActivity {
     public void initKeyPage() {
         lv = (ListView)findViewById(R.id.errorList);
         ArrayList<HashMap<String, String>> myList;
-        String WHERE = " WHERE " + Word.Key_status + " = " + "-1"
-                +" ORDER BY "+Word.Key_errortimes + " DESC ";
+        String WHERE = " WHERE " + Word.Key_status + " = " + "-1";
         myList = WordsAccess.getWordList(WHERE);
+        String type=getIntent().getStringExtra("Type");
         WordsAccess.setAccuracy();
-        WordsAccess.setErrorTimes();
+        WordsAccess.setErrorTimes(type);
         int newTrainingTimes=WordsAccess.statusReset();
-        WordsAccess.setTrainingTimes(newTrainingTimes);
+        WordsAccess.setTrainingTimes(newTrainingTimes,type);
 
         SimpleAdapter listAdapter = new SimpleAdapter(this,
                 myList,

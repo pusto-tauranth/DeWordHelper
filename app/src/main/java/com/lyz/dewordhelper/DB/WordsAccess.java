@@ -39,14 +39,20 @@ public class WordsAccess {
         return changed_num;
     }
 
-    public static void setTrainingTimes(int new_num){
+    public static void setTrainingTimes(int newNum,String type){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String timestamp=WordsAccess.timestamp("yyyy-MM-dd",0);
         String WhereDate=" WHERE "+Word.Key_date_2+" = '"+timestamp+"'";
 
-        String update="update "+Word.TABLE_2+" set "+Word.Key_training_2+"="+new_num+"+"+Word.Key_training_2+WhereDate;
-        String insert="INSERT INTO "+Word.TABLE_2+" VALUES ('"+timestamp+"','"+new_num+"','"+ 0+"')";
-
+        String update;
+        String insert;
+        if(type.equals("Gender")){
+            update="update "+Word.TABLE_2+" set "+Word.Key_trainingGender_2 +"="+newNum+"+"+Word.Key_trainingGender_2 +WhereDate;
+            insert="INSERT INTO "+Word.TABLE_2+" VALUES ('"+timestamp+"','"+0+"','"+newNum+"','"+0+"','"+0+"')";
+        }else{
+            update="update "+Word.TABLE_2+" set "+Word.Key_trainingPlural_2 +"="+newNum+"+"+Word.Key_trainingPlural_2 +WhereDate;
+            insert="INSERT INTO "+Word.TABLE_2+" VALUES ('"+timestamp+"','"+0+"','"+0+"','"+0+"','"+newNum+"')";
+        }
         if(getWordTotal(Word.TABLE_2,WhereDate)==0){
             db.execSQL(insert);
         }else {
@@ -55,16 +61,22 @@ public class WordsAccess {
         db.close();
     }
 
-    public static void setErrorTimes(){
+    public static void setErrorTimes(String type){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String timestamp=WordsAccess.timestamp("yyyy-MM-dd",0);
-        String WHERE0=" WHERE "+Word.Key_status+" = -1 ";
-        int newError=WordsAccess.getWordTotal(Word.TABLE,WHERE0);
+        String whereError=" WHERE "+Word.Key_status+" = -1 ";
+        int newError=WordsAccess.getWordTotal(Word.TABLE,whereError);
 
         String WhereDate=" WHERE "+Word.Key_date_2+" = '"+timestamp+"'";
-
-        String update="update "+Word.TABLE_2+" set "+Word.Key_errortimes_2+"="+newError+"+"+Word.Key_errortimes_2+WhereDate;
-        String insert="INSERT INTO "+Word.TABLE_2+" VALUES ('"+timestamp+"','"+0+"','"+newError+"')";
+        String update;
+        String insert;
+        if(type.equals("Gender")){
+            update="update "+Word.TABLE_2+" set "+Word.Key_errorGender_2 +"="+newError+"+"+Word.Key_errorGender_2 +WhereDate;
+            insert="INSERT INTO "+Word.TABLE_2+" VALUES ('"+timestamp+"','"+newError+"','"+0+"','"+0+"','"+0+"')";
+        }else{
+            update="update "+Word.TABLE_2+" set "+Word.Key_errorPlural_2 +"="+newError+"+"+Word.Key_errorPlural_2 +WhereDate;
+            insert="INSERT INTO "+Word.TABLE_2+" VALUES ('"+timestamp+"','"+0+"','"+0+"','"+newError+"','"+0+"')";
+        }
 
         if(getWordTotal(Word.TABLE_2,WhereDate)==0){
             db.execSQL(insert);
@@ -76,11 +88,16 @@ public class WordsAccess {
 
     public static void setAccuracy(){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
-        String update="update "+Word.TABLE+" set "+Word.Key_accuracy+
-                "=100*("+Word.Key_training+"-"+Word.Key_errortimes+")/"+Word.Key_training+
+        String update="update "+Word.TABLE+" set "+Word.Key_accuracyGender +
+                "=100*("+Word.Key_trainingGender +"-"+Word.Key_errorGender +")/"+Word.Key_trainingGender +
                 " " +
-                " WHERE "+Word.Key_training+" !=0";
+                " WHERE "+Word.Key_trainingGender +" !=0";
         db.execSQL(update);
+        String update2="update "+Word.TABLE+" set "+Word.Key_accuracyPlural +
+                "=100*("+Word.Key_trainingPlural +"-"+Word.Key_errorPlural +")/"+Word.Key_trainingPlural +
+                " " +
+                " WHERE "+Word.Key_trainingPlural +" !=0";
+        db.execSQL(update2);
         db.close();
     }
 
@@ -96,8 +113,8 @@ public class WordsAccess {
         if(cursor.moveToFirst()){
             do{
                 word.date_2=cursor.getString(cursor.getColumnIndex(Word.Key_date_2));
-                word.training_2=cursor.getInt(cursor.getColumnIndex(Word.Key_training_2));
-                word.errortimes_2=cursor.getInt(cursor.getColumnIndex(Word.Key_errortimes_2));
+                word.trainingGender_2 =cursor.getInt(cursor.getColumnIndex(Word.Key_trainingGender_2));
+                word.errorGender_2 =cursor.getInt(cursor.getColumnIndex(Word.Key_errorGender_2));
             }while(cursor.moveToNext());
         }
 
@@ -111,13 +128,15 @@ public class WordsAccess {
         ContentValues values=new ContentValues();
         values.put(Word.Key_gender,word.gender);
         values.put(Word.Key_word,word.word);
-        values.put(Word.Key_pl,word.pl);
+        values.put(Word.Key_plural,word.plural);
         values.put(Word.Key_chn,word.chn);
         values.put(Word.Key_book,book);
-        values.put(Word.Key_einheit,einheit);
-        values.put(Word.Key_errortimes,0);
+        values.put(Word.Key_unit,einheit);
+        values.put(Word.Key_errorGender,0);
         values.put(Word.Key_status,0);
-        values.put(Word.Key_training,0);
+        values.put(Word.Key_trainingGender,0);
+        values.put(Word.Key_errorPlural,0);
+        values.put(Word.Key_trainingPlural,0);
         long word_ID=db.insert(Word.TABLE,null,values);
 
         db.close();
@@ -135,12 +154,14 @@ public class WordsAccess {
         ContentValues values=new ContentValues();
         values.put(Word.Key_gender,word.gender);
         values.put(Word.Key_word,word.word);
-        values.put(Word.Key_pl,word.pl);
+        values.put(Word.Key_plural,word.plural);
         values.put(Word.Key_chn,word.chn);
-        values.put(Word.Key_errortimes,word.errortimes);
-        values.put(Word.Key_date,word.date);
+        values.put(Word.Key_errorGender,word.errorGender);
         values.put(Word.Key_status,word.status);
-        values.put(Word.Key_training,word.training);
+        values.put(Word.Key_trainingGender,word.trainingGender);
+        values.put(Word.Key_errorPlural,word.errorPlural);
+        values.put(Word.Key_status,word.status);
+        values.put(Word.Key_trainingPlural,word.trainingPlural);
         int changed_num=db.update(Word.TABLE,values,Word.Key_Id +"=?",new String[]{String.valueOf(word.word_Id)});
         db.close();
         return changed_num;
@@ -164,7 +185,7 @@ public class WordsAccess {
     public static  int getListWordTotal(String Book,String Einheit){
         int total=0;
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
-        String selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_book+" = "+Book+" AND "+Word.Key_einheit+" = "+Einheit;
+        String selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_book+" = "+Book+" AND "+Word.Key_unit +" = "+Einheit;
         Cursor cursor=db.rawQuery(selectQuery,null);
         if(cursor.moveToFirst()){
             do{
@@ -188,7 +209,7 @@ public class WordsAccess {
                 HashMap<String,String> map=new HashMap<>();
                 map.put("All",cursor.getString(cursor.getColumnIndex(Word.Key_gender))+"  "+
                         cursor.getString(cursor.getColumnIndex(Word.Key_word))+"  "+
-                        cursor.getString(cursor.getColumnIndex(Word.Key_pl))+"  "+
+                        cursor.getString(cursor.getColumnIndex(Word.Key_plural))+"  "+
                         cursor.getString(cursor.getColumnIndex(Word.Key_chn)));
                 map.put("wordId",cursor.getString(cursor.getColumnIndex(Word.Key_Id)));
                 wordList.add(map);
@@ -212,9 +233,9 @@ public class WordsAccess {
                 HashMap<String,String> map=new HashMap<>();
                 map.put("All",cursor.getString(cursor.getColumnIndex(Word.Key_gender))+"  "+
                         cursor.getString(cursor.getColumnIndex(Word.Key_word))+"  "+
-                        cursor.getString(cursor.getColumnIndex(Word.Key_pl))+"  "+
+                        cursor.getString(cursor.getColumnIndex(Word.Key_plural))+"  "+
                         cursor.getString(cursor.getColumnIndex(Word.Key_chn))+"(正确率"+
-                        cursor.getString(cursor.getColumnIndex(Word.Key_accuracy))+"%)");
+                        cursor.getString(cursor.getColumnIndex(Word.Key_accuracyGender))+"%)");
                 map.put("wordId",cursor.getString(cursor.getColumnIndex(Word.Key_Id)));
                 wordList.add(map);
             }while(cursor.moveToNext()&&t<lim);
@@ -239,14 +260,17 @@ public class WordsAccess {
                 word.word_Id =cursor.getInt(cursor.getColumnIndex(Word.Key_Id));
                 word.gender=cursor.getString(cursor.getColumnIndex(Word.Key_gender));
                 word.word=cursor.getString(cursor.getColumnIndex(Word.Key_word));
-                word.pl=cursor.getString(cursor.getColumnIndex(Word.Key_pl));
+                word.plural =cursor.getString(cursor.getColumnIndex(Word.Key_plural));
                 word.chn=cursor.getString(cursor.getColumnIndex(Word.Key_chn));
                 word.book=cursor.getInt(cursor.getColumnIndex(Word.Key_book));
-                word.einheit=cursor.getInt(cursor.getColumnIndex(Word.Key_einheit));
+                word.unit =cursor.getInt(cursor.getColumnIndex(Word.Key_unit));
                 word.status=cursor.getInt(cursor.getColumnIndex(Word.Key_status));
-                word.errortimes=cursor.getInt(cursor.getColumnIndex(Word.Key_errortimes));
-                word.training=cursor.getInt(cursor.getColumnIndex(Word.Key_training));
-                word.accuracy=cursor.getInt(cursor.getColumnIndex(Word.Key_accuracy));
+                word.errorGender =cursor.getInt(cursor.getColumnIndex(Word.Key_errorGender));
+                word.trainingGender =cursor.getInt(cursor.getColumnIndex(Word.Key_trainingGender));
+                word.accuracyGender =cursor.getInt(cursor.getColumnIndex(Word.Key_accuracyGender));
+                word.errorPlural =cursor.getInt(cursor.getColumnIndex(Word.Key_errorPlural));
+                word.trainingPlural =cursor.getInt(cursor.getColumnIndex(Word.Key_trainingPlural));
+                word.accuracyPlural =cursor.getInt(cursor.getColumnIndex(Word.Key_accuracyPlural));
             }while(cursor.moveToNext());
         }
 
@@ -258,7 +282,8 @@ public class WordsAccess {
     public static Word getWordByListId(String Book,String Einheit,int listId){
         Word word;
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
-        String selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_book+" = "+Book+" AND "+Word.Key_einheit+" = "+Einheit;
+        String selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_book+" = "+Book+" AND "+Word.Key_unit +" = "+Einheit;
+        System.out.println(selectQuery);
         Cursor cursor=db.rawQuery(selectQuery,null);
         int i=0;
         int id=0;

@@ -3,9 +3,7 @@ package com.lyz.dewordhelper;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -21,18 +19,34 @@ public class StockSelectActivity extends ListActivity {
         setContentView(R.layout.activity_stock_select);
         initToolbar();
         ArrayList<HashMap<String, String>> myList = new ArrayList<HashMap<String, String>>();
-        for (int i=1;i<=10;i++) {
-            HashMap<String, String> map = new HashMap<String, String>();
-            map.put("Einheit",String.valueOf(i));
-            map.put("Book",String.valueOf(1));
-            myList.add(map);
-        }
-        for (int i=1;i<=10;i++) {
+        if(String.valueOf(getIntent().getStringExtra("Book")).equals("All")) {
+            for (int i = 1; i <= 10; i++) {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("Einheit", String.valueOf(i));
+                map.put("Book",String.valueOf(1));
+                myList.add(map);
+            }
+            for (int i=1;i<=10;i++) {
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("Einheit",String.valueOf(i));
             map.put("Book",String.valueOf(2));
             myList.add(map);
+            }
         }
+        else {
+            for (int i = 1; i <= 10; i++) {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("Einheit", String.valueOf(i));
+                map.put("Book", String.valueOf(getIntent().getStringExtra("Book")));
+                myList.add(map);
+            }
+        }
+       /* for (int i=1;i<=10;i++) {
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("Einheit",String.valueOf(i));
+            map.put("Book",String.valueOf(2));
+            myList.add(map);
+        }*/
 
         SimpleAdapter mSchedule = new SimpleAdapter(this,
                 myList,

@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     public int[] getTrainingQuantity(){
         int[] num= new int[7];
         for(int i=0;i<7;i++){
-            num[i]=WordsAccess.getTrainingTimes(dates[i]).training_2;
+            num[i]=WordsAccess.getTrainingTimes(dates[i]).trainingGender_2;
         }
         return num;
     }
@@ -127,10 +127,10 @@ public class MainActivity extends AppCompatActivity {
         float[] num= new float[7];
         for(int i=0;i<7;i++){
             Word date=WordsAccess.getTrainingTimes(dates[i]);
-            if(date.training_2==0){
+            if(date.trainingGender_2 ==0){
                 num[1]=0;
             }else{
-                num[i]=(date.training_2-date.errortimes_2)/(float)date.training_2*100;
+                num[i]=(date.trainingGender_2 -date.errorGender_2)/(float)date.trainingGender_2 *100;
             }
         }
         return num;
@@ -155,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
     public void initKeyPage() {
         ListView lv = (ListView) pageKey.findViewById(R.id.keyList);
         ArrayList<HashMap<String, String>> myList;
-        String WHERE = " WHERE " + Word.Key_errortimes + " != " + 0
-                +" ORDER BY "+Word.Key_accuracy + " ASC ";
+        String WHERE = " WHERE " + Word.Key_errorGender + " != " + 0
+                +" ORDER BY "+Word.Key_accuracyGender + " ASC ";
         myList = WordsAccess.getLimitWordList(WHERE,50);
         SimpleAdapter listAdapter = new SimpleAdapter(this,
                 myList,

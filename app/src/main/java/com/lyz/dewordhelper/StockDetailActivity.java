@@ -1,8 +1,6 @@
 package com.lyz.dewordhelper;
 
-import android.app.Activity;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,7 +8,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 
 import com.lyz.dewordhelper.DB.Word;
 import com.lyz.dewordhelper.DB.WordsAccess;
@@ -31,7 +28,7 @@ public class StockDetailActivity extends ListActivity {
         book = Integer.parseInt(getIntent().getStringExtra("Book"));
         initToolbar();
         ArrayList<HashMap<String, String>> myList;
-        String WHERE=" WHERE "+Word.Key_einheit+" = "+einheit+" AND "+Word.Key_book+" = "+book;
+        String WHERE=" WHERE "+Word.Key_unit +" = "+einheit+" AND "+Word.Key_book+" = "+book;
         myList=WordsAccess.getWordList(WHERE);
         SimpleAdapter mSchedule = new SimpleAdapter(this,
                 myList,

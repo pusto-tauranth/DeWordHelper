@@ -32,20 +32,15 @@ public class TrainingSettingsActivity extends AppCompatActivity {
     private boolean changeFromSeekBar = false;
     private boolean changeFromEditText = false;
     Integer value=0;
-    //TextView Progress;
-    //TouchProgressView proViewStyle;
     EditText SetProgress;
-    String OpenChn="close";//LZ
-    //int progress;
+    String OpenChn="close";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_training_settings);
-        //this.setTitle("训练设置");
         initToolbar();
-        //init();
         SetProgress = (EditText) findViewById(R.id.mysetting);
         SetProgress.setText("0");
        Switch sc=(Switch)findViewById(R.id.chn1);//-----
@@ -60,7 +55,7 @@ public class TrainingSettingsActivity extends AppCompatActivity {
                     OpenChn="close";
                 }
             }
-        });//------LZ
+        });
         //联动设置
         etImageAdjustment = (EditText) findViewById(R.id.mysetting);
         etImageAdjustment.addTextChangedListener(new TextWatcher() {
@@ -168,24 +163,6 @@ public class TrainingSettingsActivity extends AppCompatActivity {
         TextView title=(TextView)findViewById(R.id.tv_title);
         title.setText("训练设置");
     }
-
-    /*private void init() {
-        Progress = (TextView) findViewById(R.id.progress);
-        proViewStyle = (TouchProgressView) findViewById(R.id.proview_style);
-        proViewStyle.setOnProgressChangedListener(this);
-        proViewStyle.setLineColor(R.color.colorAccent);
-        proViewStyle.setLineHeight(20);
-        proViewStyle.setProgress(50);
-        proViewStyle.setPointColor(R.color.colorAccent);
-        proViewStyle.setPointRadius(20);
-
-    }
-    @Override
-    public void onProgressChanged(View v, int progress) {
-        String name = "proViewStyle";
-        Log.i(TAG, name + " 进度发生变化,progress== " + progress);
-        Progress.setText(progress+"");
-    }*/
     public void onGenderClick(View v){
         /*if(SetProgress.getText().toString().equals(""))//LZ
         roundMax=Integer.parseInt(Progress.getText().toString());//LZ

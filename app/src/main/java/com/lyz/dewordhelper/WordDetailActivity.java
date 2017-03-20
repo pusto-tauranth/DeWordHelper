@@ -32,12 +32,12 @@ public class WordDetailActivity extends AppCompatActivity {
         TextView accTV=(TextView)findViewById(R.id.accuracy);
         genderTV.setText(word.gender);
         wordTV.setText(word.word);
-        plTV.setText(word.pl);
+        plTV.setText(word.plural);
         chnTV.setText(word.chn);
-        if(word.training==0){
+        if(word.trainingGender ==0){
             accTV.setText("未训练过");
         }else{
-            accTV.setText("正确率："+(word.training-word.errortimes)/word.training*100+"%");
+            accTV.setText("正确率："+(word.trainingGender -word.errorGender)/word.trainingGender *100+"%");
         }
     }
 
@@ -54,7 +54,7 @@ public class WordDetailActivity extends AppCompatActivity {
     }
 
     public void onInsertClick(View v){
-        InsertDialog insertDialog=new InsertDialog(this,word.book,word.einheit);
+        InsertDialog insertDialog=new InsertDialog(this,word.book,word.unit);
         insertDialog.show();
     }
 
