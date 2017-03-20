@@ -31,12 +31,12 @@ public class GenderTrainingActivity extends AppCompatActivity {
     TextView wordTV;
     TextView plTV;
     TextView chnTV;
-    TextView Round;//
-    TextView RoundMax;//
+    TextView Round;
+    TextView RoundMax;
 
     Random random;
     private TrainingDialog trainingDialog;
-    private ProgressBar bar;//
+    private ProgressBar bar;
 
 
 
@@ -62,12 +62,8 @@ public class GenderTrainingActivity extends AppCompatActivity {
         startNext();
 
         ShowChn=getIntent().getStringExtra("OpenChn");
-        if(ShowChn.equals("close"))//LZ
-            chnTV.setVisibility(View.INVISIBLE);//LZ
-        //LZ
-            //LZ
-
-
+        if(ShowChn.equals("close"))
+            chnTV.setVisibility(View.INVISIBLE);
     }
 
     public void startNext(){
@@ -112,8 +108,10 @@ public class GenderTrainingActivity extends AppCompatActivity {
 
         if(Bool){
             ques.status=1;
+            ques.training+=1;
         } else {
             ques.errortimes+=1;
+            ques.training+=1;
             ques.status=-1;
         }
         WordsAccess.update(ques);

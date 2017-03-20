@@ -192,7 +192,7 @@ public class TrainingSettingsActivity extends AppCompatActivity {
         else//LZ*/
         //roundMax=Integer.parseInt(SetProgress.getText().toString());//LZ
         roundMax=value;
-        WordsAccess.status_reset();//newly added
+        WordsAccess.statusReset();//newly added
         Intent intent=new Intent(this,GenderTrainingActivity.class);
         intent.putExtra("round",1);
         intent.putExtra("roundMax",roundMax);
@@ -208,7 +208,7 @@ public class TrainingSettingsActivity extends AppCompatActivity {
         else//LZ*/
            //roundMax=Integer.parseInt(SetProgress.getText().toString());//LZ
         roundMax=value;
-        WordsAccess.status_reset();//newly added
+        WordsAccess.statusReset();//newly added
         intent.putExtra("round",1);
         intent.putExtra("OpenChn",OpenChn);//LZ
         intent.putExtra("roundMax",roundMax);

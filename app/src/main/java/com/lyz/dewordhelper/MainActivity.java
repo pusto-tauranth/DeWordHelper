@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.lyz.dewordhelper.DB.Word;
@@ -44,14 +43,13 @@ public class MainActivity extends AppCompatActivity {
     private MainPagerAdapter mainPagerAdapter;
 
     private LineChartView lineChart;
+    String[] dates = getDates();
 
-    String[] dateQuan = {"10-22", "11-22", "12-22", "1-22", "6-22", "5-23", "5-22"};//X轴的标注
-    int[] quantity = {50, 42, 100, 550, 10, 74, 22};//图表的数据点
+    int[] quantity;
     private List<PointValue> quanPointValues = new ArrayList<>();
     private List<AxisValue> quanAxisXValues = new ArrayList<>();
 
-    String[] dateAcc = {"10-22", "11-22", "12-22", "1-22", "6-22", "5-23", "5-22"};//X轴的标注
-    int[] accuracy = {50, 42, 100, 33, 10, 74, 22};//图表的数据点
+    float[] accuracy;//图表的数据点
     private List<PointValue> accPointValues = new ArrayList<>();
     private List<AxisValue> accAxisXValues = new ArrayList<>();
 
@@ -65,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         wordsHelper.openDatabase();
         wordsHelper.closeDatabase();
 
+        quantity = getTrainingQuantity();
+        accuracy = getTrainingAccuracy();
         LayoutInflater inflater = getLayoutInflater();
         pageKey = inflater.inflate(R.layout.main_page_key, null);
         pageQuantity = inflater.inflate(R.layout.main_page_quantity, null);
@@ -99,6 +99,37 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public String[] getDates() {
+        String[] timestamp = new String[7];
+        int offset = 0;
+        for (int i = 6; i >=0; i--) {
+            timestamp[i] = WordsAccess.timestamp("yyyy-MM-dd", offset);
+            offset -= 1;
+        }
+        return timestamp;
+    }
+
+    public int[] getTrainingQuantity(){
+        int[] num= new int[7];
+        for(int i=0;i<7;i++){
+            num[i]=WordsAccess.getTrainingTimes(dates[i]).training_2;
+        }
+        return num;
+    }
+
+    public float[] getTrainingAccuracy(){
+        float[] num= new float[7];
+        for(int i=0;i<7;i++){
+            Word date=WordsAccess.getTrainingTimes(dates[i]);
+            if(date.training_2==0){
+                num[1]=0;
+            }else{
+                num[i]=(date.training_2-date.errortimes_2)/(float)date.training_2*100;
+            }
+        }
+        return num;
+    }
+
     public void initTabLayout(){
         titleList = new ArrayList<>();
         titleList.add("常错词");
@@ -107,12 +138,10 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout)findViewById(R.id.main_tab);
         //设置tab的模式
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        //添加tab选项卡
         //for (int i = 0;i< titleList.size(); i++) {
-        //    tabLayout.addTab(tabLayout.newTab().setText(titleList.get(i)));
-        //}
         //把TabLayout和ViewPager关联起来
         tabLayout.setupWithViewPager(mainViewPager);
+        //添加tab选项卡
         for (int i = 0;i< titleList.size(); i++) {
             tabLayout.getTabAt(i).setText(titleList.get(i));
         }
@@ -122,8 +151,8 @@ public class MainActivity extends AppCompatActivity {
         ListView lv = (ListView) pageKey.findViewById(R.id.keyList);
         ArrayList<HashMap<String, String>> myList;
         String WHERE = " WHERE " + Word.Key_errortimes + " != " + 0
-                +" ORDER BY "+Word.Key_errortimes + " DESC ";
-        myList = WordsAccess.getWordList(WHERE);
+                +" ORDER BY "+Word.Key_accuracy + " ASC ";
+        myList = WordsAccess.getLimitWordList(WHERE,50);
         SimpleAdapter listAdapter = new SimpleAdapter(this,
                 myList,
                 R.layout.activity_stock_detail_item,
@@ -146,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
      * 设置X 轴的显示
      */
     private void getAxisXLabelsQuan(){
-        for (int i = 0; i < dateQuan.length; i++) {
-            quanAxisXValues.add(new AxisValue(i).setLabel(dateQuan[i]));
+        for (int i = 0; i < dates.length; i++) {
+            quanAxisXValues.add(new AxisValue(i).setLabel(dates[i].substring(5)));
         }
     }
     /**
@@ -175,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
         //坐标轴
         Axis axisX = new Axis(); //X轴
-        axisX.setHasTiltedLabels(true);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
+        axisX.setHasTiltedLabels(false);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
         axisX.setTextColor(Color.BLACK);  //设置字体颜色
         axisX.setName("");  //表格名称
         axisX.setTextSize(15);//设置字体大小
@@ -189,8 +218,8 @@ public class MainActivity extends AppCompatActivity {
         Axis axisY = new Axis();  //Y轴
         axisY.setName("训练量");//y轴标注
         axisY.setTextSize(15);//设置字体大小
-        lineChartData.setAxisYLeft(axisY);  //Y轴设置在左边
-        //data.setAxisYRight(axisY);  //y轴设置在右边
+        //lineChartData.setAxisYLeft(axisY);  //Y轴设置在左边
+        lineChartData.setAxisYRight(axisY);  //y轴设置在右边
 
 
         //设置行为属性，支持缩放、滑动以及平移
@@ -211,12 +240,12 @@ public class MainActivity extends AppCompatActivity {
         //lineChart.setCurrentViewport(v);
     }
 
-        /**
-         * 设置X 轴的显示
-         */
+    /**
+     * 设置X 轴的显示
+     */
     private void getAxisXLabelsAcc() {
-        for (int i = 0; i < dateAcc.length; i++) {
-            accAxisXValues.add(new AxisValue(i).setLabel(dateAcc[i]));
+        for (int i = 0; i < dates.length; i++) {
+            accAxisXValues.add(new AxisValue(i).setLabel(dates[i].substring(5)));
         }
     }
 
@@ -245,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
 
         //坐标轴
         Axis axisX = new Axis(); //X轴
-        axisX.setHasTiltedLabels(true);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
+        axisX.setHasTiltedLabels(false);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
         axisX.setTextColor(Color.BLACK);  //设置字体颜色
         axisX.setName("");  //表格名称
         axisX.setTextSize(15);//设置字体大小
@@ -259,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
         Axis axisY = new Axis();  //Y轴
         axisY.setName("正确率（%）");//y轴标注
         axisY.setTextSize(15);//设置字体大小
-        lineChartData.setAxisYLeft(axisY);  //Y轴设置在左边
+        lineChartData.setAxisYRight(axisY);  //Y轴设置在左边
         //data.setAxisYRight(axisY);  //y轴设置在右边
 
 

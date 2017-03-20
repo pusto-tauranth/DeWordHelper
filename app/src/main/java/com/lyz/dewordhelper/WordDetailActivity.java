@@ -29,10 +29,16 @@ public class WordDetailActivity extends AppCompatActivity {
         TextView wordTV=(TextView)findViewById(R.id.word);
         TextView plTV=(TextView)findViewById(R.id.pl);
         TextView chnTV=(TextView)findViewById(R.id.chn);
+        TextView accTV=(TextView)findViewById(R.id.accuracy);
         genderTV.setText(word.gender);
         wordTV.setText(word.word);
         plTV.setText(word.pl);
         chnTV.setText(word.chn);
+        if(word.training==0){
+            accTV.setText("未训练过");
+        }else{
+            accTV.setText("正确率："+(word.training-word.errortimes)/word.training*100+"%");
+        }
     }
 
     public void initToolbar() {

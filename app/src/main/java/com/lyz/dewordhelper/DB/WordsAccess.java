@@ -17,11 +17,6 @@ import java.util.HashMap;
 
 public class WordsAccess {
 
-    //private WordsHelper wordsHelper;
-
-    //public WordsAccess(Context context){
-        //wordsHelper=new WordsHelper(context);
-    //}
     public static String timestamp(String format,int offset){/*recommend:"yyyy-MM-dd";offset=-1,昨天；0，当前；1：明天*/
         Date date=new Date();
         Calendar calendar = Calendar.getInstance(); //得到日历
@@ -31,10 +26,9 @@ public class WordsAccess {
 
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(date);
-
     }
 
-    public static int status_reset(){
+    public static int statusReset(){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
 
         Word word= new Word();
@@ -45,26 +39,55 @@ public class WordsAccess {
         db.close();
         return changed_num;
     }
-    public static void trainingtimes(int new_num){
+
+    public static void setTrainingTimes(int new_num){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String timestamp=WordsAccess.timestamp("yyyy-MM-dd",0);
-        String WHERE=" WHERE "+Word.Key_date_2+" = '"+timestamp+"'";
+        String WhereDate=" WHERE "+Word.Key_date_2+" = '"+timestamp+"'";
 
-        String update="update "+Word.TABLE_2+" set "+Word.Key_training_2+"="+new_num+"+"+Word.Key_training_2+WHERE;
-        String insert="INSERT INTO "+Word.TABLE_2+" VALUES ('"+timestamp+"','"+new_num+"')";
+        String update="update "+Word.TABLE_2+" set "+Word.Key_training_2+"="+new_num+"+"+Word.Key_training_2+WhereDate;
+        String insert="INSERT INTO "+Word.TABLE_2+" VALUES ('"+timestamp+"','"+new_num+"','"+ 0+"')";
 
-        if(getWordTotal(Word.TABLE_2,WHERE)==0){
+        if(getWordTotal(Word.TABLE_2,WhereDate)==0){
             db.execSQL(insert);
         }else {
             db.execSQL(update);
         }
         db.close();
     }
-    public static Word gettrainingtimes(String timestamp){
+
+    public static void setErrorTimes(){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
-        String selectQuery="SELECT "+
-                Word.Key_date_2 +","+
-                Word.Key_training_2 +
+        String timestamp=WordsAccess.timestamp("yyyy-MM-dd",0);
+        String WHERE0=" WHERE "+Word.Key_status+" = -1 ";
+        int newError=WordsAccess.getWordTotal(Word.TABLE,WHERE0);
+
+        String WhereDate=" WHERE "+Word.Key_date_2+" = '"+timestamp+"'";
+
+        String update="update "+Word.TABLE_2+" set "+Word.Key_errortimes_2+"="+newError+"+"+Word.Key_errortimes_2+WhereDate;
+        String insert="INSERT INTO "+Word.TABLE_2+" VALUES ('"+timestamp+"','"+0+"','"+newError+"')";
+
+        if(getWordTotal(Word.TABLE_2,WhereDate)==0){
+            db.execSQL(insert);
+        }else {
+            db.execSQL(update);
+        }
+        db.close();
+    }
+
+    public static void setAccuracy(){
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+        String update="update "+Word.TABLE+" set "+Word.Key_accuracy+
+                "=("+Word.Key_training+"-"+Word.Key_errortimes+")/"+Word.Key_training+
+                " " +
+                " WHERE "+Word.Key_training+" !=0";
+        db.execSQL(update);
+        db.close();
+    }
+
+    public static Word getTrainingTimes(String timestamp){
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+        String selectQuery="SELECT * "+
                 " FROM "+Word.TABLE_2
                 +" WHERE "+
                 Word.Key_date_2 +" = ?";
@@ -74,7 +97,8 @@ public class WordsAccess {
         if(cursor.moveToFirst()){
             do{
                 word.date_2=cursor.getString(cursor.getColumnIndex(Word.Key_date_2));
-                word.training_2=cursor.getInt(cursor.getColumnIndex(Word.Key_training_2));//newly added
+                word.training_2=cursor.getInt(cursor.getColumnIndex(Word.Key_training_2));
+                word.errortimes_2=cursor.getInt(cursor.getColumnIndex(Word.Key_errortimes_2));
             }while(cursor.moveToNext());
         }
 
@@ -92,6 +116,9 @@ public class WordsAccess {
         values.put(Word.Key_chn,word.chn);
         values.put(Word.Key_book,book);
         values.put(Word.Key_einheit,einheit);
+        values.put(Word.Key_errortimes,0);
+        values.put(Word.Key_status,0);
+        values.put(Word.Key_training,0);
         long word_ID=db.insert(Word.TABLE,null,values);
 
         db.close();
@@ -114,6 +141,7 @@ public class WordsAccess {
         values.put(Word.Key_errortimes,word.errortimes);
         values.put(Word.Key_date,word.date);
         values.put(Word.Key_status,word.status);
+        values.put(Word.Key_training,word.training);
         int changed_num=db.update(Word.TABLE,values,Word.Key_Id +"=?",new String[]{String.valueOf(word.word_Id)});
         db.close();
         return changed_num;
@@ -152,14 +180,6 @@ public class WordsAccess {
 
     public static ArrayList<HashMap<String,String>> getWordList(String WHERE){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
-        /*String selectQuery="SELECT "+
-                Word.Key_Id +","+
-                Word.Key_gender+","+
-                Word.Key_word+","+
-                Word.Key_pl+","+
-                Word.Key_chn+","+
-                Word.Key_book +","+
-                Word.Key_einheit+" FROM "+Word.TABLE+" "+WHERE;*/
         String selectQuery="SELECT * "+ " FROM "+Word.TABLE+" "+WHERE;
         ArrayList<HashMap<String,String>> wordList=new ArrayList<>();
         Cursor cursor=db.rawQuery(selectQuery,null);
@@ -181,10 +201,35 @@ public class WordsAccess {
         return wordList;
     }
 
+    public static ArrayList<HashMap<String,String>> getLimitWordList(String WHERE,int lim){
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+        String selectQuery="SELECT * "+ " FROM "+Word.TABLE+" "+WHERE;
+        ArrayList<HashMap<String,String>> wordList=new ArrayList<>();
+        Cursor cursor=db.rawQuery(selectQuery,null);
+        int t=0;
+        if(cursor.moveToFirst()){
+            do{
+                t+=1;
+                HashMap<String,String> map=new HashMap<>();
+                map.put("All",cursor.getString(cursor.getColumnIndex(Word.Key_gender))+"  "+
+                        cursor.getString(cursor.getColumnIndex(Word.Key_word))+"  "+
+                        cursor.getString(cursor.getColumnIndex(Word.Key_pl))+"  "+
+                        cursor.getString(cursor.getColumnIndex(Word.Key_chn))+"(正确率"+
+                        cursor.getString(cursor.getColumnIndex(Word.Key_accuracy))+"%)");
+                map.put("wordId",cursor.getString(cursor.getColumnIndex(Word.Key_Id)));
+                wordList.add(map);
+            }while(cursor.moveToNext()&&t<lim);
+        }
+
+        cursor.close();
+        db.close();
+        return wordList;
+    }
+
     public static Word getWordById(int Id){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
-        String selectQuery="SELECT "+
-                Word.Key_Id +","+
+        String selectQuery="SELECT * "+
+                /*Word.Key_Id +","+
                 Word.Key_gender+","+
                 Word.Key_word+","+
                 Word.Key_pl+","+
@@ -192,7 +237,7 @@ public class WordsAccess {
                 Word.Key_book +","+//LZ
                 Word.Key_errortimes+","+
                 Word.Key_date+","+      //newly added
-                Word.Key_einheit+ " FROM "+Word.TABLE
+                Word.Key_einheit+ */" FROM "+Word.TABLE
                 +" WHERE "+
                 Word.Key_Id +" = ?";
         Word word=new Word();
@@ -206,7 +251,10 @@ public class WordsAccess {
                 word.pl=cursor.getString(cursor.getColumnIndex(Word.Key_pl));
                 word.chn=cursor.getString(cursor.getColumnIndex(Word.Key_chn));
                 word.book=cursor.getInt(cursor.getColumnIndex(Word.Key_book));
-                word.einheit=cursor.getInt(cursor.getColumnIndex(Word.Key_einheit));//LZ
+                word.einheit=cursor.getInt(cursor.getColumnIndex(Word.Key_einheit));
+                word.status=cursor.getInt(cursor.getColumnIndex(Word.Key_status));
+                word.errortimes=cursor.getInt(cursor.getColumnIndex(Word.Key_errortimes));
+                word.training=cursor.getInt(cursor.getColumnIndex(Word.Key_training));
             }while(cursor.moveToNext());
         }
 

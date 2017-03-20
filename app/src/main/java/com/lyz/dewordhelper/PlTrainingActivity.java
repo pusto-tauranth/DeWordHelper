@@ -129,8 +129,10 @@ public class PlTrainingActivity extends AppCompatActivity {
 
         if(Bool){
             ques.status=1;
+            ques.training+=1;
         } else {
             ques.errortimes+=1;
+            ques.training+=1;
             ques.status=-1;
         }
         WordsAccess.update(ques);
