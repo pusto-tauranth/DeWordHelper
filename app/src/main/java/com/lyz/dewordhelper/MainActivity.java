@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onTrainingClick(View v) {
-        Intent intent = new Intent(this, StockSelectActivity.class);
+        Intent intent = new Intent(this,BookSelectActivity.class);
         startActivity(intent);
     }
 
@@ -98,6 +98,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, StockActivity.class);
         startActivity(intent);
     }
+
+    public void onLanSelectClick(View v){
+        Intent intent = new Intent(this,LanguageSelectActivity.class);
+        startActivity(intent);
+    }
+
 
     public String[] getDates() {
         String[] timestamp = new String[7];

@@ -23,6 +23,9 @@
         <activity android:name=".WordDetailActivity" />
         <activity android:name=".ReportActivity" />
         <activity android:name=".StockDetailActivity" />
+        <activity android:name=".BookSelectActivity" />
+        <activity android:name=".LanguageSelectActivity" />
+
     </application>
 
 </manifest>
