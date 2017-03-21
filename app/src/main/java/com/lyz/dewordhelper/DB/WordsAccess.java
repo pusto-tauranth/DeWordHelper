@@ -221,7 +221,7 @@ public class WordsAccess {
         return wordList;
     }
 
-    public static ArrayList<HashMap<String,String>> getLimitWordList(String WHERE,int lim){
+    public static ArrayList<HashMap<String,String>> getLimitWordList(String WHERE,int lim,String type){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String selectQuery="SELECT * "+ " FROM "+Word.TABLE+" "+WHERE;
         ArrayList<HashMap<String,String>> wordList=new ArrayList<>();
@@ -231,11 +231,19 @@ public class WordsAccess {
             do{
                 t+=1;
                 HashMap<String,String> map=new HashMap<>();
-                map.put("All",cursor.getString(cursor.getColumnIndex(Word.Key_gender))+"  "+
-                        cursor.getString(cursor.getColumnIndex(Word.Key_word))+"  "+
-                        cursor.getString(cursor.getColumnIndex(Word.Key_plural))+"  "+
-                        cursor.getString(cursor.getColumnIndex(Word.Key_chn))+"(正确率"+
-                        cursor.getString(cursor.getColumnIndex(Word.Key_accuracyGender))+"%)");
+                if(type.equals("Gender")){
+                    map.put("All",cursor.getString(cursor.getColumnIndex(Word.Key_gender))+"  "+
+                            cursor.getString(cursor.getColumnIndex(Word.Key_word))+"  "+
+                            cursor.getString(cursor.getColumnIndex(Word.Key_plural))+"  "+
+                            cursor.getString(cursor.getColumnIndex(Word.Key_chn))+"    (正确率"+
+                            cursor.getString(cursor.getColumnIndex(Word.Key_accuracyGender))+"%)");
+                }else{
+                    map.put("All",cursor.getString(cursor.getColumnIndex(Word.Key_gender))+"  "+
+                            cursor.getString(cursor.getColumnIndex(Word.Key_word))+"  "+
+                            cursor.getString(cursor.getColumnIndex(Word.Key_plural))+"  "+
+                            cursor.getString(cursor.getColumnIndex(Word.Key_chn))+"    (正确率"+
+                            cursor.getString(cursor.getColumnIndex(Word.Key_accuracyPlural))+"%)");
+                }
                 map.put("wordId",cursor.getString(cursor.getColumnIndex(Word.Key_Id)));
                 wordList.add(map);
             }while(cursor.moveToNext()&&t<lim);

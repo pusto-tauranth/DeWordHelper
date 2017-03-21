@@ -34,10 +34,14 @@ public class WordDetailActivity extends AppCompatActivity {
         wordTV.setText(word.word);
         plTV.setText(word.plural);
         chnTV.setText(word.chn);
-        if(word.trainingGender ==0){
+        if(word.trainingGender==0&&word.trainingPlural==0){
             accTV.setText("未训练过");
+        }else if(word.trainingGender!=0&&word.trainingPlural!=0){
+            accTV.setText("词性正确率："+word.accuracyGender+"%\n复数正确率："+word.accuracyGender+"%");
+        }else if(word.trainingGender!=0){
+            accTV.setText("词性正确率："+word.accuracyGender+"%\n复数未训练过");
         }else{
-            accTV.setText("正确率："+(word.trainingGender -word.errorGender)/word.trainingGender *100+"%");
+            accTV.setText("词性未训练过\n复数正确率："+word.accuracyGender+"%");
         }
     }
 
