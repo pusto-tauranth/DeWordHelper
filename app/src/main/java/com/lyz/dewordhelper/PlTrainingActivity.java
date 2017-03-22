@@ -136,20 +136,18 @@ public class PlTrainingActivity extends AppCompatActivity {
     public void onPlAClick(View arg0) {
         // TODO Auto-generated method stub
         String pl=((Button)arg0).getText().toString();
-        System.out.println(pl);
-        System.out.println(ques.plural);
         bar=(ProgressBar)findViewById(R.id.progressBar2);
         bar.setProgress(100*(round-1)/roundMax);
         if(ques.plural.equals(pl)||
                 (pl.equals(this.getResources().getString(R.string.en_etc))&&
                         (ques.plural.equals("-n")||ques.plural.equals("-en")||ques.plural.equals("-nen")))){
             trainingDialog=newTrainingDialog(R.style.trueDialog);
-            trainingDialog.setTitle("Richtig");
+            trainingDialog.setTitle("True");
             recording(true);
             trainingDialog.show();
         }else{
             trainingDialog=newTrainingDialog(R.style.falseDialog);
-            trainingDialog.setTitle("Falsch");
+            trainingDialog.setTitle("False");
             recording(false);
             trainingDialog.show();
         }

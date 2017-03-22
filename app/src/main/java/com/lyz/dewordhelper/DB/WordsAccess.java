@@ -53,6 +53,8 @@ public class WordsAccess {
             update="update "+Word.TABLE_2+" set "+Word.Key_trainingPlural_2 +"="+newNum+"+"+Word.Key_trainingPlural_2 +WhereDate;
             insert="INSERT INTO "+Word.TABLE_2+" VALUES ('"+timestamp+"','"+0+"','"+0+"','"+0+"','"+newNum+"')";
         }
+        System.out.println(update);
+        System.out.println(insert);
         if(getWordTotal(Word.TABLE_2,WhereDate)==0){
             db.execSQL(insert);
         }else {
@@ -115,6 +117,8 @@ public class WordsAccess {
                 word.date_2=cursor.getString(cursor.getColumnIndex(Word.Key_date_2));
                 word.trainingGender_2 =cursor.getInt(cursor.getColumnIndex(Word.Key_trainingGender_2));
                 word.errorGender_2 =cursor.getInt(cursor.getColumnIndex(Word.Key_errorGender_2));
+                word.trainingPlural_2 =cursor.getInt(cursor.getColumnIndex(Word.Key_trainingPlural_2));
+                word.errorPlural_2 =cursor.getInt(cursor.getColumnIndex(Word.Key_errorPlural_2));
             }while(cursor.moveToNext());
         }
 
@@ -291,7 +295,6 @@ public class WordsAccess {
         Word word;
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_book+" = "+Book+" AND "+Word.Key_unit +" = "+Einheit;
-        System.out.println(selectQuery);
         Cursor cursor=db.rawQuery(selectQuery,null);
         int i=0;
         int id=0;

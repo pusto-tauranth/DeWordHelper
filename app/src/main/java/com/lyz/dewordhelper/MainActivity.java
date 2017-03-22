@@ -93,26 +93,6 @@ public class MainActivity extends AppCompatActivity {
         mainPagerAdapter = new MainPagerAdapter(pageList);
         mainViewPager.setAdapter(mainPagerAdapter);
         initTabLayout();
-
-        getAxisXLabelsQuanGen();//获取x轴的标注
-        getAxisPointsQuanGen();//获取坐标点
-        initLineChartQuanGen();//初始化
-
-        getAxisXLabelsAccGen();//获取x轴的标注
-        getAxisPointsAccGen();//获取坐标点
-        initLineChartAccGen();//初始化
-
-        initKeyPageGen();
-
-        getAxisXLabelsQuanPl();//获取x轴的标注
-        getAxisPointsQuanPl();//获取坐标点
-        initLineChartQuanPl();//初始化
-
-        getAxisXLabelsAccPl();//获取x轴的标注
-        getAxisPointsAccPl();//获取坐标点
-        initLineChartAccPl();//初始化
-
-        initKeyPagePl();
     }
 
     public void onTrainingClick(View v) {
@@ -128,6 +108,14 @@ public class MainActivity extends AppCompatActivity {
     public void onLanSelectClick(View v){
         Intent intent = new Intent(this,LanguageSelectActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //layout.removeView(textView);
+        initViewPager();
+
     }
 
 
@@ -148,6 +136,13 @@ public class MainActivity extends AppCompatActivity {
         }
         return num;
     }
+    /*public int[] zeroTrainingQuantityGen(){
+        int[] num= new int[7];
+        for(int i=0;i<7;i++){
+            num[i]=0;
+        }
+        return num;
+    }*/
 
     public int[] getTrainingQuantityPl(){
         int[] num= new int[7];
@@ -199,6 +194,29 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0;i< titleList.size(); i++) {
             tabLayout.getTabAt(i).setText(titleList.get(i));
         }
+    }
+
+    public void initViewPager(){
+
+        getAxisXLabelsQuanGen();//获取x轴的标注
+        getAxisPointsQuanGen();//获取坐标点
+        initLineChartQuanGen();//初始化
+
+        getAxisXLabelsAccGen();//获取x轴的标注
+        getAxisPointsAccGen();//获取坐标点
+        initLineChartAccGen();//初始化
+
+        initKeyPageGen();
+
+        getAxisXLabelsQuanPl();//获取x轴的标注
+        getAxisPointsQuanPl();//获取坐标点
+        initLineChartQuanPl();//初始化
+
+        getAxisXLabelsAccPl();//获取x轴的标注
+        getAxisPointsAccPl();//获取坐标点
+        initLineChartAccPl();//初始化
+
+        initKeyPagePl();
     }
 
     public void initKeyPageGen() {
