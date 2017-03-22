@@ -101,8 +101,8 @@ public class TrainingSettingsActivity extends AppCompatActivity {
                 if (value != null) {
                     if (value < 0) {
                         value = 0;
-                        //} else if (value > 100) {
-                        //   value = 100;
+                        } else if (value > 1000) {
+                           value = 1000;
                     }
                     notHandleAfterTextChangedEvent = true;
                     etImageAdjustment.setText(Integer.toString(value));
@@ -175,7 +175,7 @@ public class TrainingSettingsActivity extends AppCompatActivity {
         intent.putExtra("roundMax",roundMax);
         intent.putExtra("OpenChn",OpenChn);
         intent.putExtra("Book",getIntent().getStringExtra("Book"));
-        intent.putExtra("Einheit",getIntent().getStringExtra("Einheit"));
+        intent.putExtra("Unit",getIntent().getStringExtra("Unit"));
         startActivity(intent);
     }
     public void onPlClick(View v){
@@ -190,7 +190,7 @@ public class TrainingSettingsActivity extends AppCompatActivity {
         intent.putExtra("OpenChn",OpenChn);//LZ
         intent.putExtra("roundMax",roundMax);
         intent.putExtra("Book",getIntent().getStringExtra("Book"));
-        intent.putExtra("Einheit",getIntent().getStringExtra("Einheit"));
+        intent.putExtra("Unit",getIntent().getStringExtra("Unit"));
         startActivity(intent);
     }
     public void onChnBtn(View v){

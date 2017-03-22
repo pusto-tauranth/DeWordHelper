@@ -26,7 +26,7 @@ public class PlTrainingActivity extends AppCompatActivity {
     int round;
     int roundMax;
     String bookStr;
-    String einheitStr;
+    String unitStr;
     String ShowChn;
 
     TextView genderTV;
@@ -52,7 +52,7 @@ public class PlTrainingActivity extends AppCompatActivity {
         round=getIntent().getIntExtra("round",0);
         roundMax=getIntent().getIntExtra("roundMax",0);
         bookStr=getIntent().getStringExtra("Book");
-        einheitStr=getIntent().getStringExtra("Einheit");
+        unitStr =getIntent().getStringExtra("Unit");
         genderTV=(TextView)findViewById(R.id.gender);
         wordTV=(TextView)findViewById(R.id.word);
         chnTV=(TextView)findViewById(R.id.chn);
@@ -184,9 +184,9 @@ public class PlTrainingActivity extends AppCompatActivity {
                 words[i]=WordsAccess.getWordById(i);
             }
         }else{
-            words=new Word[getListWordTotal(bookStr,einheitStr)];
-            for(int i = 0; i<getListWordTotal(bookStr,einheitStr); i++) {
-                words[i] = WordsAccess.getWordByListId(bookStr,einheitStr,i+1);
+            words=new Word[getListWordTotal(bookStr, unitStr)];
+            for(int i = 0; i<getListWordTotal(bookStr, unitStr); i++) {
+                words[i] = WordsAccess.getWordByListId(bookStr, unitStr,i+1);
             }
         }
         wordWeightSum=0;

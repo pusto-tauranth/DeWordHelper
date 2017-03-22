@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:id="@+id/stock_select_all"
-            android:text="Alles"
+            android:text="训练全部"
             android:background="#212121"
             android:textColor="#ffffff"
             android:onClick="onAll"

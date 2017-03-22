@@ -28,7 +28,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
 
     String ShowChn;
     String bookStr;
-    String einheitStr;
+    String unitStr;
 
     TextView wordTV;
     TextView plTV;
@@ -55,7 +55,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
         round=getIntent().getIntExtra("round",0);
         roundMax=getIntent().getIntExtra("roundMax",0);
         bookStr=getIntent().getStringExtra("Book");
-        einheitStr=getIntent().getStringExtra("Einheit");
+        unitStr =getIntent().getStringExtra("Unit");
         wordTV=(TextView)findViewById(R.id.word);
         plTV=(TextView)findViewById(R.id.pl);
         chnTV=(TextView)findViewById(R.id.chn);
@@ -153,17 +153,24 @@ public class GenderTrainingActivity extends AppCompatActivity {
     }
 
     public void initWords(){
-        if(bookStr.equals("All")){
+        if(bookStr.equals("All")&&unitStr.equals("All")){
             words=new Word[WordsAccess.getWordTotal(Word.TABLE,"")];
             for(int i=0;i<WordsAccess.getWordTotal(Word.TABLE,"");i++){
                 words[i]=WordsAccess.getWordById(i);
             }
-        }else{
-            words=new Word[getListWordTotal(bookStr,einheitStr)];
-            for(int i = 0; i<getListWordTotal(bookStr,einheitStr); i++) {
-                words[i] = WordsAccess.getWordByListId(bookStr,einheitStr,i+1);
+        }else if(unitStr.equals("All")){
+            int wordTotal=WordsAccess.getWordTotal(Word.TABLE," WHERE "+Word.Key_book+"= "+bookStr);
+            words=new Word[wordTotal];
+            for(int i=0;i<wordTotal;i++){
+                words[i]=WordsAccess.getWordById(i);
+            }
+        }else {
+            words=new Word[getListWordTotal(bookStr, unitStr)];
+            for(int i = 0; i<getListWordTotal(bookStr, unitStr); i++) {
+                words[i] = WordsAccess.getWordByListId(bookStr, unitStr,i+1);
             }
         }
+
         wordWeightSum=0;
         for(int i=0;i<words.length;i++){
             wordWeightSum+=100-words[i].accuracyGender +30;//错误率权重为100-accuracyGender，为防止相差过大，每词计算权重时各再加一数

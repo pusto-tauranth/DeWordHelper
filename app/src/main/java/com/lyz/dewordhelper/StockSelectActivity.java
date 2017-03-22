@@ -19,16 +19,16 @@ public class StockSelectActivity extends ListActivity {
         setContentView(R.layout.activity_stock_select);
         initToolbar();
         ArrayList<HashMap<String, String>> myList = new ArrayList<HashMap<String, String>>();
-        if(String.valueOf(getIntent().getStringExtra("Book")).equals("All")) {
+        /*if(String.valueOf(getIntent().getStringExtra("Book")).equals("All")) {
             for (int i = 1; i <= 10; i++) {
                 HashMap<String, String> map = new HashMap<String, String>();
-                map.put("Einheit", String.valueOf(i));
+                map.put("Unit", String.valueOf(i));
                 map.put("Book",String.valueOf(1));
                 myList.add(map);
             }
             for (int i=1;i<=10;i++) {
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("Einheit",String.valueOf(i));
+            map.put("Unit",String.valueOf(i));
             map.put("Book",String.valueOf(2));
             myList.add(map);
             }
@@ -36,22 +36,22 @@ public class StockSelectActivity extends ListActivity {
         else {
             for (int i = 1; i <= 10; i++) {
                 HashMap<String, String> map = new HashMap<String, String>();
-                map.put("Einheit", String.valueOf(i));
+                map.put("Unit", String.valueOf(i));
                 map.put("Book", String.valueOf(getIntent().getStringExtra("Book")));
                 myList.add(map);
             }
-        }
-       /* for (int i=1;i<=10;i++) {
-            HashMap<String, String> map = new HashMap<String, String>();
-            map.put("Einheit",String.valueOf(i));
-            map.put("Book",String.valueOf(2));
-            myList.add(map);
         }*/
+       for (int i=1;i<=10;i++) {
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("Unit",String.valueOf(i));
+            map.put("Book",String.valueOf(getIntent().getStringExtra("Book")));
+            myList.add(map);
+        }
 
         SimpleAdapter mSchedule = new SimpleAdapter(this,
                 myList,
                 R.layout.activity_stock_item,
-                new String[]{"Einheit", "Book"},
+                new String[]{"Unit", "Book"},
                 new int[]{R.id.einheit, R.id.book});
         setListAdapter(mSchedule);
     }
@@ -70,8 +70,8 @@ public class StockSelectActivity extends ListActivity {
 
     public void onAll(View v){
         Intent intent=new Intent(this,TrainingSettingsActivity.class);
-        intent.putExtra("Einheit","All");
-        intent.putExtra("Book","All");
+        intent.putExtra("Unit","All");
+        intent.putExtra("Book",getIntent().getStringExtra("Book"));
         startActivity(intent);
     }
 
@@ -79,12 +79,12 @@ public class StockSelectActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         // TODO Auto-generated method stub
         super.onListItemClick(l, v, position, id);
-        TextView einheitTV=(TextView)v.findViewById(R.id.einheit);
+        TextView unitTV=(TextView)v.findViewById(R.id.einheit);
         TextView bookTV=(TextView)v.findViewById(R.id.book);
-        String einheitStr=einheitTV.getText().toString();
+        String unitStr=unitTV.getText().toString();
         String bookStr=bookTV.getText().toString();
         Intent intent = new Intent(this,TrainingSettingsActivity.class);
-        intent.putExtra("Einheit",einheitStr);
+        intent.putExtra("Unit",unitStr);
         intent.putExtra("Book",bookStr);
         this.startActivity(intent);
     }

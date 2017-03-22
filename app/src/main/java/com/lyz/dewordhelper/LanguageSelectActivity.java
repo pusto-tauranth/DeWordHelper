@@ -3,6 +3,7 @@ package com.lyz.dewordhelper;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -14,9 +15,10 @@ public class LanguageSelectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_language_select);
         initToolbar();
-        tv = (TextView) this.findViewById(R.id.decision);
+        /*tv = (TextView) this.findViewById(R.id.decision);
         tv.setText("您选择的语言是:"+"德语");
         RadioGroup group = (RadioGroup) this.findViewById(R.id.languageGroup);
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -29,7 +31,7 @@ public class LanguageSelectActivity extends AppCompatActivity {
                 tv.setText("您选择的语言是：" + rb.getText());
                 Language=""+rb.getText();
             }
-        });
+        });*/
     }
 
     public void initToolbar() {
