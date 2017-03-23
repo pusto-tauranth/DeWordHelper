@@ -53,8 +53,6 @@ public class WordsAccess {
             update="update "+Word.TABLE_2+" set "+Word.Key_trainingPlural_2 +"="+newNum+"+"+Word.Key_trainingPlural_2 +WhereDate;
             insert="INSERT INTO "+Word.TABLE_2+" VALUES ('"+timestamp+"','"+0+"','"+0+"','"+0+"','"+newNum+"')";
         }
-        System.out.println(update);
-        System.out.println(insert);
         if(getWordTotal(Word.TABLE_2,WhereDate)==0){
             db.execSQL(insert);
         }else {
@@ -291,10 +289,16 @@ public class WordsAccess {
         return word;
     }
 
-    public static Word getWordByListId(String Book,String Einheit,int listId){
+    public static Word getWordByListId(String Book,String Unit,int listId){
         Word word;
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
-        String selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_book+" = "+Book+" AND "+Word.Key_unit +" = "+Einheit;
+        String selectQuery;
+        if(!Unit.equals("All")){
+            selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_book+" = "+Book+" AND "+Word.Key_unit +" = "+Unit;
+        }else{
+            selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_book+" = "+Book;
+        }
+
         Cursor cursor=db.rawQuery(selectQuery,null);
         int i=0;
         int id=0;
@@ -303,6 +307,49 @@ public class WordsAccess {
                 i++;
                 id=cursor.getInt(cursor.getColumnIndex(Word.Key_Id));
             }while(cursor.moveToNext()&&i<listId);
+        }
+        word=getWordById(id);
+        cursor.close();
+        db.close();
+        return word;
+    }
+    public static Word getWordByAccuracyId(String type,int listId){
+        Word word;
+        String WHERE;
+        if(type.equals("Gender")){
+            WHERE=" WHERE " + Word.Key_errorGender + " != " + 0
+                    +" ORDER BY "+Word.Key_accuracyGender + " ASC ";
+        }else{
+            WHERE= " WHERE " + Word.Key_errorPlural + " != " + 0
+                    +" ORDER BY "+Word.Key_accuracyPlural + " ASC ";
+        }
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+        String selectQuery="SELECT * FROM "+Word.TABLE+WHERE;
+
+        Cursor cursor=db.rawQuery(selectQuery,null);
+        int i=0;
+        int id=0;
+        if(cursor.moveToFirst()){
+            do{
+                i++;
+                id=cursor.getInt(cursor.getColumnIndex(Word.Key_Id));
+            }while(cursor.moveToNext()&&i<listId);
+        }
+        cursor.close();
+        db.close();
+        //若训练量太少，改从下列选择
+        if(i<listId){
+            WHERE= " ORDER BY "+Word.Key_accuracyPlural + " ASC ";
+            db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+            selectQuery="SELECT * FROM "+Word.TABLE+WHERE;
+
+            cursor=db.rawQuery(selectQuery,null);
+            if(cursor.moveToFirst()){
+                do{
+                    i++;
+                    id=cursor.getInt(cursor.getColumnIndex(Word.Key_Id));
+                }while(cursor.moveToNext()&&i<listId);
+            }
         }
         word=getWordById(id);
         cursor.close();

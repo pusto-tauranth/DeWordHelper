@@ -16,15 +16,26 @@
             android:id="@+id/toolbar"/>
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:layout_weight="10"
             android:id="@+id/android:list">
 
         </ListView>
         <Button
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/stock_select_fallible"
+            android:text="常错词专练"
+            android:background="#3e2723"
+            android:textColor="#ffffff"
+            android:onClick="onFallible"
+            android:textSize="30sp"
+            android:textStyle="normal|bold" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:id="@+id/stock_select_all"
             android:text="训练全部"
             android:background="#212121"

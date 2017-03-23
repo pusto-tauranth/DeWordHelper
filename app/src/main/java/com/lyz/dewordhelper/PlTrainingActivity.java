@@ -175,33 +175,41 @@ public class PlTrainingActivity extends AppCompatActivity {
     }
 
     public void initWords(){
-
-        if(bookStr.equals("All")){
-            words=new Word[WordsAccess.getWordTotal(Word.TABLE,"")];
-            for(int i=0;i<WordsAccess.getWordTotal(Word.TABLE,"");i++){
-                words[i]=WordsAccess.getWordById(i);
+        wordWeightSum=0;
+        if(bookStr.equals("All")&&unitStr.equals("All")){
+            wordWeightSum=WordsAccess.getWordTotal(Word.TABLE,"");
+        }else if(bookStr.equals("Fallible")){
+            words=new Word[100];
+            for(int i = 0; i<100; i++) {
+                words[i] = WordsAccess.getWordByAccuracyId("Plural",i+1);
+                wordWeightSum+=(100-words[i].accuracyPlural +30);
             }
-        }else{
+        } else if(unitStr.equals("All")){
+            wordWeightSum=WordsAccess.getWordTotal(Word.TABLE," WHERE "+Word.Key_book+"= "+bookStr);
+        }else {
             words=new Word[getListWordTotal(bookStr, unitStr)];
             for(int i = 0; i<getListWordTotal(bookStr, unitStr); i++) {
                 words[i] = WordsAccess.getWordByListId(bookStr, unitStr,i+1);
+                wordWeightSum+=(100-words[i].accuracyPlural +30);
             }
-        }
-        wordWeightSum=0;
-        for(int i=0;i<words.length;i++){
-            wordWeightSum+=100-words[i].accuracyGender +30;//错误率权重为100-accuracyGender，为防止相差过大，每词计算权重时各再加一数
         }
     }
     public Word nextWord(){
         int stepWeightSum=0;
         int num=random.nextInt(wordWeightSum)+1;
         int i;
-        for(i=0;i<words.length;i++){
-            stepWeightSum+=100-words[i].accuracyGender +30;
-            if(num<=stepWeightSum){
-                break;
+        if(!unitStr.equals("All")){
+            for(i=0;i<words.length;i++){
+                stepWeightSum+=(100-words[i].accuracyPlural+30);
+                if(num<=stepWeightSum){
+                    break;
+                }
             }
+            return words[i];
+        }else if(bookStr.equals("All")){
+            return WordsAccess.getWordById(num);
+        }else{
+            return WordsAccess.getWordByListId(bookStr,"All",num);
         }
-        return words[i];
     }
 }

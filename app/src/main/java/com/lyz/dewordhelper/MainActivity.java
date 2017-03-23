@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //layout.removeView(textView);
         quanPointValuesGen.clear();
         quanAxisXValuesGen.clear();
         accPointValuesGen.clear();
@@ -122,8 +121,11 @@ public class MainActivity extends AppCompatActivity {
         quanAxisXValuesPl.clear();
         accPointValuesPl.clear();
         accAxisXValuesPl.clear();
+        quantityGen = getTrainingQuantityGen();
+        accuracyGen = getTrainingAccuracyGen();
+        quantityPl = getTrainingQuantityPl();
+        accuracyPl = getTrainingAccuracyPl();
         initViewPager();
-
     }
 
 

@@ -49,11 +49,16 @@ public class BookSelectActivity extends ListActivity {
     }
 
     public void onAll(View v){
-        //Intent intent=new Intent(this,StockSelectActivity.class);
-        //intent.putExtra("Book","All");
         Intent intent=new Intent(this,TrainingSettingsActivity.class);
         intent.putExtra("Unit","All");
         intent.putExtra("Book","All");
+        startActivity(intent);
+    }
+
+    public void onFallible(View v){
+        Intent intent=new Intent(this,TrainingSettingsActivity.class);
+        intent.putExtra("Unit","Fallible");
+        intent.putExtra("Book","Fallible");
         startActivity(intent);
     }
 
