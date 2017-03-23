@@ -26,16 +26,20 @@ public class StockActivity extends ListActivity {
         setContentView(R.layout.activity_stock);
         initToolbar();
         ArrayList<HashMap<String, String>> myList = new ArrayList<HashMap<String, String>>();
+        HashMap<String, String> mapFavorite = new HashMap<String, String>();
+        mapFavorite.put("Einheit","收藏夹");
+        mapFavorite.put("Book","");
+        myList.add(mapFavorite);
         for (int i=1;i<=10;i++) {
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("Einheit",String.valueOf(i));
-            map.put("Book",String.valueOf(1));
+            map.put("Einheit","Einheit"+i);
+            map.put("Book","新编大学德语"+1);
             myList.add(map);
         }
         for (int i=1;i<=10;i++) {
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("Einheit",String.valueOf(i));
-            map.put("Book",String.valueOf(2));
+            map.put("Einheit","Einheit"+i);
+            map.put("Book","新编大学德语"+2);
             myList.add(map);
         }
 
@@ -76,8 +80,16 @@ public class StockActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
         TextView einheitTV=(TextView)v.findViewById(R.id.einheit);
         TextView bookTV=(TextView)v.findViewById(R.id.book);
-        String einheitStr=einheitTV.getText().toString();
-        String bookStr=bookTV.getText().toString();
+        String einheitStr;
+        String bookStr;
+        if(position==0){
+            einheitStr="0";
+            bookStr="0";
+        }else{
+            einheitStr=einheitTV.getText().toString().substring(7);
+            bookStr=bookTV.getText().toString().substring(6);
+        }
+
         Intent intent = new Intent(this,StockDetailActivity.class);
         intent.putExtra("Einheit",einheitStr);
         intent.putExtra("Book",bookStr);

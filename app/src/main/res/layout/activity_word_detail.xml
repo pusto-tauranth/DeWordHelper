@@ -27,11 +27,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="添加"
+            android:text="收藏"
             android:textSize="25sp"
             android:background="#f50057"
             android:textColor="#ffffff"
-            android:onClick="onInsertClick"
+            android:onClick="onFavoriteClick"
 
             android:id="@+id/add" />
         <Button

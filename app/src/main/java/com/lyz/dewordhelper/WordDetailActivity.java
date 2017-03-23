@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.lyz.dewordhelper.DB.Word;
 import com.lyz.dewordhelper.DB.WordsAccess;
 import com.lyz.dewordhelper.Dialog.DeleteDialog;
+import com.lyz.dewordhelper.Dialog.FavoriteDialog;
 import com.lyz.dewordhelper.Dialog.InsertDialog;
 import com.lyz.dewordhelper.Dialog.UpdateDialog;
 
@@ -57,9 +58,9 @@ public class WordDetailActivity extends AppCompatActivity {
         title.setText(word.gender+" "+word.word);
     }
 
-    public void onInsertClick(View v){
-        InsertDialog insertDialog=new InsertDialog(this,word.book,word.unit);
-        insertDialog.show();
+    public void onFavoriteClick(View v){
+        FavoriteDialog favoriteDialog=new FavoriteDialog(this,Id);
+        favoriteDialog.show();
     }
 
     public void onUpdateClick(View v){

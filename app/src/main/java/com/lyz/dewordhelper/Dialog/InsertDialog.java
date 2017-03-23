@@ -60,9 +60,8 @@ public class InsertDialog extends Dialog {
                 word.word=wordET.getText().toString();
                 word.plural =plET.getText().toString();
                 word.chn=chnET.getText().toString();
-                int idSpec=WordsAccess.insert(word,book,einheit);
+                WordsAccess.insert(word,book,einheit);
                 Toast.makeText(getContext(),"单词添加成功",Toast.LENGTH_LONG).show();
-                System.out.println(idSpec);
                 dismiss();
             }
         });
