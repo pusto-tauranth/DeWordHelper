@@ -114,6 +114,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         //layout.removeView(textView);
+        quanPointValuesGen.clear();
+        quanAxisXValuesGen.clear();
+        accPointValuesGen.clear();
+        accAxisXValuesGen.clear();
+        quanPointValuesPl.clear();
+        quanAxisXValuesPl.clear();
+        accPointValuesPl.clear();
+        accAxisXValuesPl.clear();
         initViewPager();
 
     }

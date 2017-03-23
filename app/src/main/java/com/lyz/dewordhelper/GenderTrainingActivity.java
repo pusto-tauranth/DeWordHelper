@@ -173,7 +173,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
 
         wordWeightSum=0;
         for(int i=0;i<words.length;i++){
-            wordWeightSum+=100-words[i].accuracyGender +30;//错误率权重为100-accuracyGender，为防止相差过大，每词计算权重时各再加一数
+            wordWeightSum+=(100-words[i].accuracyGender +30);//错误率权重为100-accuracyGender，为防止相差过大，每词计算权重时各再加一数
         }
     }
     public Word nextWord(){
@@ -181,7 +181,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
         int num=random.nextInt(wordWeightSum)+1;
         int i;
         for(i=0;i<words.length;i++){
-            stepWeightSum+=100-words[i].accuracyGender +30;
+            stepWeightSum+=(100-words[i].accuracyGender +30);
             if(num<=stepWeightSum){
                 break;
             }
