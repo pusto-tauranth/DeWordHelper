@@ -20,12 +20,14 @@ import java.util.HashMap;
 public class ReportActivity extends AppCompatActivity {
 
     ListView lv;
+    TextView accuracy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_report);
+        accuracy=(TextView)findViewById(R.id.accuracy);
         initToolbar();
         initKeyPage();
     }
@@ -48,17 +50,18 @@ public class ReportActivity extends AppCompatActivity {
 
     public void initKeyPage() {
         lv = (ListView)findViewById(R.id.errorList);
-        ArrayList<HashMap<String, String>> myList;
+        ArrayList<HashMap<String, String>> errorList;
         String WHERE = " WHERE " + Word.Key_status + " = " + "-1";
-        myList = WordsAccess.getWordList(WHERE);
+        errorList = WordsAccess.getWordList(WHERE);
         String type=getIntent().getStringExtra("Type");
         WordsAccess.setAccuracy();
         WordsAccess.setErrorTimes(type);
         int newTrainingTimes=WordsAccess.statusReset();
         WordsAccess.setTrainingTimes(newTrainingTimes,type);
+        accuracy.setText("本次正确率："+(100-100*errorList.size()/(float)newTrainingTimes)+"%");
 
         SimpleAdapter listAdapter = new SimpleAdapter(this,
-                myList,
+                errorList,
                 R.layout.activity_stock_detail_item,
                 new String[]{"All", "wordId"},
                 new int[]{R.id.All, R.id.wordId});
