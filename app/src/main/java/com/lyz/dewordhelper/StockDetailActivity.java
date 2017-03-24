@@ -17,21 +17,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StockDetailActivity extends ListActivity {
-    int einheit;
+    int unit;
     int book;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_stock_detail);
-        einheit = Integer.parseInt(getIntent().getStringExtra("Einheit"));
+        unit = Integer.parseInt(getIntent().getStringExtra("Unit"));
         book = Integer.parseInt(getIntent().getStringExtra("Book"));
         initToolbar();
-        ArrayList<HashMap<String, String>> myList;
-        String WHERE=" WHERE "+Word.Key_unit +" = "+einheit+" AND "+Word.Key_book+" = "+book;
-        myList=WordsAccess.getWordList(WHERE);
+        ArrayList<HashMap<String, String>> wordList;
+        String WHERE=" WHERE "+Word.Key_unit +" = "+ unit +" AND "+Word.Key_book+" = "+book;
+        wordList=WordsAccess.getWordList(WHERE);
         SimpleAdapter mSchedule = new SimpleAdapter(this,
-                myList,
+                wordList,
                 R.layout.activity_stock_detail_item,
                 new String[]{"All", "wordId"},
                 new int[]{R.id.All, R.id.wordId});
@@ -40,7 +40,7 @@ public class StockDetailActivity extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InsertDialog insertDialog=new InsertDialog(StockDetailActivity.this,book,einheit);
+                InsertDialog insertDialog=new InsertDialog(StockDetailActivity.this,book, unit);
                 insertDialog.show();
             }
         });
@@ -64,6 +64,6 @@ public class StockDetailActivity extends ListActivity {
             }
         });
         TextView title = (TextView) findViewById(R.id.tv_title);
-        title.setText("Einheit" + einheit + ", Buch" + book);
+        title.setText("Einheit" + unit + ", Buch" + book);
     }
 }

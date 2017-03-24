@@ -15,8 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StockSelectActivity" />
-        <activity android:name=".StockActivity" />
+        <activity android:name=".UnitSelectActivity" />
+        <activity android:name=".UnitManageActivity" />
         <activity android:name=".TrainingSettingsActivity" />
         <activity android:name=".GenderTrainingActivity" />
         <activity android:name=".PlTrainingActivity" />
@@ -25,7 +25,7 @@
         <activity android:name=".StockDetailActivity" />
         <activity android:name=".BookSelectActivity" />
         <activity android:name=".LanguageSelectActivity" />
-
+        <activity android:name=".BookManageActivity"></activity>
     </application>
 
 </manifest>

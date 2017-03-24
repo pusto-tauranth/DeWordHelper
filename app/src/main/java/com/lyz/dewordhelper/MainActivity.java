@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onStockClick(View v) {
-        Intent intent = new Intent(this, StockActivity.class);
+        Intent intent = new Intent(this, BookManageActivity.class);
         startActivity(intent);
     }
 
