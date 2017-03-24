@@ -139,6 +139,7 @@ public class WordsAccess {
         values.put(Word.Key_trainingGender,0);
         values.put(Word.Key_errorPlural,0);
         values.put(Word.Key_trainingPlural,0);
+        values.put(Word.Key_mark,word.mark);
         long word_ID=db.insert(Word.TABLE,null,values);
 
         db.close();
@@ -164,6 +165,7 @@ public class WordsAccess {
         values.put(Word.Key_errorPlural,word.errorPlural);
         values.put(Word.Key_status,word.status);
         values.put(Word.Key_trainingPlural,word.trainingPlural);
+        values.put(Word.Key_mark,word.mark);
         int changed_num=db.update(Word.TABLE,values,Word.Key_Id +"=?",new String[]{String.valueOf(word.word_Id)});
         db.close();
         return changed_num;
@@ -281,6 +283,7 @@ public class WordsAccess {
                 word.errorPlural =cursor.getInt(cursor.getColumnIndex(Word.Key_errorPlural));
                 word.trainingPlural =cursor.getInt(cursor.getColumnIndex(Word.Key_trainingPlural));
                 word.accuracyPlural =cursor.getInt(cursor.getColumnIndex(Word.Key_accuracyPlural));
+                word.mark =cursor.getInt(cursor.getColumnIndex(Word.Key_mark));
             }while(cursor.moveToNext());
         }
 
@@ -293,7 +296,9 @@ public class WordsAccess {
         Word word;
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String selectQuery;
-        if(!Unit.equals("All")){
+        if(Book.equals("Mark")){
+            selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_mark+" = "+1;
+        } else if(!Unit.equals("All")){
             selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_book+" = "+Book+" AND "+Word.Key_unit +" = "+Unit;
         }else{
             selectQuery="SELECT * FROM "+Word.TABLE+" WHERE "+Word.Key_book+" = "+Book;

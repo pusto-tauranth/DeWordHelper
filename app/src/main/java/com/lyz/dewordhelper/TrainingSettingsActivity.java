@@ -21,8 +21,6 @@ import com.lyz.dewordhelper.DB.WordsAccess;
 
 
 public class TrainingSettingsActivity extends AppCompatActivity {
-//public class TrainingSettingsActivity extends AppCompatActivity implements TouchProgressView.OnProgressChangedListener {
-    //private static final String TAG = "Activity";
     int roundMax;
     private EditText etImageAdjustment = null;
     private SeekBar skbImageAdjustment = null;
@@ -117,7 +115,7 @@ public class TrainingSettingsActivity extends AppCompatActivity {
                         }
                     } catch (NumberFormatException e) {
                         Toast.makeText(getApplicationContext(),
-                                "writeyour number", Toast.LENGTH_LONG).show();
+                                "请输入您希望的数值", Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -164,36 +162,33 @@ public class TrainingSettingsActivity extends AppCompatActivity {
         title.setText("训练设置");
     }
     public void onGenderClick(View v){
-        /*if(SetProgress.getText().toString().equals(""))//LZ
-        roundMax=Integer.parseInt(Progress.getText().toString());//LZ
-        else//LZ*/
-        //roundMax=Integer.parseInt(SetProgress.getText().toString());//LZ
         roundMax=value;
-        WordsAccess.statusReset();//newly added
+        WordsAccess.statusReset();
         Intent intent=new Intent(this,GenderTrainingActivity.class);
         intent.putExtra("round",1);
         intent.putExtra("roundMax",roundMax);
         intent.putExtra("OpenChn",OpenChn);
         intent.putExtra("Book",getIntent().getStringExtra("Book"));
         intent.putExtra("Unit",getIntent().getStringExtra("Unit"));
-        startActivity(intent);
+        if(roundMax==0){
+            Toast.makeText(getApplicationContext(),"请正确设置训练词数",Toast.LENGTH_SHORT).show();
+        }else{
+            startActivity(intent);
+        }
     }
     public void onPlClick(View v){
-        Intent intent=new Intent(this,PlTrainingActivity.class);
-        /*if(SetProgress.getText().toString().equals(""))//LZ
-            roundMax=Integer.parseInt(Progress.getText().toString());//LZ
-        else//LZ*/
-           //roundMax=Integer.parseInt(SetProgress.getText().toString());//LZ
+        Intent intent=new Intent(this,PluralTrainingActivity.class);
         roundMax=value;
-        WordsAccess.statusReset();//newly added
+        WordsAccess.statusReset();
         intent.putExtra("round",1);
-        intent.putExtra("OpenChn",OpenChn);//LZ
+        intent.putExtra("OpenChn",OpenChn);
         intent.putExtra("roundMax",roundMax);
         intent.putExtra("Book",getIntent().getStringExtra("Book"));
         intent.putExtra("Unit",getIntent().getStringExtra("Unit"));
-        startActivity(intent);
-    }
-    public void onChnBtn(View v){
-
+        if(roundMax==0){
+            Toast.makeText(getApplicationContext(),"请正确设置训练词数",Toast.LENGTH_SHORT).show();
+        }else{
+            startActivity(intent);
+        }
     }
 }

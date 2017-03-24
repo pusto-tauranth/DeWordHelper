@@ -19,7 +19,7 @@
         <activity android:name=".UnitManageActivity" />
         <activity android:name=".TrainingSettingsActivity" />
         <activity android:name=".GenderTrainingActivity" />
-        <activity android:name=".PlTrainingActivity" />
+        <activity android:name=".PluralTrainingActivity" />
         <activity android:name=".WordDetailActivity" />
         <activity android:name=".ReportActivity" />
         <activity android:name=".StockDetailActivity" />

@@ -57,7 +57,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
         bookStr=getIntent().getStringExtra("Book");
         unitStr =getIntent().getStringExtra("Unit");
         wordTV=(TextView)findViewById(R.id.word);
-        plTV=(TextView)findViewById(R.id.pl);
+        plTV=(TextView)findViewById(R.id.plural);
         chnTV=(TextView)findViewById(R.id.chn);
         Round=(TextView)findViewById(R.id.round);
         RoundMax=(TextView)findViewById(R.id.roundmax);
@@ -154,11 +154,13 @@ public class GenderTrainingActivity extends AppCompatActivity {
 
     public void initWords(){
         wordWeightSum=0;
-        if(bookStr.equals("All")&&unitStr.equals("All")){
+        if(bookStr.equals("Mark")){
+            wordWeightSum=WordsAccess.getWordTotal("German"," WHERE "+ Word.Key_mark+"="+1);
+        } else if(bookStr.equals("All")&&unitStr.equals("All")){
             wordWeightSum=WordsAccess.getWordTotal(Word.TABLE,"");
         }else if(bookStr.equals("Fallible")){
-            words=new Word[100];
-            for(int i = 0; i<100; i++) {
+            words=new Word[50];
+            for(int i = 0; i<50; i++) {
                 words[i] = WordsAccess.getWordByAccuracyId("Gender",i+1);
                 wordWeightSum+=(100-words[i].accuracyGender +30);
             }
@@ -176,7 +178,9 @@ public class GenderTrainingActivity extends AppCompatActivity {
         int stepWeightSum=0;
         int num=random.nextInt(wordWeightSum)+1;
         int i;
-        if(!unitStr.equals("All")){
+        if(bookStr.equals("Mark")){
+            return WordsAccess.getWordByListId(bookStr,unitStr,num);
+        } else if(!unitStr.equals("All")){
             for(i=0;i<words.length;i++){
                 stepWeightSum+=(100-words[i].accuracyGender+30);
                 if(num<=stepWeightSum){

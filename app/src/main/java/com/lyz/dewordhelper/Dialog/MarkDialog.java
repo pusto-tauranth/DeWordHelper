@@ -16,7 +16,7 @@ import com.lyz.dewordhelper.R;
  * Created by 61998 on 2017/2/25.
  */
 
-public class FavoriteDialog extends Dialog {
+public class MarkDialog extends Dialog {
     private Button yes;
     private Button no;
     private TextView tv;
@@ -24,7 +24,7 @@ public class FavoriteDialog extends Dialog {
     int wordId;
     Word word;
 
-    public FavoriteDialog(Context context, int id){
+    public MarkDialog(Context context, int id){
         super(context);
         wordId=id;
         word=WordsAccess.getWordById(wordId);
@@ -46,6 +46,9 @@ public class FavoriteDialog extends Dialog {
         no=(Button)findViewById(R.id.dialog_delete_no);
 
         tv.setText("确定收藏单词"+word.gender+" "+word.word+"吗？");
+        if(word.mark==1){
+            tv.setText("确定取消收藏单词"+word.gender+" "+word.word+"吗？");
+        }
     }
 
     private void initEvent(){
@@ -53,8 +56,15 @@ public class FavoriteDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 Word word=WordsAccess.getWordById(wordId);
-                WordsAccess.insert(word,0,0);
-                Toast.makeText(getContext(),"已成功收藏",Toast.LENGTH_LONG).show();
+                if(word.mark==1){
+                    word.mark=0;
+                    WordsAccess.update(word);
+                    Toast.makeText(getContext(),"已成功取消收藏",Toast.LENGTH_LONG).show();
+                }else{
+                    word.mark=1;
+                    WordsAccess.update(word);
+                    Toast.makeText(getContext(),"已成功收藏",Toast.LENGTH_LONG).show();
+                }
                 dismiss();
             }
         });

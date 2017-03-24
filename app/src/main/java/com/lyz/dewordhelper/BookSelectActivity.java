@@ -21,18 +21,23 @@ public class BookSelectActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_select);
         initToolbar();
-        TextView bookTXtv;
-        //bookTXtv=(TextView)findViewById(R.id.booktx);
-        //bookTXtv.setText("新编大学"+String.valueOf(getIntent().getStringExtra("Language")));
-        ArrayList<HashMap<String, String>> myList = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> stockList = new ArrayList<HashMap<String, String>>();
+        HashMap<String, String> mapMark = new HashMap<String, String>();
+        mapMark.put("Book","收藏夹");
+        mapMark.put("WordNum","总词量："+ WordsAccess.getWordTotal("German"," WHERE "+ Word.Key_mark+"="+1));
+        stockList.add(mapMark);
+        HashMap<String, String> mapSelf = new HashMap<String, String>();
+        mapSelf.put("Book","我添加的单词");
+        mapSelf.put("WordNum","总词量："+ WordsAccess.getWordTotal("German"," WHERE "+ Word.Key_unit+"="+0));
+        stockList.add(mapSelf);
         for (int i=1;i<=2;i++) {
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("Book","新编大学德语 "+i);
             map.put("WordNum","总词量："+WordsAccess.getWordTotal("German"," WHERE "+ Word.Key_book+"="+i));
-            myList.add(map);
+            stockList.add(map);
         }
         SimpleAdapter mSchedule = new SimpleAdapter(this,
-                myList,
+                stockList,
                 R.layout.activity_stock_item,
                 new String[]{"Book", "WordNum"},
                 new int[]{R.id.stock, R.id.wordNum});
@@ -70,9 +75,21 @@ public class BookSelectActivity extends ListActivity {
         // TODO Auto-generated method stub
         super.onListItemClick(l, v, position, id);
         TextView bookTV=(TextView)v.findViewById(R.id.stock);
-        String bookStr=bookTV.getText().toString().substring(7);
-        Intent intent = new Intent(this,UnitSelectActivity.class);
-        intent.putExtra("Book",bookStr);
-        this.startActivity(intent);
+        if(position==0){
+            Intent intent = new Intent(this,TrainingSettingsActivity.class);
+            intent.putExtra("Book","Mark");
+            intent.putExtra("Unit","Mark");
+            this.startActivity(intent);
+        } else if(position==1){
+            Intent intent = new Intent(this,TrainingSettingsActivity.class);
+            intent.putExtra("Book","0");
+            intent.putExtra("Unit","0");
+            this.startActivity(intent);
+        }else{
+            String bookStr=bookTV.getText().toString().substring(7);
+            Intent intent = new Intent(this,UnitSelectActivity.class);
+            intent.putExtra("Book",bookStr);
+            this.startActivity(intent);
+        }
     }
 }

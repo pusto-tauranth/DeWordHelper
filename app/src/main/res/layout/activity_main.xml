@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/button"
-                android:textSize="40sp"
+                android:textSize="50sp"
                 android:textColor="#ffffff"
                 android:background="#0097a7"
                 android:elevation="6dp"/>

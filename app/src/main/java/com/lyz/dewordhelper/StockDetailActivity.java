@@ -15,35 +15,63 @@ import com.lyz.dewordhelper.Dialog.InsertDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class StockDetailActivity extends ListActivity {
-    int unit;
-    int book;
+    String unitStr;
+    String bookStr;
+    String titleStr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_stock_detail);
-        unit = Integer.parseInt(getIntent().getStringExtra("Unit"));
-        book = Integer.parseInt(getIntent().getStringExtra("Book"));
-        initToolbar();
-        ArrayList<HashMap<String, String>> wordList;
-        String WHERE=" WHERE "+Word.Key_unit +" = "+ unit +" AND "+Word.Key_book+" = "+book;
-        wordList=WordsAccess.getWordList(WHERE);
-        SimpleAdapter mSchedule = new SimpleAdapter(this,
-                wordList,
-                R.layout.activity_stock_detail_item,
-                new String[]{"All", "wordId"},
-                new int[]{R.id.All, R.id.wordId});
-        setListAdapter(mSchedule);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InsertDialog insertDialog=new InsertDialog(StockDetailActivity.this,book, unit);
-                insertDialog.show();
+        bookStr = getIntent().getStringExtra("Book");
+        unitStr = getIntent().getStringExtra("Unit");
+        if(bookStr.equals("Mark")){
+            titleStr="收藏夹";
+            initToolbar();
+            ArrayList<HashMap<String, String>> wordList;
+            String WHERE=" WHERE "+Word.Key_mark +" = "+ 1;
+            wordList=WordsAccess.getWordList(WHERE);
+            SimpleAdapter simpleAdapter = new SimpleAdapter(this,
+                    wordList,
+                    R.layout.activity_stock_detail_item,
+                    new String[]{"All", "wordId"},
+                    new int[]{R.id.All, R.id.wordId});
+            setListAdapter(simpleAdapter);
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    InsertDialog insertDialog=new InsertDialog(StockDetailActivity.this,-1,0);
+                    insertDialog.show();
+                }
+            });
+        }else{
+            titleStr="Einheit" + unitStr + ", Buch" + bookStr;
+            if(bookStr.equals("0")){
+                titleStr="我添加的单词";
             }
-        });
+            initToolbar();
+            ArrayList<HashMap<String, String>> wordList;
+            String WHERE=" WHERE "+Word.Key_unit +" = "+ unitStr +" AND "+Word.Key_book+" = "+bookStr;
+            wordList=WordsAccess.getWordList(WHERE);
+            SimpleAdapter simpleAdapter = new SimpleAdapter(this,
+                    wordList,
+                    R.layout.activity_stock_detail_item,
+                    new String[]{"All", "wordId"},
+                    new int[]{R.id.All, R.id.wordId});
+            setListAdapter(simpleAdapter);
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    InsertDialog insertDialog=new InsertDialog(StockDetailActivity.this,Integer.parseInt(bookStr),Integer.parseInt(unitStr));
+                    insertDialog.show();
+                }
+            });
+        }
     }
    @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -64,6 +92,6 @@ public class StockDetailActivity extends ListActivity {
             }
         });
         TextView title = (TextView) findViewById(R.id.tv_title);
-        title.setText("Einheit" + unit + ", Buch" + book);
+        title.setText(titleStr);
     }
 }

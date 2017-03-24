@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    xmlns:fab="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_height="wrap_content">
-<!--android:paddingLeft="10dip"
-android:paddingRight="10dip"-->
+    android:layout_height="fill_parent"
+    android:paddingBottom="4dip">
+
     <include layout="@layout/widget_toolbar"
         android:id="@+id/toolbar"/>
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <android.support.design.widget.FloatingActionButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,7 +23,7 @@ android:paddingRight="10dip"-->
             app:rippleColor="#33728dff" />
         <ListView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@id/android:list">
         </ListView>
     </FrameLayout>

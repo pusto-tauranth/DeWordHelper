@@ -4,7 +4,7 @@
     android:id="@+id/activity_pl_training"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lyz.dewordhelper.PlTrainingActivity">
+    tools:context="com.lyz.dewordhelper.PluralTrainingActivity">
 
     <include layout="@layout/widget_toolbar"
         android:id="@+id/toolbar"/>

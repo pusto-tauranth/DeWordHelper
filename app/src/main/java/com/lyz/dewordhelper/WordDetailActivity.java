@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.lyz.dewordhelper.DB.Word;
 import com.lyz.dewordhelper.DB.WordsAccess;
 import com.lyz.dewordhelper.Dialog.DeleteDialog;
-import com.lyz.dewordhelper.Dialog.FavoriteDialog;
-import com.lyz.dewordhelper.Dialog.InsertDialog;
+import com.lyz.dewordhelper.Dialog.MarkDialog;
 import com.lyz.dewordhelper.Dialog.UpdateDialog;
 
 public class WordDetailActivity extends AppCompatActivity {
@@ -28,13 +28,17 @@ public class WordDetailActivity extends AppCompatActivity {
         initToolbar();
         TextView genderTV=(TextView)findViewById(R.id.gender);
         TextView wordTV=(TextView)findViewById(R.id.word);
-        TextView plTV=(TextView)findViewById(R.id.pl);
+        TextView plTV=(TextView)findViewById(R.id.plural);
         TextView chnTV=(TextView)findViewById(R.id.chn);
         TextView accTV=(TextView)findViewById(R.id.accuracy);
+        Button markBtn=(Button)findViewById(R.id.mark);
         genderTV.setText(word.gender);
         wordTV.setText(word.word);
         plTV.setText(word.plural);
         chnTV.setText(word.chn);
+        if(word.mark==1){
+            markBtn.setText("取消\n收藏");
+        }
         if(word.trainingGender==0&&word.trainingPlural==0){
             accTV.setText("未训练过");
         }else if(word.trainingGender!=0&&word.trainingPlural!=0){
@@ -58,9 +62,9 @@ public class WordDetailActivity extends AppCompatActivity {
         title.setText(word.gender+" "+word.word);
     }
 
-    public void onFavoriteClick(View v){
-        FavoriteDialog favoriteDialog=new FavoriteDialog(this,Id);
-        favoriteDialog.show();
+    public void onMarkClick(View v){
+        MarkDialog markDialog =new MarkDialog(this,Id);
+        markDialog.show();
     }
 
     public void onUpdateClick(View v){

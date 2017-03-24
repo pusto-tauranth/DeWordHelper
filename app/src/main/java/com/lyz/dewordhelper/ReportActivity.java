@@ -58,7 +58,12 @@ public class ReportActivity extends AppCompatActivity {
         WordsAccess.setErrorTimes(type);
         int newTrainingTimes=WordsAccess.statusReset();
         WordsAccess.setTrainingTimes(newTrainingTimes,type);
-        accuracy.setText("本次正确率："+(100-100*errorList.size()/newTrainingTimes)+"%");
+        if(!(newTrainingTimes==0)){
+            accuracy.setText("本次正确率："+(100-100*errorList.size()/newTrainingTimes)+"%");
+        }else{
+            accuracy.setText("本次共训练0词");
+        }
+
 
         SimpleAdapter listAdapter = new SimpleAdapter(this,
                 errorList,

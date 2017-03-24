@@ -17,28 +17,32 @@
         android:textSize="35sp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
-
-    <Button
-    android:text="词性训练"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-        android:id="@+id/gender"
-    android:onClick="onGenderClick"
-        android:layout_marginBottom="19dp"
-        android:layout_alignParentBottom="true"
-        android:textSize="35sp" />
-
-    <Button
-        android:text="复数训练"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/pl"
-        android:onClick="onPlClick"
-        android:textSize="35sp"
-        android:layout_alignBaseline="@+id/gender"
-        android:layout_alignBottom="@+id/gender"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentBottom="true">
+        <Button
+            android:text="词性训练"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:id="@+id/gender"
+            android:onClick="onGenderClick"
+            android:textSize="35sp"
+            android:textColor="#ffffff"
+            android:background="#212121"/>
 
+        <Button
+            android:text="复数训练"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:id="@+id/plural"
+            android:onClick="onPlClick"
+            android:textSize="35sp"
+            android:textColor="#ffffff"
+            android:background="#3e2723"/>
+    </LinearLayout>
     <TextView
         android:text="自我设定："
         android:layout_width="wrap_content"

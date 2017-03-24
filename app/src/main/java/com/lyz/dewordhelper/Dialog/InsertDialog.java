@@ -60,6 +60,11 @@ public class InsertDialog extends Dialog {
                 word.word=wordET.getText().toString();
                 word.plural =plET.getText().toString();
                 word.chn=chnET.getText().toString();
+                word.mark=0;
+                if(book==-1){//直接从收藏夹添加时，赋book=-1
+                    word.mark=1;
+                    book=0;
+                }
                 WordsAccess.insert(word,book,einheit);
                 Toast.makeText(getContext(),"单词添加成功",Toast.LENGTH_LONG).show();
                 dismiss();

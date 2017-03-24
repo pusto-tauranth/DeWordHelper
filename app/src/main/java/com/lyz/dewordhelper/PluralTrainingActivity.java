@@ -20,7 +20,7 @@ import java.util.Random;
 
 import static com.lyz.dewordhelper.DB.WordsAccess.getListWordTotal;
 
-public class PlTrainingActivity extends AppCompatActivity {
+public class PluralTrainingActivity extends AppCompatActivity {
 
     Word ques;
     int round;
@@ -47,7 +47,7 @@ public class PlTrainingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_pl_training);
+        setContentView(R.layout.activity_plural_training);
 
         round=getIntent().getIntExtra("round",0);
         roundMax=getIntent().getIntExtra("roundMax",0);
@@ -176,11 +176,13 @@ public class PlTrainingActivity extends AppCompatActivity {
 
     public void initWords(){
         wordWeightSum=0;
-        if(bookStr.equals("All")&&unitStr.equals("All")){
+        if(bookStr.equals("Mark")){
+            wordWeightSum=WordsAccess.getWordTotal("German"," WHERE "+ Word.Key_mark+"="+1);
+        } else if(bookStr.equals("All")&&unitStr.equals("All")){
             wordWeightSum=WordsAccess.getWordTotal(Word.TABLE,"");
         }else if(bookStr.equals("Fallible")){
-            words=new Word[100];
-            for(int i = 0; i<100; i++) {
+            words=new Word[50];
+            for(int i = 0; i<50; i++) {
                 words[i] = WordsAccess.getWordByAccuracyId("Plural",i+1);
                 wordWeightSum+=(100-words[i].accuracyPlural +30);
             }
@@ -198,7 +200,9 @@ public class PlTrainingActivity extends AppCompatActivity {
         int stepWeightSum=0;
         int num=random.nextInt(wordWeightSum)+1;
         int i;
-        if(!unitStr.equals("All")){
+        if(bookStr.equals("Mark")){
+            return WordsAccess.getWordByListId(bookStr,unitStr,num);
+        }else if(!unitStr.equals("All")){
             for(i=0;i<words.length;i++){
                 stepWeightSum+=(100-words[i].accuracyPlural+30);
                 if(num<=stepWeightSum){

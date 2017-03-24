@@ -22,6 +22,7 @@ public class Word {
     public static final String Key_errorPlural ="errorPlural";
     public static final String Key_trainingPlural ="trainingPlural";//记录总训练次数
     public static final String Key_accuracyPlural ="accuracyPlural";
+    public static final String Key_mark ="mark";//收藏单词
 
     //属性
     public int word_Id;
@@ -38,6 +39,7 @@ public class Word {
     public int errorPlural;
     public int trainingPlural;
     public int accuracyPlural;
+    public int mark;
     //Table_2
     public static final String TABLE_2= "statistics";
     public static final String Key_date_2 ="date";
