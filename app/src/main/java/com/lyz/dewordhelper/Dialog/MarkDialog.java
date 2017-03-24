@@ -2,6 +2,7 @@ package com.lyz.dewordhelper.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 import com.lyz.dewordhelper.DB.Word;
 import com.lyz.dewordhelper.DB.WordsAccess;
 import com.lyz.dewordhelper.R;
+import com.lyz.dewordhelper.ReportActivity;
+import com.lyz.dewordhelper.StockDetailActivity;
 
 /**
  * Created by 61998 on 2017/2/25.
@@ -65,6 +68,9 @@ public class MarkDialog extends Dialog {
                     WordsAccess.update(word);
                     Toast.makeText(getContext(),"已成功收藏",Toast.LENGTH_LONG).show();
                 }
+                Intent intent = new Intent(getContext(),ReportActivity.class);
+                intent.putExtra("Type","Die");
+                getContext().startActivity(intent);
                 dismiss();
             }
         });

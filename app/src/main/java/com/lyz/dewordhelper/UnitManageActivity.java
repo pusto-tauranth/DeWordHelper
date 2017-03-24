@@ -23,6 +23,28 @@ public class UnitManageActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unit_manage);
         initToolbar();
+        initList();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initList();
+    }
+
+    public void initToolbar(){
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UnitManageActivity.this.finish();
+            }
+        });
+        TextView title=(TextView)findViewById(R.id.tv_title);
+        title.setText("Buch "+getIntent().getStringExtra("Book"));
+    }
+
+    public void initList(){
         ArrayList<HashMap<String, String>> stockList = new ArrayList<HashMap<String, String>>();
         for (int i=1;i<=10;i++) {
             HashMap<String, String> map = new HashMap<String, String>();
@@ -46,18 +68,6 @@ public class UnitManageActivity extends ListActivity {
                 insertDialog.show();
             }
         });
-    }
-
-    public void initToolbar(){
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UnitManageActivity.this.finish();
-            }
-        });
-        TextView title=(TextView)findViewById(R.id.tv_title);
-        title.setText("Buch "+getIntent().getStringExtra("Book"));
     }
 
 

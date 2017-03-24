@@ -28,6 +28,27 @@ public class StockDetailActivity extends ListActivity {
         this.setContentView(R.layout.activity_stock_detail);
         bookStr = getIntent().getStringExtra("Book");
         unitStr = getIntent().getStringExtra("Unit");
+        initList();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initList();
+    }
+
+   @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        // TODO Auto-generated method stub
+       super.onListItemClick(l, v, position, id);
+       TextView idTV=(TextView)v.findViewById(R.id.wordId);
+       String wordIdStr=idTV.getText().toString();
+       Intent intent = new Intent(this,WordDetailActivity.class);
+       intent.putExtra("WordIdStr",wordIdStr);
+       this.startActivity(intent);
+    }
+
+    public void initList(){
         if(bookStr.equals("Mark")){
             titleStr="收藏夹";
             initToolbar();
@@ -73,16 +94,7 @@ public class StockDetailActivity extends ListActivity {
             });
         }
     }
-   @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        // TODO Auto-generated method stub
-       super.onListItemClick(l, v, position, id);
-       TextView idTV=(TextView)v.findViewById(R.id.wordId);
-       String wordIdStr=idTV.getText().toString();
-       Intent intent = new Intent(this,WordDetailActivity.class);
-       intent.putExtra("WordIdStr",wordIdStr);
-       this.startActivity(intent);
-    }
+
     public void initToolbar() {
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

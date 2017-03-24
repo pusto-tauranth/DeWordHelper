@@ -25,6 +25,9 @@ public class ReportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getIntent().getStringExtra("Type").equals("Die")){
+            finish();
+        }//为帮助更改词库类Dialog结束后更新页面用
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_report);
         accuracy=(TextView)findViewById(R.id.accuracy);

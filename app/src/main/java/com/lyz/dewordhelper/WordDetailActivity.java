@@ -23,8 +23,20 @@ public class WordDetailActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_word_detail);
         Id=Integer.parseInt(getIntent().getStringExtra("WordIdStr"));
+        initWord();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initWord();
+        if(word.word==null){
+            finish();
+        }
+    }
+
+    public void initWord(){
         word=WordsAccess.getWordById(Id);
-        setTitle(word.gender+" "+word.word);
         initToolbar();
         TextView genderTV=(TextView)findViewById(R.id.gender);
         TextView wordTV=(TextView)findViewById(R.id.word);
@@ -38,6 +50,8 @@ public class WordDetailActivity extends AppCompatActivity {
         chnTV.setText(word.chn);
         if(word.mark==1){
             markBtn.setText("取消\n收藏");
+        }else{
+            markBtn.setText("收藏");
         }
         if(word.trainingGender==0&&word.trainingPlural==0){
             accTV.setText("未训练过");
@@ -75,6 +89,7 @@ public class WordDetailActivity extends AppCompatActivity {
     public void onDeleteClick(View v){
         DeleteDialog deleteDialog=new DeleteDialog(this,Id);
         deleteDialog.show();
+
     }
 
 }
