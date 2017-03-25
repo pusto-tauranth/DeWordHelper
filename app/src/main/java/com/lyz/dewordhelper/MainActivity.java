@@ -146,13 +146,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return num;
     }
-    /*public int[] zeroTrainingQuantityGen(){
-        int[] num= new int[7];
-        for(int i=0;i<7;i++){
-            num[i]=0;
-        }
-        return num;
-    }*/
 
     public int[] getTrainingQuantityPl(){
         int[] num= new int[7];
@@ -189,15 +182,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void initTabLayout(){
         titleList = new ArrayList<>();
-        titleList.add("词性\n常错");
-        titleList.add("词性\n训练量");
-        titleList.add("词性\n正确率");
-        titleList.add("复数\n常错");
-        titleList.add("复数\n训练量");
-        titleList.add("复数\n正确率");
+        titleList.add("词性常错");
+        titleList.add("词性训练量");
+        titleList.add("词性正确率");
+        titleList.add("复数常错");
+        titleList.add("复数训练量");
+        titleList.add("复数正确率");
         tabLayout = (TabLayout)findViewById(R.id.main_tab);
         //设置tab的模式
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         //把TabLayout和ViewPager关联起来
         tabLayout.setupWithViewPager(mainViewPager);
         //添加tab选项卡

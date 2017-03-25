@@ -4,19 +4,52 @@
     android:id="@+id/activity_training_settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context="com.lyz.dewordhelper.TrainingSettingsActivity">
-    <include layout="@layout/widget_toolbar"
-        android:id="@+id/toolbar"/>
-    <TextView
-        android:text="出词量："
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
-        android:id="@+id/出词量"
-        android:textSize="35sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <include layout="@layout/widget_toolbar"
+            android:id="@+id/toolbar"/>
+        <TextView
+            android:text="训练词量："
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/出词量"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <SeekBar
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="4"
+                android:id="@+id/wordsSeekBar"
+                />
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/wordEditText"
+                android:ems="4"
+                android:inputType="number"
+                android:textSize="20sp"
+                android:text="0"/>
+
+        </LinearLayout>
+        <Switch
+            android:text="显示汉语"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/chn1"
+            android:textColor="#616161"
+            android:textSize="20sp" />
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,81 +76,4 @@
             android:textColor="#ffffff"
             android:background="#3e2723"/>
     </LinearLayout>
-    <TextView
-        android:text="自我设定："
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/setting"
-        android:textSize="30sp" />
-
-    <Switch
-        android:text="是否显示汉语"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/chn1"
-        android:layout_marginTop="38dp"
-        android:textColor="#AB82FF"
-        android:textSize="30sp"
-        android:layout_below="@+id/mysetting"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:id="@+id/wordsSeekBar"
-        android:layout_below="@+id/出词量"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:id="@+id/outwordsnumber"
-        android:textSize="35sp"
-        android:layout_alignBaseline="@+id/出词量"
-        android:layout_alignBottom="@+id/出词量"
-        android:layout_toRightOf="@+id/出词量"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:text="100"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/max"
-        android:textSize="25dp"
-        android:layout_below="@+id/wordsSeekBar"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
-        android:id="@+id/mysetting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/setting"
-        android:layout_alignBottom="@+id/setting"
-        android:layout_alignLeft="@+id/outwordsnumber"
-        android:layout_alignStart="@+id/outwordsnumber"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="30sp"
-        android:text="0"/>
-
-    <TextView
-        android:text="0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/min"
-        android:textSize="25dp"
-        android:layout_below="@+id/wordsSeekBar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="9dp" />
-
 </RelativeLayout>

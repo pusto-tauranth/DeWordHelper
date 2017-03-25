@@ -39,7 +39,7 @@ public class TrainingSettingsActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_training_settings);
         initToolbar();
-        SetProgress = (EditText) findViewById(R.id.mysetting);
+        SetProgress = (EditText) findViewById(R.id.wordEditText);
         SetProgress.setText("0");
        Switch sc=(Switch)findViewById(R.id.chn1);//-----
         sc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
@@ -55,7 +55,7 @@ public class TrainingSettingsActivity extends AppCompatActivity {
             }
         });
         //联动设置
-        etImageAdjustment = (EditText) findViewById(R.id.mysetting);
+        etImageAdjustment = (EditText) findViewById(R.id.wordEditText);
         etImageAdjustment.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -104,8 +104,6 @@ public class TrainingSettingsActivity extends AppCompatActivity {
                     }
                     notHandleAfterTextChangedEvent = true;
                     etImageAdjustment.setText(Integer.toString(value));
-                    wordsNumber=(TextView)findViewById(R.id.outwordsnumber);
-                    wordsNumber.setText(s.toString());
                     try {
                         if (!changeFromSeekBar) {
                             changeFromEditText = true;

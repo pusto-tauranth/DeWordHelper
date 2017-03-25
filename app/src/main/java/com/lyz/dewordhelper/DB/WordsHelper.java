@@ -19,12 +19,12 @@ import java.io.InputStream;
 
 public class WordsHelper{
     private final int Buffer_size=400000;
-    public static final String DB_name="database.db";
-    public static final String Package_name="com.lyz.dewordhelper";
-    public static final String DB_dir = "/data"+
+    private static final String DB_name="database.db";
+    private static final String Package_name="com.lyz.dewordhelper";
+    private static final String DB_dir = "/data"+
             Environment.getDataDirectory().getAbsolutePath()+"/"+
             Package_name+"/";
-    public static final String DB_path=DB_dir+DB_name;
+    static final String DB_path=DB_dir+DB_name;
 
     private SQLiteDatabase db;
     private Context context;
@@ -39,7 +39,7 @@ public class WordsHelper{
 
     private SQLiteDatabase openDatabase(String dbFile){
         try{
-            if(new File(dbFile).exists()){
+            if(!new File(dbFile).exists()){
                 InputStream is=this.context.getResources().openRawResource(R.raw.database);
                 FileOutputStream fos=new FileOutputStream(dbFile);
                 byte[] buffer=new byte[Buffer_size];
