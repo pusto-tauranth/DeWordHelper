@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lyz.dewordhelper.DB.Word;
 import com.lyz.dewordhelper.DB.WordsAccess;
@@ -63,7 +64,7 @@ public class PluralTrainingActivity extends AppCompatActivity {
         RoundMax.setText("/"+roundMax);
 
         ShowChn=getIntent().getStringExtra("OpenChn");
-        if(ShowChn.equals("close"))
+        if(ShowChn.equals("off"))
             chnTV.setVisibility(View.INVISIBLE);
 
         initWords();

@@ -30,7 +30,7 @@ public class TrainingSettingsActivity extends AppCompatActivity {
     private boolean changeFromEditText = false;
     Integer value=0;
     EditText SetProgress;
-    String OpenChn="close";
+    String OpenChn=WordsAccess.getSettingsValueByName("chinese");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,19 +38,26 @@ public class TrainingSettingsActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_training_settings);
         initToolbar();
+        value=Integer.parseInt(WordsAccess.getSettingsValueByName("quantity"));
         SetProgress = (EditText) findViewById(R.id.wordEditText);
-        SetProgress.setText("0");
-       Switch sc=(Switch)findViewById(R.id.chn1);//-----
-        sc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+        SetProgress.setText(String.valueOf(value));
+        Switch switcher=(Switch)findViewById(R.id.chn1);
+        if(OpenChn.equals("on")){
+            switcher.setChecked(true);
+        }else{
+            switcher.setChecked(false);
+        }
+        switcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton compoundButton,boolean b){
                 if(b){
                     Toast.makeText(getApplicationContext(),"显示汉语",Toast.LENGTH_SHORT).show();
-                    OpenChn="open";
+                    OpenChn="on";
                 }else{
                     Toast.makeText(getApplicationContext(),"不显示汉语",Toast.LENGTH_SHORT).show();
-                    OpenChn="close";
+                    OpenChn="off";
                 }
+                WordsAccess.setSettings("chinese",OpenChn);
             }
         });
         //联动设置
@@ -118,6 +125,7 @@ public class TrainingSettingsActivity extends AppCompatActivity {
             }
         });
         skbImageAdjustment = (SeekBar) findViewById(R.id.wordsSeekBar);
+        skbImageAdjustment.setProgress(value);
         skbImageAdjustment
                 .setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -159,33 +167,46 @@ public class TrainingSettingsActivity extends AppCompatActivity {
         title.setText("训练设置");
     }
     public void onGenderClick(View v){
-        roundMax=value;
-        WordsAccess.statusReset();
-        Intent intent=new Intent(this,GenderTrainingActivity.class);
-        intent.putExtra("round",1);
-        intent.putExtra("roundMax",roundMax);
-        intent.putExtra("OpenChn",OpenChn);
-        intent.putExtra("Book",getIntent().getStringExtra("Book"));
-        intent.putExtra("Unit",getIntent().getStringExtra("Unit"));
-        if(roundMax==0){
-            Toast.makeText(getApplicationContext(),"请正确设置训练词数",Toast.LENGTH_SHORT).show();
+        if(getIntent().getStringExtra("WordNum").equals("0")){
+            Toast.makeText(getApplicationContext(),"此词库中没有单词！",Toast.LENGTH_SHORT).show();
         }else{
-            startActivity(intent);
+            roundMax=value;
+            WordsAccess.setSettings("quantity",String.valueOf(roundMax));
+            WordsAccess.statusReset();
+            Intent intent=new Intent(this,GenderTrainingActivity.class);
+            intent.putExtra("round",1);
+            intent.putExtra("roundMax",roundMax);
+            intent.putExtra("OpenChn",OpenChn);
+            intent.putExtra("Book",getIntent().getStringExtra("Book"));
+            intent.putExtra("Unit",getIntent().getStringExtra("Unit"));
+            intent.putExtra("WordNum",getIntent().getStringExtra("WordNum"));
+            if(roundMax==0){
+                Toast.makeText(getApplicationContext(),"请正确设置训练词数",Toast.LENGTH_SHORT).show();
+            }else{
+                startActivity(intent);
+            }
         }
+
     }
     public void onPlClick(View v){
-        Intent intent=new Intent(this,PluralTrainingActivity.class);
-        roundMax=value;
-        WordsAccess.statusReset();
-        intent.putExtra("round",1);
-        intent.putExtra("OpenChn",OpenChn);
-        intent.putExtra("roundMax",roundMax);
-        intent.putExtra("Book",getIntent().getStringExtra("Book"));
-        intent.putExtra("Unit",getIntent().getStringExtra("Unit"));
-        if(roundMax==0){
-            Toast.makeText(getApplicationContext(),"请正确设置训练词数",Toast.LENGTH_SHORT).show();
+        if(getIntent().getStringExtra("WordNum").equals("0")){
+            Toast.makeText(getApplicationContext(),"此词库中没有单词！",Toast.LENGTH_SHORT).show();
         }else{
-            startActivity(intent);
+            Intent intent=new Intent(this,PluralTrainingActivity.class);
+            roundMax=value;
+            WordsAccess.setSettings("quantity",String.valueOf(roundMax));
+            WordsAccess.statusReset();
+            intent.putExtra("round",1);
+            intent.putExtra("OpenChn",OpenChn);
+            intent.putExtra("roundMax",roundMax);
+            intent.putExtra("Book",getIntent().getStringExtra("Book"));
+            intent.putExtra("Unit",getIntent().getStringExtra("Unit"));
+            intent.putExtra("WordNum",getIntent().getStringExtra("WordNum"));
+            if(roundMax==0){
+                Toast.makeText(getApplicationContext(),"请正确设置训练词数",Toast.LENGTH_SHORT).show();
+            }else{
+                startActivity(intent);
+            }
         }
     }
 }

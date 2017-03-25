@@ -365,9 +365,9 @@ public class WordsAccess {
     public static String getSettingsValueByName(String Name){
         SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
         String selectQuery="SELECT * "+
-                " FROM "+Word.TABLE
+                " FROM "+Word.TABLE_settings
                 +" WHERE "+
-                Word.Key_Id +" = ?";
+                Word.Key_name_settings +" = ?";
         String Value="";
         Cursor cursor=db.rawQuery(selectQuery,new String[]{Name});
 

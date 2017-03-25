@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lyz.dewordhelper.DB.Word;
 import com.lyz.dewordhelper.DB.WordsAccess;
@@ -53,7 +54,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gender_training);
 
         round=getIntent().getIntExtra("round",0);
-        roundMax=getIntent().getIntExtra("roundMax",0);
+        roundMax=getIntent().getIntExtra("roundMax",1);
         bookStr=getIntent().getStringExtra("Book");
         unitStr =getIntent().getStringExtra("Unit");
         wordTV=(TextView)findViewById(R.id.word);
@@ -65,7 +66,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
         RoundMax.setText("/"+roundMax);
 
         ShowChn=getIntent().getStringExtra("OpenChn");
-        if(ShowChn.equals("close"))
+        if(ShowChn.equals("off"))
             chnTV.setVisibility(View.INVISIBLE);
 
         initWords();

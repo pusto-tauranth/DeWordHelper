@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BookSelectActivity extends ListActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +59,7 @@ public class BookSelectActivity extends ListActivity {
         Intent intent=new Intent(this,TrainingSettingsActivity.class);
         intent.putExtra("Unit","All");
         intent.putExtra("Book","All");
+        intent.putExtra("WordNum","All");
         startActivity(intent);
     }
 
@@ -67,6 +67,7 @@ public class BookSelectActivity extends ListActivity {
         Intent intent=new Intent(this,TrainingSettingsActivity.class);
         intent.putExtra("Unit","Fallible");
         intent.putExtra("Book","Fallible");
+        intent.putExtra("WordNum","Fallible");
         startActivity(intent);
     }
 
@@ -75,15 +76,19 @@ public class BookSelectActivity extends ListActivity {
         // TODO Auto-generated method stub
         super.onListItemClick(l, v, position, id);
         TextView bookTV=(TextView)v.findViewById(R.id.stock);
+        TextView numTV=(TextView)v.findViewById(R.id.wordNum);
+        String numStr=numTV.getText().toString().substring(4);
         if(position==0){
             Intent intent = new Intent(this,TrainingSettingsActivity.class);
             intent.putExtra("Book","Mark");
             intent.putExtra("Unit","Mark");
+            intent.putExtra("WordNum",numStr);
             this.startActivity(intent);
         } else if(position==1){
             Intent intent = new Intent(this,TrainingSettingsActivity.class);
             intent.putExtra("Book","0");
             intent.putExtra("Unit","0");
+            intent.putExtra("WordNum",numStr);
             this.startActivity(intent);
         }else{
             String bookStr=bookTV.getText().toString().substring(7);

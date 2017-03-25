@@ -61,9 +61,12 @@ public class UnitSelectActivity extends ListActivity {
         super.onListItemClick(l, v, position, id);
         TextView unitTV=(TextView)v.findViewById(R.id.stock);
         String unitStr=unitTV.getText().toString().substring(8);
+        TextView numTV=(TextView)v.findViewById(R.id.wordNum);
+        String numStr=numTV.getText().toString().substring(4);
         Intent intent = new Intent(this,TrainingSettingsActivity.class);
         intent.putExtra("Unit",unitStr);
         intent.putExtra("Book",getIntent().getStringExtra("Book"));
+        intent.putExtra("WordNum",numStr);
         this.startActivity(intent);
     }
 }
