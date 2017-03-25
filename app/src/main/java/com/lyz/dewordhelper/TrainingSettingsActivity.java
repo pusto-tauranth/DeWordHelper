@@ -24,7 +24,6 @@ public class TrainingSettingsActivity extends AppCompatActivity {
     int roundMax;
     private EditText etImageAdjustment = null;
     private SeekBar skbImageAdjustment = null;
-    private TextView wordsNumber;
 
     private boolean notHandleAfterTextChangedEvent = false;
     private boolean changeFromSeekBar = false;

@@ -52,4 +52,8 @@ public class Word {
     public int errorGender_2;
     public int trainingPlural_2;
     public int errorPlural_2;
+    //TABLE_settings
+    public static final String TABLE_settings= "settings";
+    public static final String Key_name_settings= "name";
+    public static final String Key_value_settings= "value";
 }

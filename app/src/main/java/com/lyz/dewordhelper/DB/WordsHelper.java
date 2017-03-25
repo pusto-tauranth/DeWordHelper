@@ -39,7 +39,7 @@ public class WordsHelper{
 
     private SQLiteDatabase openDatabase(String dbFile){
         try{
-            if(!new File(dbFile).exists()){
+            if(new File(dbFile).exists()){
                 InputStream is=this.context.getResources().openRawResource(R.raw.database);
                 FileOutputStream fos=new FileOutputStream(dbFile);
                 byte[] buffer=new byte[Buffer_size];

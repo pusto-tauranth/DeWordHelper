@@ -361,4 +361,31 @@ public class WordsAccess {
         db.close();
         return word;
     }
+
+    public static String getSettingsValueByName(String Name){
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+        String selectQuery="SELECT * "+
+                " FROM "+Word.TABLE
+                +" WHERE "+
+                Word.Key_Id +" = ?";
+        String Value="";
+        Cursor cursor=db.rawQuery(selectQuery,new String[]{Name});
+
+        if(cursor.moveToFirst()){
+            do{
+                Value=cursor.getString(cursor.getColumnIndex(Word.Key_value_settings));
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return Value;
+    }
+    public static void setSettings(String Name,String Value){
+        SQLiteDatabase db=SQLiteDatabase.openOrCreateDatabase(WordsHelper.DB_path,null);
+        String update="update "+Word.TABLE_settings+" set "+Word.Key_value_settings +"='"+Value+
+                "' WHERE "+Word.Key_name_settings+" ='"+Name+"'";
+        db.execSQL(update);
+        db.close();
+    }
 }
