@@ -5,8 +5,8 @@ package com.lyz.dewordhelper.DB;
  */
 
 public class Word {
-    public static final String TABLE = "German";//表名
 
+    public static final String TABLE = "German";//表名
     //列名
     public static final String Key_Id="id";
     public static final String Key_gender="gender";
@@ -40,18 +40,34 @@ public class Word {
     public int trainingPlural;
     public int accuracyPlural;
     public int mark;
-    //Table_2
-    public static final String TABLE_2= "statistics";
-    public static final String Key_date_2 ="date";
-    public static final String Key_trainingGender_2 ="trainingGender";
-    public static final String Key_errorGender_2 ="errorGender";
-    public static final String Key_trainingPlural_2 ="trainingPlural";
-    public static final String Key_errorPlural_2 ="errorPlural";
-    public String date_2;
-    public int trainingGender_2;
-    public int errorGender_2;
-    public int trainingPlural_2;
-    public int errorPlural_2;
+
+    public static final String TABLE_French= "French";//表名
+
+
+    //Table_GermanStatistic
+    public static final String TABLE_GermanStatistics= "Germanstatistics";
+    public static final String Key_date_GermanStatistics ="date";
+    public static final String Key_trainingGender_GermanStatistics ="trainingGender";
+    public static final String Key_errorGender_GermanStatistics ="errorGender";
+    public static final String Key_trainingPlural_GermanStatistics ="trainingPlural";
+    public static final String Key_errorPlural_GermanStatistics ="errorPlural";
+
+    public String date_GermanStatistics;
+    public int trainingGender_GermanStatistics;
+    public int errorGender_GermanStatistics;
+    public int trainingPlural_GermanStatistics;
+    public int errorPlural_GermanStatistics;
+
+    //Table_FrenchStatistic
+    public static final String TABLE_FrenchStatistics= "Frenchstatistics";
+    public static final String Key_date_FrenchStatistics ="date";
+    public static final String Key_trainingGender_FrenchStatistics ="trainingGender";
+    public static final String Key_errorGender_FrenchStatistics ="errorGender";
+
+    public String date_FrenchStatistics;
+    public int trainingGender_FrenchStatistics;
+    public int errorGender_FrenchStatistics;
+
     //TABLE_settings
     public static final String TABLE_settings= "settings";
     public static final String Key_name_settings= "name";

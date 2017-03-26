@@ -2,10 +2,10 @@ package com.lyz.dewordhelper;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -75,23 +75,7 @@ public class MainActivity extends AppCompatActivity {
         accuracyGen = getTrainingAccuracyGen();
         quantityPl = getTrainingQuantityPl();
         accuracyPl = getTrainingAccuracyPl();
-        LayoutInflater inflater = getLayoutInflater();
-        pageKeyGender = inflater.inflate(R.layout.main_page_key, null);
-        pageQuantityGender = inflater.inflate(R.layout.main_page_quantity, null);
-        pageAccuracyGender = inflater.inflate(R.layout.main_page_accuracy, null);
-        pageKeyPlural = inflater.inflate(R.layout.main_page_key, null);
-        pageQuantityPlural = inflater.inflate(R.layout.main_page_quantity, null);
-        pageAccuracyPlural = inflater.inflate(R.layout.main_page_accuracy, null);
-        pageList = new ArrayList<>();
-        pageList.add(pageKeyGender);
-        pageList.add(pageQuantityGender);
-        pageList.add(pageAccuracyGender);
-        pageList.add(pageKeyPlural);
-        pageList.add(pageQuantityPlural);
-        pageList.add(pageAccuracyPlural);
-        mainViewPager = (ViewPager) findViewById(R.id.pager);
-        mainPagerAdapter = new MainPagerAdapter(pageList);
-        mainViewPager.setAdapter(mainPagerAdapter);
+
         initTabLayout();
     }
 
@@ -125,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         accuracyGen = getTrainingAccuracyGen();
         quantityPl = getTrainingQuantityPl();
         accuracyPl = getTrainingAccuracyPl();
+        initTabLayout();
         initViewPager();
     }
 
@@ -141,8 +126,15 @@ public class MainActivity extends AppCompatActivity {
 
     public int[] getTrainingQuantityGen(){
         int[] num= new int[7];
-        for(int i=0;i<7;i++){
-            num[i]=WordsAccess.getTrainingTimes(dates[i]).trainingGender_2;
+        if(WordsAccess.getSettingValueByName("language").equals("德语")) {
+            for (int i = 0; i < 7; i++) {
+                num[i] = WordsAccess.getTrainingTimes(dates[i]).trainingGender_GermanStatistics;
+            }
+        }
+        if(WordsAccess.getSettingValueByName("language").equals("法语")) {
+            for (int i = 0; i < 7; i++) {
+                num[i] = WordsAccess.getTrainingTimes(dates[i]).trainingGender_FrenchStatistics;
+            }
         }
         return num;
     }
@@ -150,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     public int[] getTrainingQuantityPl(){
         int[] num= new int[7];
         for(int i=0;i<7;i++){
-            num[i]=WordsAccess.getTrainingTimes(dates[i]).trainingPlural_2;
+            num[i]= WordsAccess.getTrainingTimes(dates[i]).trainingPlural_GermanStatistics;
         }
         return num;
     }
@@ -158,11 +150,20 @@ public class MainActivity extends AppCompatActivity {
     public float[] getTrainingAccuracyGen(){
         float[] num= new float[7];
         for(int i=0;i<7;i++){
-            Word date=WordsAccess.getTrainingTimes(dates[i]);
-            if(date.trainingGender_2 ==0){
-                num[1]=0;
-            }else{
-                num[i]=(date.trainingGender_2 -date.errorGender_2)/(float)date.trainingGender_2 *100;
+            Word date= WordsAccess.getTrainingTimes(dates[i]);
+            if(WordsAccess.getSettingValueByName("language").equals("德语")) {
+                if (date.trainingGender_GermanStatistics == 0) {
+                    num[1] = 0;
+                } else {
+                    num[i] = (date.trainingGender_GermanStatistics - date.errorGender_GermanStatistics) / (float) date.trainingGender_GermanStatistics * 100;
+                }
+            }
+            if(WordsAccess.getSettingValueByName("language").equals("法语")) {
+                if (date.trainingGender_FrenchStatistics == 0) {
+                    num[1] = 0;
+                } else {
+                    num[i] = (date.trainingGender_FrenchStatistics - date.errorGender_FrenchStatistics) / (float) date.trainingGender_FrenchStatistics * 100;
+                }
             }
         }
         return num;
@@ -170,27 +171,53 @@ public class MainActivity extends AppCompatActivity {
     public float[] getTrainingAccuracyPl(){
         float[] num= new float[7];
         for(int i=0;i<7;i++){
-            Word date=WordsAccess.getTrainingTimes(dates[i]);
-            if(date.trainingPlural_2 ==0){
+            Word date= WordsAccess.getTrainingTimes(dates[i]);
+            if(date.trainingPlural_GermanStatistics ==0){
                 num[1]=0;
             }else{
-                num[i]=(date.trainingPlural_2 -date.errorPlural_2)/(float)date.trainingPlural_2 *100;
+                num[i]=(date.trainingPlural_GermanStatistics -date.errorPlural_GermanStatistics)/(float)date.trainingPlural_GermanStatistics *100;
             }
         }
         return num;
     }
 
     public void initTabLayout(){
+        LayoutInflater inflater = getLayoutInflater();
+        pageKeyGender = inflater.inflate(R.layout.main_page_key, null);
+        pageQuantityGender = inflater.inflate(R.layout.main_page_quantity, null);
+        pageAccuracyGender = inflater.inflate(R.layout.main_page_accuracy, null);
+        pageKeyPlural = inflater.inflate(R.layout.main_page_key, null);
+        pageQuantityPlural = inflater.inflate(R.layout.main_page_quantity, null);
+        pageAccuracyPlural = inflater.inflate(R.layout.main_page_accuracy, null);
+        pageList = new ArrayList<>();
+        pageList.add(pageKeyGender);
+        pageList.add(pageQuantityGender);
+        pageList.add(pageAccuracyGender);
         titleList = new ArrayList<>();
         titleList.add("词性常错");
         titleList.add("词性训练量");
         titleList.add("词性正确率");
-        titleList.add("复数常错");
-        titleList.add("复数训练量");
-        titleList.add("复数正确率");
+        if(WordsAccess.getSettingValueByName("language").equals("德语")) {
+            titleList.add("复数常错");
+            titleList.add("复数训练量");
+            titleList.add("复数正确率");
+            pageList.add(pageKeyPlural);
+            pageList.add(pageQuantityPlural);
+            pageList.add(pageAccuracyPlural);
+        }
+
+        mainViewPager = (ViewPager) findViewById(R.id.pager);
+        mainPagerAdapter = new MainPagerAdapter(pageList);
+        mainViewPager.setAdapter(mainPagerAdapter);
+
+
         tabLayout = (TabLayout)findViewById(R.id.main_tab);
         //设置tab的模式
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        if(WordsAccess.getSettingValueByName("language").equals("德语")) {
+            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }else{
+            tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        }
         //把TabLayout和ViewPager关联起来
         tabLayout.setupWithViewPager(mainViewPager);
         //添加tab选项卡
@@ -210,23 +237,24 @@ public class MainActivity extends AppCompatActivity {
         initLineChartAccGen();//初始化
 
         initKeyPageGen();
+        if(WordsAccess.getSettingValueByName("language").equals("德语")) {
+            getAxisXLabelsQuanPl();//获取x轴的标注
+            getAxisPointsQuanPl();//获取坐标点
+            initLineChartQuanPl();//初始化
 
-        getAxisXLabelsQuanPl();//获取x轴的标注
-        getAxisPointsQuanPl();//获取坐标点
-        initLineChartQuanPl();//初始化
+            getAxisXLabelsAccPl();//获取x轴的标注
+            getAxisPointsAccPl();//获取坐标点
+            initLineChartAccPl();//初始化
 
-        getAxisXLabelsAccPl();//获取x轴的标注
-        getAxisPointsAccPl();//获取坐标点
-        initLineChartAccPl();//初始化
-
-        initKeyPagePl();
+            initKeyPagePl();
+        }
     }
 
     public void initKeyPageGen() {
         ListView lv = (ListView) pageKeyGender.findViewById(R.id.keyList);
         ArrayList<HashMap<String, String>> myList;
         String WHERE = " WHERE " + Word.Key_errorGender + " != " + 0
-                +" ORDER BY "+Word.Key_accuracyGender + " ASC ";
+                +" ORDER BY "+ Word.Key_accuracyGender + " ASC ";
         myList = WordsAccess.getLimitWordList(WHERE,50,"Gender");
         SimpleAdapter listAdapter = new SimpleAdapter(this,
                 myList,
@@ -249,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         ListView lv = (ListView) pageKeyPlural.findViewById(R.id.keyList);
         ArrayList<HashMap<String, String>> myList;
         String WHERE = " WHERE " + Word.Key_errorPlural + " != " + 0
-                +" ORDER BY "+Word.Key_accuracyPlural + " ASC ";
+                +" ORDER BY "+ Word.Key_accuracyPlural + " ASC ";
         myList = WordsAccess.getLimitWordList(WHERE,50,"Plural");
         SimpleAdapter listAdapter = new SimpleAdapter(this,
                 myList,
@@ -269,9 +297,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * 设置X 轴的显示
-     */
+
+     //设置X 轴的显示
     private void getAxisXLabelsQuanGen(){
         for (int i = 0; i < dates.length; i++) {
             quanAxisXValuesGen.add(new AxisValue(i).setLabel(dates[i].substring(5)));
@@ -282,9 +309,8 @@ public class MainActivity extends AppCompatActivity {
             quanAxisXValuesPl.add(new AxisValue(i).setLabel(dates[i].substring(5)));
         }
     }
-    /**
-     * 图表的每个点的显示
-     */
+
+     //图表的每个点的显示
     private void getAxisPointsQuanGen() {
         for (int i = 0; i < quantityGen.length; i++) {
             quanPointValuesGen.add(new PointValue(i, quantityGen[i]));
@@ -379,9 +405,7 @@ public class MainActivity extends AppCompatActivity {
         lineChart.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * 设置X 轴的显示
-     */
+    //设置X 轴的显示
     private void getAxisXLabelsAccGen() {
         for (int i = 0; i < dates.length; i++) {
             accAxisXValuesGen.add(new AxisValue(i).setLabel(dates[i].substring(5)));
@@ -393,9 +417,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 图表的每个点的显示
-     */
+
+    //图表的每个点的显示
+
     private void getAxisPointsAccGen() {
         for (int i = 0; i < accuracyGen.length; i++) {
             accPointValuesGen.add(new PointValue(i, accuracyGen[i]));

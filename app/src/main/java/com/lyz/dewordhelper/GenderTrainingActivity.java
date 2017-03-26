@@ -11,7 +11,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lyz.dewordhelper.DB.Word;
 import com.lyz.dewordhelper.DB.WordsAccess;
@@ -26,6 +25,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
     Word ques;
     int round;
     int roundMax;
+    int errorTimes;
 
     String ShowChn;
     String bookStr;
@@ -55,6 +55,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
 
         round=getIntent().getIntExtra("round",0);
         roundMax=getIntent().getIntExtra("roundMax",1);
+        errorTimes=0;
         bookStr=getIntent().getStringExtra("Book");
         unitStr =getIntent().getStringExtra("Unit");
         wordTV=(TextView)findViewById(R.id.word);
@@ -85,6 +86,8 @@ public class GenderTrainingActivity extends AppCompatActivity {
         }else{
             Intent intent=new Intent(this,ReportActivity.class);
             intent.putExtra("Type","Gender");
+            intent.putExtra("RoundMax",roundMax);
+            intent.putExtra("ErrorTimes",errorTimes);
             startActivity(intent);
             finish();
         }
@@ -102,9 +105,6 @@ public class GenderTrainingActivity extends AppCompatActivity {
         title.setText(ques.word);
     }
     public void recording(boolean Bool){
-
-        //ques.date=WordsAccess.timestamp("yyyy-MM-dd",0);
-
         if(Bool){
             ques.status=1;
             ques.trainingGender +=1;
@@ -112,11 +112,11 @@ public class GenderTrainingActivity extends AppCompatActivity {
             ques.errorGender +=1;
             ques.trainingGender +=1;
             ques.status=-1;
+            errorTimes++;
         }
         WordsAccess.update(ques);
     }
     public void onGenderAClick(View arg0){
-        // TODO Auto-generated method stub
         bar=(ProgressBar)findViewById(R.id.progressBar);
         bar.setProgress(100*(round-1)/roundMax);
         if(ques.gender.equals(((Button)arg0).getText())){
@@ -156,9 +156,9 @@ public class GenderTrainingActivity extends AppCompatActivity {
     public void initWords(){
         wordWeightSum=0;
         if(bookStr.equals("Mark")){
-            wordWeightSum=WordsAccess.getWordTotal("German"," WHERE "+ Word.Key_mark+"="+1);
+            wordWeightSum= WordsAccess.getWordTotal("German"," WHERE "+ Word.Key_mark+"="+1);
         } else if(bookStr.equals("All")&&unitStr.equals("All")){
-            wordWeightSum=WordsAccess.getWordTotal(Word.TABLE,"");
+            wordWeightSum= WordsAccess.getWordTotal(Word.TABLE,"");
         }else if(bookStr.equals("Fallible")){
             words=new Word[50];
             for(int i = 0; i<50; i++) {
@@ -166,7 +166,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
                 wordWeightSum+=(100-words[i].accuracyGender +30);
             }
         } else if(unitStr.equals("All")){
-            wordWeightSum=WordsAccess.getWordTotal(Word.TABLE," WHERE "+Word.Key_book+"= "+bookStr);
+            wordWeightSum= WordsAccess.getWordTotal(Word.TABLE," WHERE "+ Word.Key_book+"= "+bookStr);
         }else {
             words=new Word[getListWordTotal(bookStr, unitStr)];
             for(int i = 0; i<getListWordTotal(bookStr, unitStr); i++) {
@@ -176,11 +176,12 @@ public class GenderTrainingActivity extends AppCompatActivity {
         }
     }
     public Word nextWord(){
+        Word word;
         int stepWeightSum=0;
         int num=random.nextInt(wordWeightSum)+1;
         int i;
         if(bookStr.equals("Mark")){
-            return WordsAccess.getWordByListId(bookStr,unitStr,num);
+            word= WordsAccess.getWordByListId(bookStr,unitStr,num);
         } else if(!unitStr.equals("All")){
             for(i=0;i<words.length;i++){
                 stepWeightSum+=(100-words[i].accuracyGender+30);
@@ -188,11 +189,12 @@ public class GenderTrainingActivity extends AppCompatActivity {
                     break;
                 }
             }
-            return words[i];
+            word= words[i];
         }else if(bookStr.equals("All")){
-            return WordsAccess.getWordById(num);
+            word= WordsAccess.getWordById(num);
         }else{
-            return WordsAccess.getWordByListId(bookStr,"All",num);
+            word= WordsAccess.getWordByListId(bookStr,"All",num);
         }
+        return word;
     }
 }

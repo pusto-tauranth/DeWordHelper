@@ -15,7 +15,6 @@ import com.lyz.dewordhelper.Dialog.InsertDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 
 public class StockDetailActivity extends ListActivity {
     String unitStr;
@@ -23,7 +22,6 @@ public class StockDetailActivity extends ListActivity {
     String titleStr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_stock_detail);
         bookStr = getIntent().getStringExtra("Book");
@@ -39,7 +37,6 @@ public class StockDetailActivity extends ListActivity {
 
    @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        // TODO Auto-generated method stub
        super.onListItemClick(l, v, position, id);
        TextView idTV=(TextView)v.findViewById(R.id.wordId);
        String wordIdStr=idTV.getText().toString();
@@ -53,8 +50,8 @@ public class StockDetailActivity extends ListActivity {
             titleStr="收藏夹";
             initToolbar();
             ArrayList<HashMap<String, String>> wordList;
-            String WHERE=" WHERE "+Word.Key_mark +" = "+ 1;
-            wordList=WordsAccess.getWordList(WHERE);
+            String WHERE=" WHERE "+ Word.Key_mark +" = "+ 1;
+            wordList= WordsAccess.getWordList(WHERE);
             SimpleAdapter simpleAdapter = new SimpleAdapter(this,
                     wordList,
                     R.layout.activity_stock_detail_item,
@@ -70,14 +67,17 @@ public class StockDetailActivity extends ListActivity {
                 }
             });
         }else{
-            titleStr="Einheit" + unitStr + ", Buch" + bookStr;
-            if(bookStr.equals("0")){
+            titleStr="Einheit" + unitStr + ", Buch " + bookStr;
+            if(WordsAccess.getSettingsValueByName("language").equals("法语")){
+                titleStr="épisode" + unitStr + ", Reflets " + bookStr;
+            }
+            if(bookStr.equals("-10")){
                 titleStr="我添加的单词";
             }
             initToolbar();
             ArrayList<HashMap<String, String>> wordList;
-            String WHERE=" WHERE "+Word.Key_unit +" = "+ unitStr +" AND "+Word.Key_book+" = "+bookStr;
-            wordList=WordsAccess.getWordList(WHERE);
+            String WHERE=" WHERE "+ Word.Key_unit +" = "+ unitStr +" AND "+ Word.Key_book+" = "+bookStr;
+            wordList= WordsAccess.getWordList(WHERE);
             SimpleAdapter simpleAdapter = new SimpleAdapter(this,
                     wordList,
                     R.layout.activity_stock_detail_item,
@@ -88,7 +88,7 @@ public class StockDetailActivity extends ListActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    InsertDialog insertDialog=new InsertDialog(StockDetailActivity.this,Integer.parseInt(bookStr),Integer.parseInt(unitStr));
+                    InsertDialog insertDialog=new InsertDialog(StockDetailActivity.this, Integer.parseInt(bookStr), Integer.parseInt(unitStr));
                     insertDialog.show();
                 }
             });

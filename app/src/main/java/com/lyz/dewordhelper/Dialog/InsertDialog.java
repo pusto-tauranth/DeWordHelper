@@ -29,7 +29,7 @@ public class InsertDialog extends Dialog {
     private int book;
     private int einheit;
 
-    public InsertDialog(Context context,int book,int einheit){
+    public InsertDialog(Context context, int book, int einheit){
         super(context);
         this.book=book;
         this.einheit=einheit;
@@ -71,7 +71,7 @@ public class InsertDialog extends Dialog {
                 Intent intent = new Intent(getContext(),ReportActivity.class);
                 intent.putExtra("Type","Die");
                 getContext().startActivity(intent);
-                Toast.makeText(getContext(),"单词添加成功",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"单词添加成功", Toast.LENGTH_LONG).show();
                 dismiss();
             }
         });

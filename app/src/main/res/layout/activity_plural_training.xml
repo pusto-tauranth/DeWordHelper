@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.lyz.dewordhelper.PluralTrainingActivity">
-
     <include layout="@layout/widget_toolbar"
         android:id="@+id/toolbar"/>
     <LinearLayout
@@ -13,8 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:orientation="vertical">
-
-
         <TextView
             android:text="gender"
             android:layout_width="wrap_content"
@@ -22,7 +19,6 @@
             android:id="@+id/gender"
             android:textSize="40sp"
             android:layout_marginTop="70dp"/>
-
         <TextView
             android:text="word"
             android:layout_width="wrap_content"
@@ -37,13 +33,11 @@
             android:id="@+id/chn"
             android:textSize="30sp" />
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
         android:id="@+id/linearLayout4"
         >
 
@@ -52,12 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:orientation="horizontal"
-        android:id="@+id/linearLayout"
-            >
-
-
-
-
+        android:id="@+id/linearLayout">
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -69,7 +58,6 @@
                 android:textColor="#ffffff"
                 android:background="#212121"
                 android:textAllCaps="false" />
-
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -98,8 +86,6 @@
             android:layout_height="70dp"
             android:orientation="horizontal"
             android:id="@+id/linearLayout3">
-
-
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -111,7 +97,6 @@
                 android:background="#f50057"
                 android:textColor="#ffffff"
                 android:textAllCaps="false" />
-
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -141,8 +126,6 @@
             android:orientation="horizontal"
             android:id="@+id/linearLayout2"
             android:layout_weight="1">
-
-
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -153,7 +136,6 @@
                 android:onClick="onPlAClick"
                 android:background="#ffc107"
                 android:textAllCaps="false" />
-
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -174,10 +156,8 @@
                 android:onClick="onPlAClick"
                 android:id="@+id/pl_other"
                 android:textAllCaps="false" />
-
         </LinearLayout>
     </LinearLayout>
-
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
@@ -187,7 +167,6 @@
         android:max="100"
         android:visibility="visible"
         android:layout_above="@+id/linearLayout4" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -196,13 +175,10 @@
         android:layout_above="@+id/progressBar2"
         android:layout_toRightOf="@+id/round"
         android:layout_toEndOf="@+id/round" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/round"
         android:textSize="20dp"
-        android:layout_above="@+id/progressBar2"
-/>
-
+        android:layout_above="@+id/progressBar2" />
 </RelativeLayout>

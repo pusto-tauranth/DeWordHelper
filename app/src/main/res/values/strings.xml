@@ -3,5 +3,8 @@
     <string name="option_der">der</string>
     <string name="option_das">das</string>
     <string name="option_die">die</string>
+    <string name="option_le">le</string>
+    <string name="option_la">la</string>
+    <string name="option_les">les</string>
     <string name="en_etc">-en/-n/-nen</string>
 </resources>

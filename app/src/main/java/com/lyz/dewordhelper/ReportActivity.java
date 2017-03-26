@@ -1,8 +1,8 @@
 package com.lyz.dewordhelper;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
@@ -59,14 +59,14 @@ public class ReportActivity extends AppCompatActivity {
         String type=getIntent().getStringExtra("Type");
         WordsAccess.setAccuracy();
         WordsAccess.setErrorTimes(type);
-        int newTrainingTimes=WordsAccess.statusReset();
+        int newTrainingTimes= WordsAccess.statusReset();
         WordsAccess.setTrainingTimes(newTrainingTimes,type);
         if(!(newTrainingTimes==0)){
-            accuracy.setText("本次正确率："+(100-100*errorList.size()/newTrainingTimes)+"%");
+            String textAccuracy="本次正确率："+(100-100*getIntent().getIntExtra("ErrorTimes",0)/getIntent().getIntExtra("RoundMax",1)+"%");
+            accuracy.setText(textAccuracy);
         }else{
             accuracy.setText("本次共训练0词");
         }
-
 
         SimpleAdapter listAdapter = new SimpleAdapter(this,
                 errorList,

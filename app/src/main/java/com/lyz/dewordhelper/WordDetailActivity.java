@@ -21,8 +21,12 @@ public class WordDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_word_detail);
-        Id=Integer.parseInt(getIntent().getStringExtra("WordIdStr"));
+        if(WordsAccess.getSettingsValueByName("language").equals("德语")){
+            setContentView(R.layout.activity_word_detail);
+        }else{
+            setContentView(R.layout.activity_word_detail_french);
+        }
+        Id= Integer.parseInt(getIntent().getStringExtra("WordIdStr"));
         initWord();
     }
 
@@ -36,18 +40,20 @@ public class WordDetailActivity extends AppCompatActivity {
     }
 
     public void initWord(){
-        word=WordsAccess.getWordById(Id);
+        word= WordsAccess.getWordById(Id);
         initToolbar();
         TextView genderTV=(TextView)findViewById(R.id.gender);
         TextView wordTV=(TextView)findViewById(R.id.word);
-        TextView plTV=(TextView)findViewById(R.id.plural);
         TextView chnTV=(TextView)findViewById(R.id.chn);
         TextView accTV=(TextView)findViewById(R.id.accuracy);
         Button markBtn=(Button)findViewById(R.id.mark);
         genderTV.setText(word.gender);
         wordTV.setText(word.word);
-        plTV.setText(word.plural);
         chnTV.setText(word.chn);
+        if(WordsAccess.getSettingsValueByName("language").equals("德语")){
+            TextView plTV=(TextView)findViewById(R.id.plural);
+            plTV.setText(word.plural);
+        }
         if(word.mark==1){
             markBtn.setText("取消\n收藏");
         }else{

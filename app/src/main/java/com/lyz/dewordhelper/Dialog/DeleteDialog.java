@@ -29,7 +29,7 @@ public class DeleteDialog extends Dialog {
     public DeleteDialog(Context context, int id){
         super(context);
         wordId=id;
-        word=WordsAccess.getWordById(wordId);
+        word= WordsAccess.getWordById(wordId);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class DeleteDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 WordsAccess.delete(wordId);
-                Toast.makeText(getContext(),"单词删除成功",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"单词删除成功", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getContext(),ReportActivity.class);
                 intent.putExtra("Type","Die");
                 getContext().startActivity(intent);

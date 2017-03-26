@@ -25,6 +25,7 @@
         <activity android:name=".StockDetailActivity" />
         <activity android:name=".BookSelectActivity" />
         <activity android:name=".LanguageSelectActivity" />
+        <activity android:name=".FrenchGenderTrainingActivity" />
         <activity android:name=".BookManageActivity"></activity>
     </application>
 

@@ -41,16 +41,32 @@ public class UnitManageActivity extends ListActivity {
             }
         });
         TextView title=(TextView)findViewById(R.id.tv_title);
-        title.setText("Buch "+getIntent().getStringExtra("Book"));
+        String titleStr;
+        titleStr="Buch "+getIntent().getStringExtra("Book");
+        if(WordsAccess.getSettingsValueByName("language").equals("法语")){
+            titleStr="Reflets " + getIntent().getStringExtra("Book");
+        }
+        title.setText(titleStr);
     }
 
     public void initList(){
         ArrayList<HashMap<String, String>> stockList = new ArrayList<HashMap<String, String>>();
-        for (int i=1;i<=10;i++) {
-            HashMap<String, String> map = new HashMap<String, String>();
-            map.put("Unit","Einheit "+i);
-            map.put("WordNum","总词量："+ WordsAccess.getListWordTotal(getIntent().getStringExtra("Book"),""+i));
-            stockList.add(map);
+        if( WordsAccess.getSettingValueByName("language").equals("德语")) {
+            for (int i = 1; i <= 10; i++) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Unit", "Einheit " + i);
+                map.put("WordNum", "总词量：" + WordsAccess.getListWordTotal(getIntent().getStringExtra("Book"), "" + i));
+                stockList.add(map);
+            }
+        }
+        if( WordsAccess.getSettingValueByName("language").equals("法语"))
+        {
+            for (int i = 0; i <= 26; i++) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Unit", "épisode " + i);
+                map.put("WordNum", "总词量：" + WordsAccess.getListWordTotal(getIntent().getStringExtra("Book"), "" + i));
+                stockList.add(map);
+            }
         }
 
         SimpleAdapter mSchedule = new SimpleAdapter(this,
@@ -64,7 +80,7 @@ public class UnitManageActivity extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InsertDialog insertDialog=new InsertDialog(UnitManageActivity.this,0,0);
+                InsertDialog insertDialog=new InsertDialog(UnitManageActivity.this,-10,-10);
                 insertDialog.show();
             }
         });
@@ -73,7 +89,6 @@ public class UnitManageActivity extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        // TODO Auto-generated method stub
         super.onListItemClick(l, v, position, id);
         TextView unitTV=(TextView)v.findViewById(R.id.stock);
         String unitStr=unitTV.getText().toString().substring(8);

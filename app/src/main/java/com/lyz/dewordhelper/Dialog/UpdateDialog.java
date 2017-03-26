@@ -28,10 +28,10 @@ public class UpdateDialog extends Dialog {
     private int wordId;
     private Word word;
 
-    public UpdateDialog(Context context,int id){
+    public UpdateDialog(Context context, int id){
         super(context);
         wordId=id;
-        word=WordsAccess.getWordById(wordId);
+        word= WordsAccess.getWordById(wordId);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UpdateDialog extends Dialog {
                 Intent intent = new Intent(getContext(),ReportActivity.class);
                 intent.putExtra("Type","Die");
                 getContext().startActivity(intent);
-                Toast.makeText(getContext(),"单词编辑成功",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"单词编辑成功", Toast.LENGTH_LONG).show();
                 dismiss();
             }
         });

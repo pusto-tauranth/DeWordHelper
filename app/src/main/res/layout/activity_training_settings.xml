@@ -27,8 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="17dp"
                 android:layout_weight="5"
-                android:id="@+id/wordsSeekBar"
-                />
+                android:id="@+id/wordsSeekBar" />
             <EditText
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -38,7 +37,6 @@
                 android:inputType="number"
                 android:textSize="20sp"
                 android:text="0"/>
-
         </LinearLayout>
         <Switch
             android:text="显示汉语"
@@ -48,7 +46,6 @@
             android:id="@+id/chn1"
             android:textColor="#616161"
             android:textSize="20sp" />
-
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,7 +61,6 @@
             android:textSize="35sp"
             android:textColor="#ffffff"
             android:background="#212121"/>
-
         <Button
             android:text="复数训练"
             android:layout_width="0dp"

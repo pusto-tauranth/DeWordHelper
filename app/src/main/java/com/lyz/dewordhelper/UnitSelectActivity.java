@@ -20,22 +20,31 @@ public class UnitSelectActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unit_select);
         initToolbar();
-        ArrayList<HashMap<String, String>> myList = new ArrayList<HashMap<String, String>>();
-        for (int i=1;i<=10;i++) {
-            HashMap<String, String> map = new HashMap<>();
-            map.put("Unit","Einheit "+i);
-            map.put("WordNum","总词量："+ WordsAccess.getListWordTotal(getIntent().getStringExtra("Book"),""+i));
-            myList.add(map);
+        ArrayList<HashMap<String, String>> stockList = new ArrayList<HashMap<String, String>>();
+        if( WordsAccess.getSettingValueByName("language").equals("德语")) {
+            for (int i = 1; i <= 10; i++) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Unit", "Einheit " + i);
+                map.put("WordNum", "总词量：" + WordsAccess.getListWordTotal(getIntent().getStringExtra("Book"), "" + i));
+                stockList.add(map);
+            }
         }
-
+        if( WordsAccess.getSettingValueByName("language").equals("法语"))
+        {
+            for (int i = 0; i <= 26; i++) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Unit", "épisode " + i);
+                map.put("WordNum", "总词量：" + WordsAccess.getListWordTotal(getIntent().getStringExtra("Book"), "" + i));
+                stockList.add(map);
+            }
+        }
         SimpleAdapter mSchedule = new SimpleAdapter(this,
-                myList,
+                stockList,
                 R.layout.activity_stock_item,
                 new String[]{"Unit", "WordNum"},
                 new int[]{R.id.stock, R.id.wordNum});
         setListAdapter(mSchedule);
     }
-
     public void initToolbar() {
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -52,15 +61,17 @@ public class UnitSelectActivity extends ListActivity {
         Intent intent=new Intent(this,TrainingSettingsActivity.class);
         intent.putExtra("Unit","All");
         intent.putExtra("Book",getIntent().getStringExtra("Book"));
+        intent.putExtra("WordNum",getIntent().getStringExtra("WordNum"));
         startActivity(intent);
     }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        // TODO Auto-generated method stub
         super.onListItemClick(l, v, position, id);
         TextView unitTV=(TextView)v.findViewById(R.id.stock);
-        String unitStr=unitTV.getText().toString().substring(8);
+        String unitStr;
+        unitStr = unitTV.getText().toString().substring(8);
+
         TextView numTV=(TextView)v.findViewById(R.id.wordNum);
         String numStr=numTV.getText().toString().substring(4);
         Intent intent = new Intent(this,TrainingSettingsActivity.class);

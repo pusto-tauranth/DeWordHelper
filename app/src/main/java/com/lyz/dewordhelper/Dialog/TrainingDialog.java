@@ -2,16 +2,13 @@ package com.lyz.dewordhelper.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StyleRes;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.lyz.dewordhelper.GenderTrainingActivity;
 import com.lyz.dewordhelper.R;
-import com.lyz.dewordhelper.ReportActivity;
 
 /**
  * Created by 61998 on 2017/2/24.
@@ -28,7 +25,7 @@ public class TrainingDialog extends Dialog {
 
     private NextOnClickListener nextOnClickListener;
 
-    public TrainingDialog(Context context,@StyleRes int themResId){
+    public TrainingDialog(Context context, @StyleRes int themResId){
         super(context, themResId);
     }
 

@@ -13,7 +13,6 @@ import com.lyz.dewordhelper.DB.Word;
 import com.lyz.dewordhelper.DB.WordsAccess;
 import com.lyz.dewordhelper.R;
 import com.lyz.dewordhelper.ReportActivity;
-import com.lyz.dewordhelper.StockDetailActivity;
 
 /**
  * Created by 61998 on 2017/2/25.
@@ -30,7 +29,7 @@ public class MarkDialog extends Dialog {
     public MarkDialog(Context context, int id){
         super(context);
         wordId=id;
-        word=WordsAccess.getWordById(wordId);
+        word= WordsAccess.getWordById(wordId);
     }
 
     @Override
@@ -58,15 +57,15 @@ public class MarkDialog extends Dialog {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Word word=WordsAccess.getWordById(wordId);
+                Word word= WordsAccess.getWordById(wordId);
                 if(word.mark==1){
                     word.mark=0;
                     WordsAccess.update(word);
-                    Toast.makeText(getContext(),"已成功取消收藏",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"已成功取消收藏", Toast.LENGTH_LONG).show();
                 }else{
                     word.mark=1;
                     WordsAccess.update(word);
-                    Toast.makeText(getContext(),"已成功收藏",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"已成功收藏", Toast.LENGTH_LONG).show();
                 }
                 Intent intent = new Intent(getContext(),ReportActivity.class);
                 intent.putExtra("Type","Die");

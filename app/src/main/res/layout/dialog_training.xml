@@ -11,14 +11,12 @@
         android:id="@+id/dialog_training_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_gravity="center"
         android:layout_margin="15dp"
         android:gravity="center"
         android:text="Title"
         android:textColor="#f2debd"
-        android:textSize="30sp"
-        />
+        android:textSize="30sp" />
     <TextView
         android:id="@+id/dialog_training_word"
         android:layout_width="wrap_content"
@@ -49,11 +47,10 @@
         android:layout_marginLeft="10dp"
         android:background="@null"
         android:gravity="center"
-        android:singleLine="true"
-        android:text="Nächst"
+        android:maxLines="1"
+        android:text="Next"
         android:textColor="#ffffff"
-        android:textSize="16sp"
-        />
+        android:textSize="16sp" />
 </LinearLayout>
 
 </RelativeLayout>

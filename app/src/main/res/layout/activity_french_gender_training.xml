@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_gender_training"
+    android:id="@+id/activity_french_gender_training"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lyz.dewordhelper.GenderTrainingActivity">
+    tools:context="com.lyz.dewordhelper.FrenchGenderTrainingActivity">
     <include layout="@layout/widget_toolbar"
         android:id="@+id/toolbar"/>
     <LinearLayout
@@ -16,30 +16,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/option_der"
-            android:background="#212121"
+            android:text="@string/option_le"
+            android:background="#0d47a1"
             android:textColor="#ffffff"
             android:onClick="onGenderAClick"
-            android:id="@+id/der"
+            android:id="@+id/le"
+            android:textSize="30sp" />
+        <Button
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/option_les"
+            android:background="#ffffff"
+            android:textColor="#ffffffff"
+            android:id="@+id/les"
+            android:onClick="onGenderAClick"
             android:textSize="30sp" />
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/option_das"
+            android:text="@string/option_la"
+            android:textColor="#ffffffff"
             android:background="#f50057"
-            android:textColor="#ffffff"
-            android:id="@+id/das"
             android:onClick="onGenderAClick"
-            android:textSize="30sp" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/option_die"
-            android:background="#ffc107"
-            android:onClick="onGenderAClick"
-            android:id="@+id/die"
+            android:id="@+id/la"
             android:textSize="30sp" />
     </LinearLayout>
     <LinearLayout
@@ -47,25 +49,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:orientation="vertical">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
-        android:id="@+id/word"
-        android:textColor="#212121"
-        android:textSize="50sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:id="@+id/word"
+            android:textColor="#212121"
+            android:textSize="50sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/plural"
-        android:textSize="40sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/chn"
-        android:textSize="30sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chn"
+            android:textSize="30sp" />
     </LinearLayout>
 
     <TextView

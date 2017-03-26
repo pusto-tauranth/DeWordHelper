@@ -17,7 +17,7 @@ import java.io.InputStream;
  * Created by 61998 on 2017/2/22.
  */
 
-public class WordsHelper{
+public class WordsHelper {
     private final int Buffer_size=400000;
     private static final String DB_name="database.db";
     private static final String Package_name="com.lyz.dewordhelper";
@@ -50,7 +50,7 @@ public class WordsHelper{
                 fos.close();
                 is.close();
             }
-            db=SQLiteDatabase.openOrCreateDatabase(dbFile,null);
+            db= SQLiteDatabase.openOrCreateDatabase(dbFile,null);
             return db;
         }catch (FileNotFoundException e){
             Log.e("Database", "File not found");

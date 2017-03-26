@@ -14,11 +14,8 @@
         android:id="@+id/All"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textSize="25dip"
-        android:textColor="#000000"
-        android:background="@drawable/setbar_bg"
-        >
-    </TextView>
+        android:textSize="25sp"
+        android:textColor="#000000"/>
     <TextView
         android:layout_height="0dp"
         android:layout_width="0dp"
@@ -27,8 +24,8 @@
         android:id="@+id/wordId"
         android:layout_marginLeft="10dp"
         android:background="@drawable/setbar_bg"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:visibility="gone">
     </TextView>
-
 </LinearLayout>
 </RelativeLayout>
