@@ -51,6 +51,10 @@ public class InsertDialog extends Dialog {
         chnET=(EditText)findViewById(R.id.dialog_insert_chn_et);
         yes=(Button)findViewById(R.id.dialog_insert_yes);
         no=(Button)findViewById(R.id.dialog_insert_no);
+        if(WordsAccess.getSettingsValueByName("language").equals("法语")) {
+            plET.setVisibility(View.GONE);
+            findViewById(R.id.dialog_insert_pl_tv).setVisibility(View.GONE);
+        }
     }
 
     private void initEvent(){
@@ -60,7 +64,9 @@ public class InsertDialog extends Dialog {
                 Word word=new Word();
                 word.gender=genderET.getText().toString();
                 word.word=wordET.getText().toString();
-                word.plural =plET.getText().toString();
+                if(WordsAccess.getSettingsValueByName("language").equals("德语")){
+                    word.plural =plET.getText().toString();
+                }
                 word.chn=chnET.getText().toString();
                 word.mark=0;
                 if(book==-1){//直接从收藏夹添加时，赋book=-1

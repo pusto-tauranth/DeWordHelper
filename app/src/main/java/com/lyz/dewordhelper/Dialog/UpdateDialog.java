@@ -50,10 +50,14 @@ public class UpdateDialog extends Dialog {
         chnET=(EditText)findViewById(R.id.dialog_update_chn_et);
         yes=(Button)findViewById(R.id.dialog_update_yes);
         no=(Button)findViewById(R.id.dialog_update_no);
-
+        if(WordsAccess.getSettingsValueByName("language").equals("法语")) {
+            plET.setVisibility(View.GONE);
+            findViewById(R.id.dialog_update_pl_tv).setVisibility(View.GONE);
+        }else{
+            plET.setText(word.plural);
+        }
         genderET.setText(word.gender);
         wordET.setText(word.word);
-        plET.setText(word.plural);
         chnET.setText(word.chn);
     }
 
@@ -63,7 +67,9 @@ public class UpdateDialog extends Dialog {
             public void onClick(View v) {
                 word.gender=genderET.getText().toString();
                 word.word=wordET.getText().toString();
-                word.plural =plET.getText().toString();
+                if(WordsAccess.getSettingsValueByName("language").equals("德语")){
+                    word.plural =plET.getText().toString();
+                }
                 word.chn=chnET.getText().toString();
                 WordsAccess.update(word);
                 Intent intent = new Intent(getContext(),ReportActivity.class);
