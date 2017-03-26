@@ -27,12 +27,12 @@ public class InsertDialog extends Dialog {
     private Button no;
 
     private int book;
-    private int einheit;
+    private int unit;
 
-    public InsertDialog(Context context, int book, int einheit){
+    public InsertDialog(Context context, int book, int unit){
         super(context);
         this.book=book;
-        this.einheit=einheit;
+        this.unit = unit;
     }
 
     @Override
@@ -71,9 +71,10 @@ public class InsertDialog extends Dialog {
                 word.mark=0;
                 if(book==-1){//直接从收藏夹添加时，赋book=-1
                     word.mark=1;
-                    book=0;
+                    book=-10;
+                    unit=-10;
                 }
-                WordsAccess.insert(word,book,einheit);
+                WordsAccess.insert(word,book, unit);
                 Intent intent = new Intent(getContext(),ReportActivity.class);
                 intent.putExtra("Type","Die");
                 getContext().startActivity(intent);
