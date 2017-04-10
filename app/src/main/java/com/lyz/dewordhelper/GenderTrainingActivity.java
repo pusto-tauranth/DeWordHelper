@@ -157,7 +157,7 @@ public class GenderTrainingActivity extends AppCompatActivity {
         wordWeightSum=0;
         if(bookStr.equals("Mark")){
             wordWeightSum= WordsAccess.getWordTotal("German"," WHERE "+ Word.Key_mark+"="+1);
-        } else if(bookStr.equals("All")&&unitStr.equals("All")){
+        }else if(bookStr.equals("All")&&unitStr.equals("All")){
             wordWeightSum= WordsAccess.getWordTotal(Word.TABLE,"");
         }else if(bookStr.equals("Fallible")){
             words=new Word[50];
